@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Conventional and Unconventional Robots — VexGrind</title>
+  <title>Experimenting with Obstacle Courses — VexGrind</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -386,11 +386,11 @@
       background-size: 40px 40px;
     }
 
-    .vis-conventional {
-      background: linear-gradient(135deg, rgba(30,109,255,0.2), rgba(7,9,15,0.9));
-    }
-    .vis-unconventional {
+    .vis-track {
       background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(7,9,15,0.9));
+    }
+    .vis-results {
+      background: linear-gradient(135deg, rgba(30,109,255,0.2), rgba(7,9,15,0.9));
     }
 
     .vis-item {
@@ -420,7 +420,7 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Comparison table */
+    /* Results table */
     .compare-table {
       width: 100%;
       border-collapse: collapse;
@@ -437,7 +437,8 @@
     }
     .compare-table th:first-child { color: var(--muted); }
     .compare-table th:nth-child(2) { color: #60a5fa; }
-    .compare-table th:nth-child(3) { color: var(--accent2); }
+    .compare-table th:nth-child(3) { color: #60a5fa; }
+    .compare-table th:nth-child(4) { color: var(--accent2); }
 
     .compare-table td {
       padding: 0.8rem 1rem;
@@ -448,6 +449,8 @@
     .compare-table tr:last-child td { border-bottom: none; }
     .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
     .compare-table td:first-child { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
+    .compare-table td.winner { color: var(--green); font-weight: 700; }
+    .compare-table td.fastest { color: var(--accent2); font-weight: 700; }
 
     /* Key takeaway */
     .takeaway {
@@ -466,14 +469,23 @@
     }
     .takeaway p { color: var(--text2); font-size: 0.93rem; line-height: 1.75; margin-bottom: 0; }
 
-    /* Tag list / key terms */
-    .key-terms { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0; }
-    .key-term {
-      padding: 0.3rem 0.75rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.78rem; color: var(--muted);
+    /* Fastest lap badge */
+    .fastest-lap-badge {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(255,140,96,0.1));
+      border: 1px solid rgba(172,46,68,0.4);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .fastest-lap-badge .flag { font-size: 2rem; }
+    .fastest-lap-badge .lap-info { }
+    .fastest-lap-badge .lap-label {
+      font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--accent2); font-weight: 700; margin-bottom: 0.2rem;
+    }
+    .fastest-lap-badge .lap-val {
+      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text);
     }
 
     /* ── DIVIDER ── */
@@ -614,7 +626,6 @@
       .article-layout, .more-section { padding-left: 1.5rem; padding-right: 1.5rem; }
       .more-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
-      .vis-unconventional .vis-item:not(:first-child) { display: none; }
       .vis-divider { display: none; }
     }
   </style>
@@ -644,7 +655,7 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-orb"></div>
-  <div class="hero-icon-wrap">🤖</div>
+  <div class="hero-icon-wrap">🏁</div>
 
   <div class="hero-content">
     <div class="breadcrumb">
@@ -652,10 +663,10 @@
       <span>/</span>
       <a href="blog.html">Blog</a>
       <span>/</span>
-      <span style="color:var(--text)">Conventional &amp; Unconventional Robots</span>
+      <span style="color:var(--text)">Experimenting with Obstacle Courses</span>
     </div>
-    <div class="article-tag">🧠 Autonomous</div>
-    <h1>Conventional and <em>Unconventional</em> Robots</h1>
+    <div class="article-tag">🎮 Driver Skills</div>
+    <h1>Experimenting with <em>Obstacle Courses</em></h1>
     <div class="article-byline">
       <div class="byline-avatar">LR</div>
       <div>
@@ -664,13 +675,13 @@
       </div>
       <div class="byline-divider"></div>
       <div class="byline-stat">
-        <div class="byline-stat-val">12 min</div>
+        <div class="byline-stat-val">5 min</div>
         <div class="byline-stat-label">read</div>
       </div>
       <div class="byline-divider"></div>
       <div class="byline-stat">
-        <div class="byline-stat-val">2.1k</div>
-        <div class="byline-stat-label">views</div>
+        <div class="byline-stat-val">4</div>
+        <div class="byline-stat-label">drivers</div>
       </div>
     </div>
   </div>
@@ -683,13 +694,11 @@
   <aside class="toc-sidebar">
     <div class="toc-label">In this article</div>
     <ul class="toc-list">
-      <li class="toc-item"><a class="toc-link" href="#intro">Introduction</a></li>
-      <li class="toc-item"><a class="toc-link" href="#conventional">Conventional Robots</a></li>
-      <li class="toc-item"><a class="toc-link" href="#unconventional">Unconventional Robots</a></li>
-      <li class="toc-item"><a class="toc-link" href="#soft-robots">Soft Robots in Depth</a></li>
-      <li class="toc-item"><a class="toc-link" href="#comparison">Side-by-Side Comparison</a></li>
-      <li class="toc-item"><a class="toc-link" href="#vex-relevance">Relevance to VEX V5</a></li>
-      <li class="toc-item"><a class="toc-link" href="#takeaway">Key Takeaway</a></li>
+      <li class="toc-item"><a class="toc-link" href="#overview">Overview</a></li>
+      <li class="toc-item"><a class="toc-link" href="#track">Track Map</a></li>
+      <li class="toc-item"><a class="toc-link" href="#times">Racing Times</a></li>
+      <li class="toc-item"><a class="toc-link" href="#howit">How It Worked</a></li>
+      <li class="toc-item"><a class="toc-link" href="#reactions">Reactions</a></li>
     </ul>
 
     <div class="toc-divider"></div>
@@ -716,245 +725,173 @@
     <a href="blog.html" class="back-btn">← Back to Blog</a>
 
     <p class="article-lead">
-      Not all robots look like what science fiction taught us to expect. Understanding the two broad families — conventional and unconventional — is foundational for any engineer, and deeply relevant to the creative design decisions you face in VEX V5 competition.
+      A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.
     </p>
 
-    <!-- INTRO -->
-    <div class="article-section" id="intro">
+    <!-- OVERVIEW -->
+    <div class="article-section" id="overview">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">01</span> Introduction</h2>
+      <h2><span class="section-num">01</span> Overview</h2>
       <p>
-        When most people hear the word "robot," they picture a metal arm welding car chassis, or maybe a humanoid figure striding across a stage. These mental images are understandable — but they barely scratch the surface of what robotics actually encompasses in 2026. The field has exploded into territory that looks nothing like its industrial roots.
+        A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.
       </p>
-      <p>
-        At the highest level, we can split the world of robots into two broad camps: <strong>conventional robots</strong>, which match the classic definition most closely, and <strong>unconventional robots</strong>, which challenge that definition in fascinating, often counterintuitive ways. Neither category is better — each is optimized for different tasks, environments, and constraints.
-      </p>
-      <div class="info-box">
-        <div class="info-box-head">📖 By definition</div>
-        <p>A robot is a machine capable of carrying out a complex series of actions automatically, especially one programmable by a computer. Both conventional and unconventional robots satisfy this definition — they just get there very differently.</p>
+
+      <div class="fastest-lap-badge">
+        <span class="flag">🏆</span>
+        <div class="lap-info">
+          <div class="lap-label">Fastest Lap — VEX V5 Grand Prix</div>
+          <div class="lap-val">Naitik Pal &nbsp;·&nbsp; 1:51</div>
+        </div>
       </div>
     </div>
 
-    <!-- CONVENTIONAL -->
-    <div class="article-section" id="conventional">
+    <!-- TRACK MAP -->
+    <div class="article-section" id="track">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">02</span> Conventional Robots</h2>
-      <p>
-        Conventional robots are what the word "robot" conjures in the public imagination. The most iconic example is the <strong>articulated industrial robot arm</strong> — the kind you see on car production lines, welding, painting, or assembling components with millimeter precision, hour after hour, without fatigue.
-      </p>
+      <h2><span class="section-num">02</span> Track Map</h2>
 
       <div class="visual-card">
-        <div class="visual-inner vis-conventional">
-          <div class="vis-item">
-            <div class="vis-icon">🦾</div>
-            <div class="vis-title">Articulated Arm</div>
-            <div class="vis-desc">Rigid joints, fixed range of motion, high precision, high repeatability</div>
-          </div>
-          <div class="vis-divider"></div>
-          <div class="vis-item">
-            <div class="vis-icon">⚙️</div>
-            <div class="vis-title">Fixed Task</div>
-            <div class="vis-desc">Programmed for a single repeating operation in a controlled environment</div>
-          </div>
-          <div class="vis-divider"></div>
-          <div class="vis-item">
-            <div class="vis-icon">🏭</div>
-            <div class="vis-title">Industrial Setting</div>
-            <div class="vis-desc">Automotive lines, warehouses, electronics manufacturing</div>
-          </div>
-        </div>
-        <div class="visual-caption">A conventional articulated robot excels at doing one thing perfectly — forever.</div>
-      </div>
-
-      <h3>What makes them "conventional"?</h3>
-      <p>
-        The word conventional here means they closely mirror our expectations: rigid mechanical structures, motors at joints, sensors feeding a central controller, and a clearly defined workspace. They're built to operate within tight tolerances and are rarely designed to adapt to unexpected situations.
-      </p>
-      <p>
-        This isn't a weakness — it's a <em>feature</em>. For a task like spot-welding a car door frame, you don't want creativity. You want consistent, repeatable perfection across thousands of cycles. The constraint is the point.
-      </p>
-
-      <div class="pull-quote">
-        "The design philosophy of conventional robots is optimization through constraint — the robot is brilliant at its one job precisely because it cannot be distracted into doing anything else."
-      </div>
-
-      <h3>Key characteristics</h3>
-      <div class="key-terms">
-        <span class="key-term">Rigid links</span>
-        <span class="key-term">Rotary joints</span>
-        <span class="key-term">Servo/stepper motors</span>
-        <span class="key-term">Closed-loop feedback</span>
-        <span class="key-term">Fixed workspace</span>
-        <span class="key-term">High repeatability</span>
-        <span class="key-term">Deterministic behavior</span>
-      </div>
-    </div>
-
-    <!-- UNCONVENTIONAL -->
-    <div class="article-section" id="unconventional">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">03</span> Unconventional Robots</h2>
-      <p>
-        Unconventional robots deliberately break away from the rigid, structured template. They explore new materials, movement strategies, and interaction principles — often taking inspiration from nature itself.
-      </p>
-      <p>
-        There are many branches: bio-inspired robots that walk like insects, tensegrity robots that move by changing internal tension, swarm robots that coordinate without a central brain, and perhaps most fascinatingly — <strong>soft robots</strong>.
-      </p>
-    </div>
-
-    <!-- SOFT ROBOTS -->
-    <div class="article-section" id="soft-robots">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">04</span> Soft Robots in Depth</h2>
-      <p>
-        Soft robotics is one of the most actively researched branches of unconventional robotics. The core idea: replace rigid materials (steel, aluminium, hard plastics) with <strong>compliant materials</strong> — silicone, hydrogels, textiles, and even biological tissue. The result is a robot that can bend, squeeze, grip, and navigate in ways a rigid machine simply cannot.
-      </p>
-
-      <div class="visual-card">
-        <div class="visual-inner vis-unconventional">
-          <div class="vis-item">
-            <div class="vis-icon">🫁</div>
-            <div class="vis-title">Pneumatic Actuation</div>
-            <div class="vis-desc">Pressurised fluid channels create movement — no motors at joints</div>
-          </div>
-          <div class="vis-divider"></div>
-          <div class="vis-item">
-            <div class="vis-icon">🤌</div>
-            <div class="vis-title">Compliant Grippers</div>
-            <div class="vis-desc">Finger-like projections conform to object shape — no force calculation needed</div>
-          </div>
-          <div class="vis-divider"></div>
-          <div class="vis-item">
-            <div class="vis-icon">🌊</div>
-            <div class="vis-title">Wide Range of Motion</div>
-            <div class="vis-desc">Continuous deformation rather than discrete joint angles</div>
+        <div class="visual-inner vis-track" style="flex-direction: column; gap: 1rem; text-align: center;">
+          <div style="position: relative; z-index: 1;">
+            <div style="font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; letter-spacing: 0.08em; color: var(--text); margin-bottom: 1.25rem;">VEX V5 GRAND PRIX</div>
+            <!-- SVG track shape inspired by the winding course in the PDF -->
+            <svg viewBox="0 0 320 200" width="320" height="200" xmlns="http://www.w3.org/2000/svg" style="display:block; margin: 0 auto;">
+              <path d="M 260 30 C 230 10, 180 10, 160 40 C 140 70, 160 100, 140 120 C 120 140, 80 130, 70 110 C 55 85, 75 55, 100 50 C 120 46, 135 60, 130 80 C 125 100, 105 105, 95 120 C 80 140, 85 170, 110 175 C 140 180, 180 165, 200 145 C 220 125, 215 100, 230 80 C 248 55, 278 55, 285 80 C 292 105, 270 125, 260 30"
+                stroke="white" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Checkered flag marker -->
+              <rect x="250" y="22" width="14" height="10" fill="white"/>
+              <rect x="250" y="22" width="7" height="5" fill="black"/>
+              <rect x="257" y="27" width="7" height="5" fill="black"/>
+            </svg>
+            <div style="margin-top: 1.25rem;">
+              <div style="font-family: 'Syne', sans-serif; font-style: italic; font-size: 1.05rem; font-weight: 800; letter-spacing: 0.05em; color: var(--accent2);">FASTEST LAP</div>
+              <div style="font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); letter-spacing: 0.05em; margin-top: 0.2rem;">NAITIK PAL 1:51</div>
+            </div>
           </div>
         </div>
-        <div class="visual-caption">Soft robots move via pressure changes in internal fluid channels — the structure IS the actuator.</div>
-      </div>
-
-      <h3>How they move</h3>
-      <p>
-        Unlike conventional robots where motors rotate rigid joints, soft robots carry a <strong>fluid (gas or liquid) inside their body structure</strong>. Selectively pressurising different channels causes specific regions to expand or contract, producing bending, elongation, or twisting motions. This is fundamentally similar to how a squid or octopus moves — using internal pressure and muscular tension rather than a skeleton.
-      </p>
-
-      <div class="info-box">
-        <div class="info-box-head">💡 Why it matters</div>
-        <p>Because soft robots conform to their environment rather than imposing rigid structure on it, they excel at handling delicate or irregular objects — fruit harvesting, surgical tools, search-and-rescue in rubble. The same compliance that makes them "weak" also makes them safe.</p>
-      </div>
-
-      <h3>The finger-gripper example</h3>
-      <p>
-        A classic demonstration of soft robotics is the pneumatic finger gripper. Several soft tube-like projections are arranged around an object. When pressure is applied, each finger curls inward naturally — distributing grip force across the object's surface without needing to pre-calculate its shape. A conventional gripper would need precise geometry data and careful force control to avoid crushing a tomato; the soft gripper figures it out passively through compliance.
-      </p>
-
-      <div class="pull-quote">
-        "Soft robots don't solve the grasping problem with intelligence — they dissolve it with physics. Compliance is computation."
+        <div class="visual-caption">The VEX V5 Grand Prix — a winding household obstacle course built to test precision driving.</div>
       </div>
     </div>
 
-    <!-- COMPARISON -->
-    <div class="article-section" id="comparison">
+    <!-- RACING TIMES -->
+    <div class="article-section" id="times">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">05</span> Side-by-Side Comparison</h2>
-      <p>Here's how the two paradigms stack up across the dimensions that matter most for engineering decisions:</p>
+      <h2><span class="section-num">03</span> Racing Times</h2>
+      <p>Each driver completed two runs. The results are recorded below — lowest average time wins.</p>
 
       <table class="compare-table">
         <thead>
           <tr>
-            <th>Dimension</th>
-            <th>🔵 Conventional</th>
-            <th>🔴 Unconventional (Soft)</th>
+            <th>Driver</th>
+            <th>Run 1 (s)</th>
+            <th>Run 2 (s)</th>
+            <th>Average (s)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Structure</td>
-            <td>Rigid links and joints</td>
-            <td>Compliant, deformable body</td>
+            <td>Aryan</td>
+            <td>260</td>
+            <td>221</td>
+            <td>241</td>
           </tr>
           <tr>
-            <td>Actuation</td>
-            <td>Electric motors / servos</td>
-            <td>Fluid pressure / tendons</td>
+            <td>Lakshman</td>
+            <td>212</td>
+            <td>210</td>
+            <td>211</td>
           </tr>
           <tr>
-            <td>Motion type</td>
-            <td>Discrete joint angles</td>
-            <td>Continuous deformation</td>
+            <td>Naitik</td>
+            <td>167</td>
+            <td class="fastest">111</td>
+            <td class="winner">139 🏆</td>
           </tr>
           <tr>
-            <td>Adaptability</td>
-            <td>Low — fixed workspace</td>
-            <td>High — conforms to environment</td>
-          </tr>
-          <tr>
-            <td>Precision</td>
-            <td>Very high repeatability</td>
-            <td>Lower absolute precision</td>
-          </tr>
-          <tr>
-            <td>Safety</td>
-            <td>Requires safety barriers</td>
-            <td>Inherently safe for human contact</td>
-          </tr>
-          <tr>
-            <td>Best use case</td>
-            <td>Repetitive industrial tasks</td>
-            <td>Delicate / unstructured environments</td>
-          </tr>
-          <tr>
-            <td>Manufacturing cost</td>
-            <td>High (precision machining)</td>
-            <td>Low (casting/molding)</td>
+            <td>Sarvesh</td>
+            <td>124</td>
+            <td>165</td>
+            <td>146</td>
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <!-- VEX RELEVANCE -->
-    <div class="article-section" id="vex-relevance">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">06</span> Relevance to VEX V5</h2>
-      <p>
-        You might be thinking: this is interesting, but my VEX robot is just a VEX robot. Here's why understanding these categories matters for competition design.
-      </p>
-      <p>
-        VEX V5 robots sit firmly in the <strong>conventional robot</strong> family — rigid aluminium structure, discrete servo and motor joints, centralised V5 brain, and deterministic autonomous code. Understanding this helps you reason about your robot's strengths and limitations clearly.
-      </p>
-
-      <h3>Where unconventional thinking sneaks in</h3>
-      <p>
-        Even within the rigid VEX system, teams can apply unconventional design philosophy. Using <strong>compliant intake rollers</strong> that deform around game pieces — rather than precise geometry — mirrors soft robotics thinking. Designing mechanisms that passively self-align rather than requiring precise programming borrows from compliance-as-computation.
-      </p>
-      <p>
-        The best VEX teams don't just build conventional robots — they ask: <em>where can I use the environment or material compliance to reduce programming complexity?</em> That question is born directly from understanding unconventional robotics.
-      </p>
 
       <div class="info-box">
-        <div class="info-box-head">🏆 Competition edge</div>
-        <p>Compliant rollers on intakes are one of the most powerful examples in VEX. They grip discs, rings, and triballs across a range of positions without needing precise alignment — exactly the soft robotics principle at work in a competition context.</p>
+        <div class="info-box-head">📊 The Numbers</div>
+        <p>Naitik posted the fastest individual lap of the day — 111 seconds on Run 2 — well clear of the field. Sarvesh was closest with a 124-second opening run, but his second run cost him the top spot.</p>
       </div>
     </div>
 
-    <!-- TAKEAWAY -->
-    <div class="article-section" id="takeaway">
+    <!-- HOW IT WORKED -->
+    <div class="article-section" id="howit">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">07</span> Key Takeaway</h2>
+      <h2><span class="section-num">04</span> How It Worked</h2>
+      <p>
+        Each one of us had two runs to try and set the fastest lap times and eventually have the lowest average time. There were two clear frontrunners after the first round, Naitik and Sarvesh. Lakshman and Aryan, especially Aryan, struggled to keep up and fell far behind.
+      </p>
+
+      <div class="visual-card">
+        <div class="visual-inner vis-results">
+          <div class="vis-item">
+            <div class="vis-icon">🥇</div>
+            <div class="vis-title">Naitik</div>
+            <div class="vis-desc">Frontrunner from round one — clutch final run sealed the deal</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">🥈</div>
+            <div class="vis-title">Sarvesh</div>
+            <div class="vis-desc">Second-fastest average — agonisingly close at the line</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">😅</div>
+            <div class="vis-title">Lakshman & Aryan</div>
+            <div class="vis-desc">Fell far behind — especially Aryan, who struggled to keep up</div>
+          </div>
+        </div>
+        <div class="visual-caption">After round one it was a two-horse race between Naitik and Sarvesh.</div>
+      </div>
+
+      <p>
+        It was a gripping competition and came down to Naitik's final run… if he got a sub 122 second time, he would claim victory. It seemed impossible, but he prevailed and came out on top.
+      </p>
+
+      <div class="pull-quote">
+        "Agony, agony for Sarvesh. Ecstasy, ecstasy for Naitik."
+      </div>
+    </div>
+
+    <!-- REACTIONS -->
+    <div class="article-section" id="reactions">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">05</span> Reactions</h2>
 
       <div class="takeaway">
-        <div class="takeaway-head">⚡ The core insight</div>
+        <div class="takeaway-head">⚡ The Final Verdict</div>
         <p>
-          Conventional robots win by precision and repeatability in controlled environments. Unconventional robots — especially soft robots — win by adaptability and compliance in unpredictable ones. Neither is universally superior. The best engineers know which philosophy fits the problem, and the best VEX competitors borrow ideas from both worlds.
+          Naitik claimed the VEX V5 Grand Prix crown with a blistering 111-second second run. Agony, agony for Sarvesh. Ecstasy, ecstasy for Naitik. And as for Aryan — inexplicably celebrating despite finishing last — the less said the better. WHY?!!!!
         </p>
       </div>
 
-      <p>
-        As you design your next VEX robot, ask yourself: is each subsystem optimised with a conventional mindset (precision, control, repeatability) or could a dose of unconventional thinking — compliance, passive alignment, environmental adaptation — reduce mechanical complexity and programming overhead at the same time?
-      </p>
-      <p>
-        The answer is almost always: a bit of both.
-      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 2rem 0;">
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎉</div>
+          <div style="font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--green); margin-bottom: 0.3rem;">Naitik overjoyed after his victory</div>
+          <div style="font-size: 0.78rem; color: var(--muted);">Winner · Avg 139s</div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">😔</div>
+          <div style="font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent2); margin-bottom: 0.3rem;">Sarvesh heart-broken after his loss</div>
+          <div style="font-size: 0.78rem; color: var(--muted);">Runner-up · Avg 146s</div>
+        </div>
+      </div>
+
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center; margin: 1.25rem 0;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤔</div>
+        <div style="font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 0.3rem;">Aryan is erm… celebrating? WHY?!!!!</div>
+        <div style="font-size: 0.78rem; color: var(--muted);">Last place · Avg 241s</div>
+      </div>
     </div>
 
     <div class="art-divider"><span>✦</span></div>
