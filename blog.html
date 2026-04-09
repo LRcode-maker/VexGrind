@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #f1f5f9;
+      line-height: 1.6;
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 10%;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+      color: #38bdf8;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #e2e8f0;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 80px 10%;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #94a3b8;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    /* BLOG GRID */
+    .blog-container {
+      padding: 40px 10%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: #1e293b;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 10px;
+    }
+
+    .card-content p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .card-content a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      color: #64748b;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <h1>MyBlog</h1>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Articles</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h2>Welcome to My Blog</h2>
+    <p>Thoughts, tutorials, and insights on design, coding, and modern web development.</p>
+  </section>
+
+  <!-- BLOG POSTS -->
+  <section class="blog-container">
+
+    <div class="card">
+      <img src="https://source.unsplash.com/400x300/?technology" />
+      <div class="card-content">
+        <h3>Getting Started with Web Development</h3>
+        <p>Learn the fundamentals of HTML, CSS, and JavaScript to build modern websites.</p>
+        <a href="#">Read More →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://source.unsplash.com/400x300/?coding" />
+      <div class="card-content">
+        <h3>Top 10 JavaScript Tips</h3>
+        <p>Improve your coding skills with these powerful JavaScript tricks.</p>
+        <a href="#">Read More →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://source.unsplash.com/400x300/?design" />
+      <div class="card-content">
+        <h3>UI Design Principles</h3>
+        <p>Design beautiful and user-friendly interfaces with these principles.</p>
+        <a href="#">Read More →</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 MyBlog. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
