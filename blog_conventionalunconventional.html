@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Conventional and Unconventional Robots — VexGrind</title>
+  <title>Robot Types: Conventional & Unconventional — VexGrind</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,7 +33,6 @@
       overflow-x: hidden;
     }
 
-    /* ── PROGRESS BAR ── */
     #progress-bar {
       position: fixed;
       top: 0; left: 0;
@@ -44,7 +43,6 @@
       transition: width 0.1s linear;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 3px; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -73,7 +71,6 @@
     .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.15s; }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
 
-    /* ── ARTICLE HERO ── */
     .article-hero {
       position: relative;
       min-height: 70vh;
@@ -180,14 +177,11 @@
 
     .byline-name { font-weight: 500; }
     .byline-meta { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
-
     .byline-divider { width: 1px; height: 30px; background: var(--border); }
-
     .byline-stat { text-align: center; }
     .byline-stat-val { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
     .byline-stat-label { color: var(--muted); font-size: 0.72rem; }
 
-    /* ── ARTICLE LAYOUT ── */
     .article-layout {
       max-width: 1180px;
       margin: 0 auto;
@@ -198,7 +192,6 @@
       align-items: start;
     }
 
-    /* ── TOC SIDEBAR ── */
     .toc-sidebar {
       position: sticky;
       top: 100px;
@@ -270,12 +263,8 @@
     }
     .reading-pct { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--accent2); }
 
-    /* ── ARTICLE BODY ── */
-    .article-body {
-      min-width: 0;
-    }
+    .article-body { min-width: 0; }
 
-    /* Lead */
     .article-lead {
       font-family: 'DM Serif Display', serif;
       font-size: 1.35rem;
@@ -286,7 +275,6 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* Sections */
     .article-section { margin-bottom: 3.5rem; }
 
     .section-anchor {
@@ -329,7 +317,6 @@
       margin-bottom: 1.1rem;
     }
 
-    /* Pull quote */
     .pull-quote {
       margin: 2.5rem 0;
       padding: 1.75rem 2rem;
@@ -343,7 +330,6 @@
       font-style: italic;
     }
 
-    /* Info box */
     .info-box {
       margin: 2rem 0;
       padding: 1.4rem 1.5rem;
@@ -360,7 +346,6 @@
     }
     .info-box p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; margin-bottom: 0; }
 
-    /* Visual card */
     .visual-card {
       margin: 2.5rem 0;
       border-radius: var(--radius);
@@ -386,12 +371,8 @@
       background-size: 40px 40px;
     }
 
-    .vis-conventional {
-      background: linear-gradient(135deg, rgba(30,109,255,0.2), rgba(7,9,15,0.9));
-    }
-    .vis-unconventional {
-      background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(7,9,15,0.9));
-    }
+    .vis-conv { background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(7,9,15,0.9)); }
+    .vis-unconv { background: linear-gradient(135deg, rgba(30,109,255,0.2), rgba(7,9,15,0.9)); }
 
     .vis-item {
       text-align: center; position: relative; z-index: 1;
@@ -420,36 +401,38 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Comparison table */
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 2rem 0;
-      font-size: 0.88rem;
+    /* Bullet list styling */
+    .styled-list {
+      list-style: none;
+      margin: 1.25rem 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
-    .compare-table th {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.78rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.07em;
-      padding: 0.8rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .compare-table th:first-child { color: var(--muted); }
-    .compare-table th:nth-child(2) { color: #60a5fa; }
-    .compare-table th:nth-child(3) { color: var(--accent2); }
 
-    .compare-table td {
-      padding: 0.8rem 1rem;
-      border-bottom: 1px solid var(--border);
+    .styled-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
       color: var(--text2);
-      vertical-align: top;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      padding: 0.75rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
     }
-    .compare-table tr:last-child td { border-bottom: none; }
-    .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .compare-table td:first-child { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
+    .styled-list li:hover { border-color: rgba(172,46,68,0.3); }
 
-    /* Key takeaway */
+    .styled-list li .li-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      color: var(--accent2);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
     .takeaway {
       margin: 3rem 0;
       padding: 2rem;
@@ -466,17 +449,28 @@
     }
     .takeaway p { color: var(--text2); font-size: 0.93rem; line-height: 1.75; margin-bottom: 0; }
 
-    /* Tag list / key terms */
-    .key-terms { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0; }
-    .key-term {
-      padding: 0.3rem 0.75rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.78rem; color: var(--muted);
+    .compare-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin: 2rem 0;
     }
 
-    /* ── DIVIDER ── */
+    .comp-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .comp-item-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .comp-item-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem; font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .comp-item p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 0; }
+
     .art-divider {
       display: flex; align-items: center; gap: 1rem;
       margin: 3rem 0;
@@ -484,7 +478,6 @@
     .art-divider::before, .art-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .art-divider span { color: var(--accent2); font-size: 1rem; }
 
-    /* ── AUTHOR BOX ── */
     .author-box {
       background: var(--card);
       border: 1px solid var(--border);
@@ -498,7 +491,7 @@
       background: linear-gradient(135deg, var(--accent), #ff8c60);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif;
-      font-size: 1.2rem; font-weight: 700;
+      font-size: 1rem; font-weight: 700;
       flex-shrink: 0;
     }
     .author-box-name {
@@ -508,7 +501,6 @@
     .author-box-role { color: var(--accent2); font-size: 0.78rem; margin-bottom: 0.6rem; }
     .author-box p { color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
 
-    /* ── MORE POSTS ── */
     .more-section {
       max-width: 1180px;
       margin: 0 auto;
@@ -562,7 +554,6 @@
     .more-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
     .more-body h3 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; line-height: 1.3; color: var(--text); }
 
-    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem 3rem;
@@ -570,7 +561,6 @@
       color: var(--muted); font-size: 0.82rem;
     }
 
-    /* ── BACK BTN ── */
     .back-btn {
       display: inline-flex; align-items: center; gap: 0.5rem;
       color: var(--muted); text-decoration: none; font-size: 0.85rem;
@@ -579,7 +569,6 @@
     }
     .back-btn:hover { color: var(--text); }
 
-    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -593,18 +582,17 @@
       50%       { opacity: 0.9; transform: scale(1.08); }
     }
 
-    /* ── REVEAL ── */
     .reveal {
       opacity: 0; transform: translateY(22px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .article-layout { grid-template-columns: 1fr; gap: 2rem; }
       .toc-sidebar { display: none; }
       .more-grid { grid-template-columns: 1fr 1fr; }
+      .compare-card { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
@@ -614,17 +602,14 @@
       .article-layout, .more-section { padding-left: 1.5rem; padding-right: 1.5rem; }
       .more-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
-      .vis-unconventional .vis-item:not(:first-child) { display: none; }
       .vis-divider { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- READING PROGRESS -->
 <div id="progress-bar"></div>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">VexGrind</a>
   <ul class="nav-links">
@@ -639,7 +624,6 @@
   </div>
 </nav>
 
-<!-- ARTICLE HERO -->
 <section class="article-hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
@@ -652,44 +636,39 @@
       <span>/</span>
       <a href="blog.html">Blog</a>
       <span>/</span>
-      <span style="color:var(--text)">Conventional &amp; Unconventional Robots</span>
+      <span style="color:var(--text)">Robot Types</span>
     </div>
-    <div class="article-tag">🧠 Autonomous</div>
-    <h1>Conventional and <em>Unconventional</em> Robots</h1>
+    <div class="article-tag">🔬 Robotics</div>
+    <h1>Robot Types: <em>Conventional</em> & Unconventional</h1>
     <div class="article-byline">
-      <div class="byline-avatar">LR</div>
+      <div class="byline-avatar">AL</div>
       <div>
-        <div class="byline-name">Lakshman R.</div>
-        <div class="byline-meta">VexGrind · Apr 9, 2026</div>
+        <div class="byline-name">Aryan & Lakshman</div>
+        <div class="byline-meta">VEX Pitwall · VexGrind · Apr 9, 2026</div>
       </div>
       <div class="byline-divider"></div>
       <div class="byline-stat">
-        <div class="byline-stat-val">12 min</div>
+        <div class="byline-stat-val">5 min</div>
         <div class="byline-stat-label">read</div>
       </div>
       <div class="byline-divider"></div>
       <div class="byline-stat">
-        <div class="byline-stat-val">2.1k</div>
-        <div class="byline-stat-label">views</div>
+        <div class="byline-stat-val">2</div>
+        <div class="byline-stat-label">robot types</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MAIN ARTICLE LAYOUT -->
 <div class="article-layout">
 
-  <!-- SIDEBAR TOC -->
   <aside class="toc-sidebar">
     <div class="toc-label">In this article</div>
     <ul class="toc-list">
       <li class="toc-item"><a class="toc-link" href="#intro">Introduction</a></li>
+      <li class="toc-item"><a class="toc-link" href="#difference">What's the Difference?</a></li>
       <li class="toc-item"><a class="toc-link" href="#conventional">Conventional Robots</a></li>
       <li class="toc-item"><a class="toc-link" href="#unconventional">Unconventional Robots</a></li>
-      <li class="toc-item"><a class="toc-link" href="#soft-robots">Soft Robots in Depth</a></li>
-      <li class="toc-item"><a class="toc-link" href="#comparison">Side-by-Side Comparison</a></li>
-      <li class="toc-item"><a class="toc-link" href="#vex-relevance">Relevance to VEX V5</a></li>
-      <li class="toc-item"><a class="toc-link" href="#takeaway">Key Takeaway</a></li>
     </ul>
 
     <div class="toc-divider"></div>
@@ -710,269 +689,177 @@
     </div>
   </aside>
 
-  <!-- ARTICLE BODY -->
   <article class="article-body" id="article-body">
 
     <a href="blog.html" class="back-btn">← Back to Blog</a>
 
     <p class="article-lead">
-      Not all robots look like what science fiction taught us to expect. Understanding the two broad families — conventional and unconventional — is foundational for any engineer, and deeply relevant to the creative design decisions you face in VEX V5 competition.
+      When most people think of robots, they imagine stiff metal machines moving with precise, serious motions — like something straight out of a sci-fi factory. On the other hand, there are unconventional robots who stretch, squish and jiggle (like jelly) and are the size of a hand.
     </p>
 
-    <!-- INTRO -->
+    <!-- INTRODUCTION -->
     <div class="article-section" id="intro">
       <span class="section-anchor"></span>
       <h2><span class="section-num">01</span> Introduction</h2>
       <p>
-        When most people hear the word "robot," they picture a metal arm welding car chassis, or maybe a humanoid figure striding across a stage. These mental images are understandable — but they barely scratch the surface of what robotics actually encompasses in 2026. The field has exploded into territory that looks nothing like its industrial roots.
+        When most people think of robots, they imagine stiff metal machines moving with precise, serious motions — like something straight out of a sci-fi factory. On the other hand, there are unconventional robots who stretch, squish and jiggle (like jelly) and are the size of a hand.
       </p>
-      <p>
-        At the highest level, we can split the world of robots into two broad camps: <strong>conventional robots</strong>, which match the classic definition most closely, and <strong>unconventional robots</strong>, which challenge that definition in fascinating, often counterintuitive ways. Neither category is better — each is optimized for different tasks, environments, and constraints.
-      </p>
-      <div class="info-box">
-        <div class="info-box-head">📖 By definition</div>
-        <p>A robot is a machine capable of carrying out a complex series of actions automatically, especially one programmable by a computer. Both conventional and unconventional robots satisfy this definition — they just get there very differently.</p>
+
+      <div class="compare-card">
+        <div class="comp-item">
+          <div class="comp-item-icon">🏭</div>
+          <div class="comp-item-title">Conventional</div>
+          <p>Rigid structures. Precise. Built for controlled environments and repetitive tasks at scale.</p>
+        </div>
+        <div class="comp-item">
+          <div class="comp-item-icon">🐙</div>
+          <div class="comp-item-title">Unconventional</div>
+          <p>Flexible, bio-inspired. Built for complex, unpredictable tasks conventional robots can't handle.</p>
+        </div>
       </div>
     </div>
 
-    <!-- CONVENTIONAL -->
-    <div class="article-section" id="conventional">
+    <!-- WHAT'S THE DIFFERENCE -->
+    <div class="article-section" id="difference">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">02</span> Conventional Robots</h2>
+      <h2><span class="section-num">02</span> What's the Difference?</h2>
       <p>
-        Conventional robots are what the word "robot" conjures in the public imagination. The most iconic example is the <strong>articulated industrial robot arm</strong> — the kind you see on car production lines, welding, painting, or assembling components with millimeter precision, hour after hour, without fatigue.
+        Conventional robots often are built as rigid structures (e.g. wheels, arms etc) and are mainly used in a controlled environment for doing repetitive tasks for many hours. An example could be a huge industrial arm in a factory for manufacturing items on a large scale. The main purpose of these types of robots are for speed, precision and most importantly efficiency. This is because they often are allocated 1 specific job that they have to excel in — this also means that they are pre-programmed and have limited flexibility as they follow simple instructions repeatedly.
+      </p>
+
+      <p>
+        However, unconventional robots are designed to overcome the rigidity of conventional robots. They achieve this by using different materials that are more specialised for a task. For example, soft robots need more flexible materials like silicone rubber, polyurethane, and hydrogels to grip irregular objects. In addition, unconventional robots are given complex tasks due to their lack of rigidity. For instance, environmental monitoring, disaster rescue, medical procedures etc.
       </p>
 
       <div class="visual-card">
-        <div class="visual-inner vis-conventional">
-          <div class="vis-item">
-            <div class="vis-icon">🦾</div>
-            <div class="vis-title">Articulated Arm</div>
-            <div class="vis-desc">Rigid joints, fixed range of motion, high precision, high repeatability</div>
-          </div>
-          <div class="vis-divider"></div>
+        <div class="visual-inner vis-conv">
           <div class="vis-item">
             <div class="vis-icon">⚙️</div>
-            <div class="vis-title">Fixed Task</div>
-            <div class="vis-desc">Programmed for a single repeating operation in a controlled environment</div>
+            <div class="vis-title">Speed & Precision</div>
+            <div class="vis-desc">Conventional robots excel at one repeated task with maximum efficiency</div>
           </div>
           <div class="vis-divider"></div>
           <div class="vis-item">
-            <div class="vis-icon">🏭</div>
-            <div class="vis-title">Industrial Setting</div>
-            <div class="vis-desc">Automotive lines, warehouses, electronics manufacturing</div>
+            <div class="vis-icon">🔄</div>
+            <div class="vis-title">Pre-programmed</div>
+            <div class="vis-desc">Limited flexibility — they follow simple instructions repeatedly</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">🏗️</div>
+            <div class="vis-title">Rigid Structure</div>
+            <div class="vis-desc">Metal frames designed for controlled, factory environments</div>
           </div>
         </div>
-        <div class="visual-caption">A conventional articulated robot excels at doing one thing perfectly — forever.</div>
+        <div class="visual-caption">Conventional robots: purpose-built for efficiency in controlled environments.</div>
       </div>
-
-      <h3>What makes them "conventional"?</h3>
-      <p>
-        The word conventional here means they closely mirror our expectations: rigid mechanical structures, motors at joints, sensors feeding a central controller, and a clearly defined workspace. They're built to operate within tight tolerances and are rarely designed to adapt to unexpected situations.
-      </p>
-      <p>
-        This isn't a weakness — it's a <em>feature</em>. For a task like spot-welding a car door frame, you don't want creativity. You want consistent, repeatable perfection across thousands of cycles. The constraint is the point.
-      </p>
 
       <div class="pull-quote">
-        "The design philosophy of conventional robots is optimization through constraint — the robot is brilliant at its one job precisely because it cannot be distracted into doing anything else."
-      </div>
-
-      <h3>Key characteristics</h3>
-      <div class="key-terms">
-        <span class="key-term">Rigid links</span>
-        <span class="key-term">Rotary joints</span>
-        <span class="key-term">Servo/stepper motors</span>
-        <span class="key-term">Closed-loop feedback</span>
-        <span class="key-term">Fixed workspace</span>
-        <span class="key-term">High repeatability</span>
-        <span class="key-term">Deterministic behavior</span>
+        "Unconventional robots use bio-inspired materials and softer structures to overcome the rigidity of conventional robots — navigating spaces and tasks machines never could before."
       </div>
     </div>
 
-    <!-- UNCONVENTIONAL -->
+    <!-- CONVENTIONAL DEEP DIVE -->
+    <div class="article-section" id="conventional">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">03</span> Diving Deeper on Conventional Robots</h2>
+      <p>
+        Conventional robots often are made with the engineering principles of: mechanical strength, repeatability, and seamless integration into automated systems — allowing it to work with the other machinery (in a factory or controlled environment). In addition to a rigid metal frame, they also use many common actuation components. Such as:
+      </p>
+
+      <ul class="styled-list">
+        <li>
+          <span class="li-label">Electric servo motors →</span>
+          <span>These are precise electric motors that can control position, speed, and rotation very accurately. They are commonly used for robotic arms where exact movement is needed.</span>
+        </li>
+        <li>
+          <span class="li-label">Hydraulic actuators →</span>
+          <span>These use pressurized liquid to generate very strong force. They are used when robots need to lift heavy loads, like in large industrial robots.</span>
+        </li>
+        <li>
+          <span class="li-label">Pneumatic actuators →</span>
+          <span>These use compressed air to create motion. They are lighter and faster but less powerful, often used for gripping or quick repetitive movements.</span>
+        </li>
+      </ul>
+
+      <p>
+        An example could include the Delta robot, a conventional robot heavily used in production lines for picking and plucking of items (like coke cans), which uses 3–4 electric servo motors to control its precise and quick movements. Another example is the KUKA KR QUANTEC, a large industrial robotic arm which uses pneumatic actuators for its claws. To aid integration with other robots in an environment, such as conveyor belts, engineers put programmable logic controller sensors and machine vision systems to help co-ordination.
+      </p>
+
+      <div class="info-box">
+        <div class="info-box-head">🏭 Real World Examples</div>
+        <p>The Delta robot uses 3–4 servo motors for lightning-fast pick-and-place operations. The KUKA KR QUANTEC uses pneumatic actuators in its claws and integrates with conveyor systems via machine vision.</p>
+      </div>
+    </div>
+
+    <!-- UNCONVENTIONAL DEEP DIVE -->
     <div class="article-section" id="unconventional">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">03</span> Unconventional Robots</h2>
+      <h2><span class="section-num">04</span> Diving Deeper on Unconventional Robots</h2>
       <p>
-        Unconventional robots deliberately break away from the rigid, structured template. They explore new materials, movement strategies, and interaction principles — often taking inspiration from nature itself.
+        Unconventional robots are not 'conventional' due to the lack of their rigidity in their design (and are often used for complex tasks). In addition, they use bio inspired materials and softer materials to overcome the rigidity of conventional robots. Such as: silicone rubber, fabric etc. For example, soft grippers can pick up fragile items like fruit without damage, or softer materials allow them to navigate small crawl spaces. They also use biomimicry and copy designs from nature such as an octopus. Because of this they use special actuation components like:
       </p>
-      <p>
-        There are many branches: bio-inspired robots that walk like insects, tensegrity robots that move by changing internal tension, swarm robots that coordinate without a central brain, and perhaps most fascinatingly — <strong>soft robots</strong>.
-      </p>
-    </div>
 
-    <!-- SOFT ROBOTS -->
-    <div class="article-section" id="soft-robots">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">04</span> Soft Robots in Depth</h2>
-      <p>
-        Soft robotics is one of the most actively researched branches of unconventional robotics. The core idea: replace rigid materials (steel, aluminium, hard plastics) with <strong>compliant materials</strong> — silicone, hydrogels, textiles, and even biological tissue. The result is a robot that can bend, squeeze, grip, and navigate in ways a rigid machine simply cannot.
-      </p>
+      <ul class="styled-list">
+        <li><span class="li-label">Pneumatic artificial muscles →</span><span>Air-powered flexible actuators</span></li>
+        <li><span class="li-label">Hydraulic soft actuators →</span><span>Liquid-powered movement</span></li>
+        <li><span class="li-label">Cable-driven tendon systems →</span><span>Rope-like tension control</span></li>
+        <li><span class="li-label">Vacuum-based grippers →</span><span>Soft suction gripping</span></li>
+        <li><span class="li-label">Shape memory alloys →</span><span>Metals that move when heated</span></li>
+        <li><span class="li-label">Dielectric elastomers →</span><span>Stretchable electric actuators</span></li>
+        <li><span class="li-label">Electroactive polymers →</span><span>Materials that change shape with electricity</span></li>
+        <li><span class="li-label">Fluidic elastomer actuators →</span><span>Inflatable soft chambers</span></li>
+      </ul>
 
       <div class="visual-card">
-        <div class="visual-inner vis-unconventional">
+        <div class="visual-inner vis-unconv">
+          <div class="vis-item">
+            <div class="vis-icon">🐙</div>
+            <div class="vis-title">OctArm</div>
+            <div class="vis-desc">Pneumatic artificial muscles inflate with air to bend and twist like an octopus arm</div>
+          </div>
+          <div class="vis-divider"></div>
           <div class="vis-item">
             <div class="vis-icon">🫁</div>
-            <div class="vis-title">Pneumatic Actuation</div>
-            <div class="vis-desc">Pressurised fluid channels create movement — no motors at joints</div>
+            <div class="vis-title">Soft Robotic Gripper</div>
+            <div class="vis-desc">Harvard's air-powered chambers gently grasp fragile items without damage</div>
           </div>
           <div class="vis-divider"></div>
           <div class="vis-item">
-            <div class="vis-icon">🤌</div>
-            <div class="vis-title">Compliant Grippers</div>
-            <div class="vis-desc">Finger-like projections conform to object shape — no force calculation needed</div>
-          </div>
-          <div class="vis-divider"></div>
-          <div class="vis-item">
-            <div class="vis-icon">🌊</div>
-            <div class="vis-title">Wide Range of Motion</div>
-            <div class="vis-desc">Continuous deformation rather than discrete joint angles</div>
+            <div class="vis-icon">🖨️</div>
+            <div class="vis-title">3D Printed</div>
+            <div class="vis-desc">Custom-printed components tailored to highly specific and complex tasks</div>
           </div>
         </div>
-        <div class="visual-caption">Soft robots move via pressure changes in internal fluid channels — the structure IS the actuator.</div>
+        <div class="visual-caption">Unconventional robots draw inspiration from nature to tackle tasks rigid machines never could.</div>
       </div>
 
-      <h3>How they move</h3>
       <p>
-        Unlike conventional robots where motors rotate rigid joints, soft robots carry a <strong>fluid (gas or liquid) inside their body structure</strong>. Selectively pressurising different channels causes specific regions to expand or contract, producing bending, elongation, or twisting motions. This is fundamentally similar to how a squid or octopus moves — using internal pressure and muscular tension rather than a skeleton.
+        For example, the OctArm uses pneumatic artificial muscles that inflate with air to bend and twist in a flexible manner similar to an octopus arm. Another example is the Soft Robotic Gripper (Harvard), which relies on air-powered chambers to gently grasp fragile items. To aid varying complex tasks, they are often 3D-printed for their special tasks.
       </p>
-
-      <div class="info-box">
-        <div class="info-box-head">💡 Why it matters</div>
-        <p>Because soft robots conform to their environment rather than imposing rigid structure on it, they excel at handling delicate or irregular objects — fruit harvesting, surgical tools, search-and-rescue in rubble. The same compliance that makes them "weak" also makes them safe.</p>
-      </div>
-
-      <h3>The finger-gripper example</h3>
-      <p>
-        A classic demonstration of soft robotics is the pneumatic finger gripper. Several soft tube-like projections are arranged around an object. When pressure is applied, each finger curls inward naturally — distributing grip force across the object's surface without needing to pre-calculate its shape. A conventional gripper would need precise geometry data and careful force control to avoid crushing a tomato; the soft gripper figures it out passively through compliance.
-      </p>
-
-      <div class="pull-quote">
-        "Soft robots don't solve the grasping problem with intelligence — they dissolve it with physics. Compliance is computation."
-      </div>
-    </div>
-
-    <!-- COMPARISON -->
-    <div class="article-section" id="comparison">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">05</span> Side-by-Side Comparison</h2>
-      <p>Here's how the two paradigms stack up across the dimensions that matter most for engineering decisions:</p>
-
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Dimension</th>
-            <th>🔵 Conventional</th>
-            <th>🔴 Unconventional (Soft)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Structure</td>
-            <td>Rigid links and joints</td>
-            <td>Compliant, deformable body</td>
-          </tr>
-          <tr>
-            <td>Actuation</td>
-            <td>Electric motors / servos</td>
-            <td>Fluid pressure / tendons</td>
-          </tr>
-          <tr>
-            <td>Motion type</td>
-            <td>Discrete joint angles</td>
-            <td>Continuous deformation</td>
-          </tr>
-          <tr>
-            <td>Adaptability</td>
-            <td>Low — fixed workspace</td>
-            <td>High — conforms to environment</td>
-          </tr>
-          <tr>
-            <td>Precision</td>
-            <td>Very high repeatability</td>
-            <td>Lower absolute precision</td>
-          </tr>
-          <tr>
-            <td>Safety</td>
-            <td>Requires safety barriers</td>
-            <td>Inherently safe for human contact</td>
-          </tr>
-          <tr>
-            <td>Best use case</td>
-            <td>Repetitive industrial tasks</td>
-            <td>Delicate / unstructured environments</td>
-          </tr>
-          <tr>
-            <td>Manufacturing cost</td>
-            <td>High (precision machining)</td>
-            <td>Low (casting/molding)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- VEX RELEVANCE -->
-    <div class="article-section" id="vex-relevance">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">06</span> Relevance to VEX V5</h2>
-      <p>
-        You might be thinking: this is interesting, but my VEX robot is just a VEX robot. Here's why understanding these categories matters for competition design.
-      </p>
-      <p>
-        VEX V5 robots sit firmly in the <strong>conventional robot</strong> family — rigid aluminium structure, discrete servo and motor joints, centralised V5 brain, and deterministic autonomous code. Understanding this helps you reason about your robot's strengths and limitations clearly.
-      </p>
-
-      <h3>Where unconventional thinking sneaks in</h3>
-      <p>
-        Even within the rigid VEX system, teams can apply unconventional design philosophy. Using <strong>compliant intake rollers</strong> that deform around game pieces — rather than precise geometry — mirrors soft robotics thinking. Designing mechanisms that passively self-align rather than requiring precise programming borrows from compliance-as-computation.
-      </p>
-      <p>
-        The best VEX teams don't just build conventional robots — they ask: <em>where can I use the environment or material compliance to reduce programming complexity?</em> That question is born directly from understanding unconventional robotics.
-      </p>
-
-      <div class="info-box">
-        <div class="info-box-head">🏆 Competition edge</div>
-        <p>Compliant rollers on intakes are one of the most powerful examples in VEX. They grip discs, rings, and triballs across a range of positions without needing precise alignment — exactly the soft robotics principle at work in a competition context.</p>
-      </div>
-    </div>
-
-    <!-- TAKEAWAY -->
-    <div class="article-section" id="takeaway">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">07</span> Key Takeaway</h2>
 
       <div class="takeaway">
-        <div class="takeaway-head">⚡ The core insight</div>
+        <div class="takeaway-head">⚡ Key Takeaway</div>
         <p>
-          Conventional robots win by precision and repeatability in controlled environments. Unconventional robots — especially soft robots — win by adaptability and compliance in unpredictable ones. Neither is universally superior. The best engineers know which philosophy fits the problem, and the best VEX competitors borrow ideas from both worlds.
+          Conventional robots dominate when speed, precision, and repeatability matter in a controlled setting. Unconventional robots take over where rigidity fails — in disaster rescue, medical procedures, and environmental monitoring — using the flexibility of nature itself as their blueprint.
         </p>
       </div>
-
-      <p>
-        As you design your next VEX robot, ask yourself: is each subsystem optimised with a conventional mindset (precision, control, repeatability) or could a dose of unconventional thinking — compliance, passive alignment, environmental adaptation — reduce mechanical complexity and programming overhead at the same time?
-      </p>
-      <p>
-        The answer is almost always: a bit of both.
-      </p>
     </div>
 
     <div class="art-divider"><span>✦</span></div>
 
-    <!-- AUTHOR BOX -->
     <div class="author-box reveal">
-      <div class="author-box-avatar">LR</div>
+      <div class="author-box-avatar">AL</div>
       <div>
-        <div class="author-box-name">Lakshman R.</div>
-        <div class="author-box-role">Writer · VexGrind</div>
-        <p>Lakshman competes with Team 99999A and writes about robotics fundamentals, autonomous systems, and engineering principles for the VexGrind platform. He's been in VEX since middle school and has qualified for Worlds twice.</p>
+        <div class="author-box-name">Aryan & Lakshman</div>
+        <div class="author-box-role">VEX Pitwall · VexGrind</div>
+        <p>The VEX pitwall team covering the science and engineering behind the robots we use and love.</p>
       </div>
     </div>
 
   </article>
 </div>
 
-<!-- MORE POSTS -->
 <div class="more-section">
   <div class="more-label reveal">More from the blog</div>
   <div class="more-grid">
@@ -1000,7 +887,6 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <a href="index.html" class="nav-logo" style="font-size:1.1rem;">VexGrind</a>
   <p>© 2026 VexGrind. All rights reserved.</p>
@@ -1012,18 +898,15 @@
 </footer>
 
 <script>
-  // ── READING PROGRESS ──
   function updateProgress() {
     const body = document.getElementById('article-body');
     const bar  = document.getElementById('progress-bar');
     const sideFill = document.getElementById('sidebar-progress');
     const sidePct  = document.getElementById('sidebar-pct');
-
     const rect   = body.getBoundingClientRect();
     const total  = body.offsetHeight - window.innerHeight;
     const scrolled = Math.max(0, -rect.top);
     const pct    = Math.min(100, Math.round((scrolled / total) * 100));
-
     bar.style.width = pct + '%';
     if (sideFill) sideFill.style.width = pct + '%';
     if (sidePct)  sidePct.textContent  = pct + '%';
@@ -1031,10 +914,8 @@
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // ── ACTIVE TOC LINK ──
   const sections = document.querySelectorAll('.article-section');
   const tocLinks = document.querySelectorAll('.toc-link');
-
   const tocObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1045,10 +926,8 @@
       }
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
-
   sections.forEach(s => tocObserver.observe(s));
 
-  // ── SCROLL REVEAL ──
   const reveals = document.querySelectorAll('.reveal');
   const revealObs = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -1059,7 +938,6 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => revealObs.observe(el));
 
-  // ── COPY LINK BUTTON ──
   document.querySelectorAll('.share-btn').forEach(btn => {
     if (btn.textContent.includes('Copy')) {
       btn.addEventListener('click', () => {

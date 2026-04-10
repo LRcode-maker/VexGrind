@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -169,7 +167,7 @@
     /* ── BLOG GRID ── */
     .blog-grid-wrap {
       max-width: 1100px; margin: 0 auto;
-      padding: 0 3rem 6rem;
+      padding: 0 3rem 2rem;
     }
 
     /* Featured post */
@@ -184,6 +182,9 @@
       margin-bottom: 2rem;
       transition: border-color 0.3s, transform 0.3s;
       cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: grid;
     }
     .featured-post:hover {
       border-color: rgba(172,46,68,0.4);
@@ -232,6 +233,7 @@
     .tag-strategy { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
     .tag-notebook { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
     .tag-community { background: rgba(249,115,22,0.12); color: #f97316; border: 1px solid rgba(249,115,22,0.2); }
+    .tag-driver { background: rgba(172,46,68,0.15); color: var(--accent2); border: 1px solid rgba(172,46,68,0.25); }
 
     .featured-content h2 {
       font-family: 'Syne', sans-serif;
@@ -513,31 +515,55 @@
     <button class="filter-tab" onclick="setFilter(this,'community')">🤝 Community</button>
   </div>
 
-  <!-- FEATURED POST -->
+  <!-- FEATURED POSTS -->
   <div class="blog-grid-wrap">
-    <div class="featured-post reveal">
+
+    <!-- Featured 1: Conventional and Unconventional Robots -->
+    <a class="featured-post reveal" href="blog_conventionalunconventional.html" style="text-decoration:none; color:inherit; display:grid; margin-bottom:2rem;">
       <div class="featured-visual">
         <div class="featured-visual-icon">🧠</div>
       </div>
       <div class="featured-content">
         <span class="post-tag tag-auto">Autonomous</span>
         <h2>Conventional and Unconventional Robots</h2>
-        <p>Conventional: these robots often fit the stereotypes that a “robot” carries.
-           One (popular) example of unconventional robots is the branch of “soft robots”. They utilise compliant materials, contrary to their conventional 
-           counterparts, and employ links that have a similar structure: soft, malleable and high-tech! They have a fluid inside of theme and therefore must 
+        <p>Conventional: these robots often fit the stereotypes that a "robot" carries.
+           One (popular) example of unconventional robots is the branch of "soft robots". They utilise compliant materials, contrary to their conventional 
+           counterparts, and employ links that have a similar structure: soft, malleable and high-tech! They have a fluid inside of them and therefore must 
            utilise pressure changes for movement. It is suited to its function because soft robots are used for tasks that require a large range of movement, 
            such as demonstrated in the image of the finger-like projections on the above robot to help it pick up objects, like, a hand!</p>
         <div class="post-meta" style="margin-bottom:1.25rem;">
-          <div class="post-meta-avatar av1">MK</div>
+          <div class="post-meta-avatar av1">LR</div>
           <span>Lakshman R. · VexGrind</span>
           <div class="post-meta-sep"></div>
           <span>Apr 9, 2026</span>
           <div class="post-meta-sep"></div>
           <span>12 min read</span>
         </div>
-        <a class="featured-cta" href="blog_conventionalunconventional.html">Read full article <span>→</span></a>
+        <span class="featured-cta">Read full article <span>→</span></span>
       </div>
-    </div>
+    </a>
+
+    <!-- Featured 2: Experimenting with Obstacle Courses -->
+    <a class="featured-post reveal" href="blog_obstachecourses.html" style="text-decoration:none; color:inherit; display:grid; margin-bottom:2rem;">
+      <div class="featured-visual" style="background: linear-gradient(135deg, rgba(172,46,68,0.3) 0%, rgba(255,140,96,0.15) 60%, rgba(7,9,15,0.9) 100%);">
+        <div class="featured-visual-icon">🏁</div>
+      </div>
+      <div class="featured-content">
+        <span class="post-tag tag-driver">🎮 Driver Skills</span>
+        <h2>Experimenting with Obstacle Courses</h2>
+        <p>A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.</p>
+        <div class="post-meta" style="margin-bottom:1.25rem;">
+          <div class="post-meta-avatar av1">SG</div>
+          <span>Sarvesh G. & Naitik P. · VexGrind</span>
+          <div class="post-meta-sep"></div>
+          <span>Apr 9, 2026</span>
+          <div class="post-meta-sep"></div>
+          <span>5 min read</span>
+        </div>
+        <span class="featured-cta">Read full article <span>→</span></span>
+      </div>
+    </a>
+
   </div>
 
   <!-- SECTION HEADER -->
