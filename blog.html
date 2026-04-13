@@ -494,10 +494,17 @@
       .posts-grid { grid-template-columns: 1fr; }
     }
     .read-button {
-  color: inherit; /* Keeps the original text color */
-  text-decoration: inherit; /* Removes the default underline */
+  font-size: 0.78rem; color: var(--accent2);
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: gap 0.2s, color 0.2s;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      background: rgba(232,69,96,0.08);
+      border: 1px solid rgba(232,69,96,0.18);
 
-}
+    }
   </style>
 </head>
 <body>
