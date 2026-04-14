@@ -1,1 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VEX Name Reveal 2026-27 — VexGrind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07090f; --bg2: #0d1220;
+      --accent: #AC2E44; --accent2: #e84560;
+      --blue: #1e6dff; --text: #f0f2ff; --text2: #c8cde8; --muted: #7a82a0;
+      --border: rgba(255,255,255,0.07); --card: rgba(255,255,255,0.04); --radius: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
+    /* PROGRESS */
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2), #ff8c60); z-index: 200; transition: width 0.1s linear; }
+
+    /* NAV */
+    nav { position: fixed; top: 3px; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(7,9,15,0.75); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; background: linear-gradient(135deg, #fff 40%, var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    /* HERO */
+    .article-hero { position: relative; min-height: 72vh; display: flex; align-items: flex-end; padding: 10rem 3rem 5rem; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 60% 30%, rgba(172,46,68,0.25) 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 10% 80%, rgba(30,109,255,0.1) 0%, transparent 60%), linear-gradient(to bottom, rgba(7,9,15,0) 0%, rgba(7,9,15,0.96) 100%); z-index: 1; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-orb { position: absolute; top: 15%; left: 55%; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(172,46,68,0.45), rgba(30,109,255,0.15) 50%, transparent 75%); filter: blur(60px); animation: pulse 5s ease-in-out infinite; }
+    .hero-icon-wrap { position: absolute; top: 50%; left: 62%; transform: translate(-50%, -60%); font-size: 10rem; filter: drop-shadow(0 0 60px rgba(172,46,68,0.5)); animation: float 5s ease-in-out infinite; z-index: 1; }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem; animation: fadeUp 0.5s ease both; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--text); }
+    .breadcrumb span { color: rgba(255,255,255,0.2); }
+    .article-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(172,46,68,0.15); border: 1px solid rgba(172,46,68,0.3); border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent2); margin-bottom: 1.2rem; animation: fadeUp 0.5s 0.05s ease both; }
+    .article-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 400; line-height: 1.1; margin-bottom: 1.25rem; animation: fadeUp 0.5s 0.1s ease both; }
+    .article-hero h1 em { font-style: italic; color: var(--accent2); }
+    .article-byline { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; animation: fadeUp 0.5s 0.15s ease both; }
+    .byline-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #ff8c60); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+    .byline-name { font-weight: 500; }
+    .byline-meta { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
+    .byline-divider { width: 1px; height: 30px; background: var(--border); }
+    .byline-stat { text-align: center; }
+    .byline-stat-val { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
+    .byline-stat-label { color: var(--muted); font-size: 0.72rem; }
+
+    /* LAYOUT */
+    .article-layout { max-width: 1160px; margin: 0 auto; padding: 4rem 3rem 8rem; display: grid; grid-template-columns: 240px 1fr; gap: 5rem; align-items: start; }
+
+    /* TOC */
+    .toc-sidebar { position: sticky; top: 100px; }
+    .toc-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 1rem; font-weight: 500; }
+    .toc-list { list-style: none; border-left: 1px solid var(--border); }
+    .toc-link { display: block; padding: 0.45rem 1rem; font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; border-left: 2px solid transparent; margin-left: -1px; }
+    .toc-link:hover { color: var(--text); }
+    .toc-link.active { color: var(--accent2); border-left-color: var(--accent2); }
+    .toc-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+    .share-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.75rem; font-weight: 500; }
+    .share-btns { display: flex; flex-direction: column; gap: 0.5rem; }
+    .share-btn { display: flex; align-items: center; gap: 0.65rem; padding: 0.55rem 0.9rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.8rem; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+    .share-btn:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
+    .reading-box { margin-top: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+    .reading-box-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
+    .reading-progress-track { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-bottom: 0.5rem; }
+    .reading-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; width: 0%; transition: width 0.2s; }
+    .reading-pct { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--accent2); }
+
+    /* ARTICLE BODY */
+    .article-body { min-width: 0; }
+    .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; margin-bottom: 2rem; }
+    .back-btn:hover { color: var(--text); }
+    .article-lead { font-family: 'DM Serif Display', serif; font-size: 1.3rem; line-height: 1.65; color: var(--text2); margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .article-section { margin-bottom: 3.5rem; }
+    .section-anchor { display: block; position: relative; top: -120px; visibility: hidden; }
+    .article-section h2 { font-family: 'Syne', sans-serif; font-size: 1.55rem; font-weight: 800; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+    .section-num { font-size: 0.7rem; color: var(--accent2); background: rgba(172,46,68,0.12); border: 1px solid rgba(172,46,68,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; font-family: 'DM Sans', sans-serif; font-weight: 500; letter-spacing: 0.05em; }
+    .article-section h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+    .article-section p { color: var(--text2); font-size: 1rem; line-height: 1.85; margin-bottom: 1.1rem; }
+
+    /* VIDEO EMBED */
+    .video-wrap { margin: 2rem 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); position: relative; }
+    .video-wrap iframe { width: 100%; height: 400px; display: block; border: none; }
+    .video-caption { background: var(--bg2); padding: 0.9rem 1.5rem; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); }
+
+    /* PULL QUOTE */
+    .pull-quote { margin: 2.5rem 0; padding: 1.75rem 2rem; border-left: 3px solid var(--accent2); background: rgba(172,46,68,0.07); border-radius: 0 var(--radius) var(--radius) 0; font-family: 'DM Serif Display', serif; font-size: 1.2rem; line-height: 1.55; color: var(--text); font-style: italic; }
+
+    /* INFO BOX */
+    .info-box { margin: 2rem 0; padding: 1.4rem 1.5rem; background: rgba(30,109,255,0.07); border: 1px solid rgba(30,109,255,0.2); border-radius: var(--radius); }
+    .info-box-head { display: flex; align-items: center; gap: 0.6rem; font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.6rem; }
+    .info-box p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; margin-bottom: 0; }
+
+    /* TIMELINE */
+    .timeline { margin: 2rem 0; display: flex; flex-direction: column; gap: 0; }
+    .timeline-item { display: grid; grid-template-columns: 120px 1fr; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); position: relative; }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-date { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--accent2); padding-top: 0.2rem; }
+    .timeline-content h4 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .timeline-content p { color: var(--muted); font-size: 0.82rem; line-height: 1.55; margin-bottom: 0; }
+
+    /* SEASON CARDS */
+    .season-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+    .season-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center; transition: border-color 0.3s; }
+    .season-card:hover { border-color: rgba(172,46,68,0.3); }
+    .season-card .year { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.4rem; }
+    .season-card .name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .season-card .detail { font-size: 0.78rem; color: var(--muted); }
+    .season-card.current { border-color: rgba(172,46,68,0.4); background: rgba(172,46,68,0.06); }
+    .season-card.current .name { color: var(--accent2); }
+
+    /* TAKEAWAY */
+    .takeaway { margin: 3rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(172,46,68,0.12), rgba(30,109,255,0.08)); border: 1px solid rgba(172,46,68,0.2); border-radius: var(--radius); }
+    .takeaway-head { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 0.75rem; }
+    .takeaway p { color: var(--text2); font-size: 0.93rem; line-height: 1.75; margin-bottom: 0; }
+
+    /* DIVIDER */
+    .art-divider { display: flex; align-items: center; gap: 1rem; margin: 3rem 0; }
+    .art-divider::before, .art-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .art-divider span { color: var(--accent2); font-size: 1rem; }
+
+    /* AUTHOR */
+    .author-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; display: flex; gap: 1.5rem; align-items: flex-start; margin-top: 4rem; }
+    .author-box-avatar { width: 60px; height: 60px; border-radius: 14px; background: linear-gradient(135deg, var(--accent), #ff8c60); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; flex-shrink: 0; }
+    .author-box-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .author-box-role { color: var(--accent2); font-size: 0.78rem; margin-bottom: 0.6rem; }
+    .author-box p { color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
+
+    /* MORE */
+    .more-section { max-width: 1160px; margin: 0 auto; padding: 0 3rem 6rem; }
+    .more-label { font-family: 'Syne', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 1.5rem; }
+    .more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .more-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; text-decoration: none; transition: border-color 0.3s, transform 0.3s; display: block; }
+    .more-card:hover { border-color: rgba(172,46,68,0.4); transform: translateY(-4px); }
+    .more-thumb { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; position: relative; overflow: hidden; }
+    .more-thumb::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 30px 30px; }
+    .more-thumb span { position: relative; z-index: 1; }
+    .tb-auto { background: linear-gradient(135deg, rgba(172,46,68,0.3), rgba(7,9,15,0.8)); }
+    .tb-build { background: linear-gradient(135deg, rgba(30,109,255,0.3), rgba(7,9,15,0.8)); }
+    .tb-driver { background: linear-gradient(135deg, rgba(172,46,68,0.3), rgba(255,140,96,0.15)); }
+    .more-body { padding: 1.1rem; }
+    .more-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
+    .more-body h3 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; line-height: 1.3; color: var(--text); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 0.82rem; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-18px) rotate(2deg); } }
+    @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.08); } }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) { .article-layout { grid-template-columns: 1fr; gap: 2rem; } .toc-sidebar { display: none; } .more-grid { grid-template-columns: 1fr 1fr; } .season-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .article-hero { padding: 8rem 1.5rem 4rem; min-height: auto; } .hero-icon-wrap { display: none; }
+      .article-layout, .more-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .more-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 90px 1fr; gap: 1rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">VexGrind</a>
+  <ul class="nav-links">
+    <li><a href="#">Guides</a></li>
+    <li><a href="#">Robot Builds</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="#">Community</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="signup.html" class="btn-primary">Sign Up</a>
+    <a href="signup.html" class="btn-primary">Join the Team</a>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-icon-wrap">🎮</div>
+  <div class="hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="blog.html">Blog</a>
+      <span>/</span>
+      <span style="color:var(--text)">VEX Name Reveal 2026-27</span>
+    </div>
+    <div class="article-tag">🚨 Breaking News</div>
+    <h1>VEX Name Reveal:<br><em>2026-27 Season</em></h1>
+    <div class="article-byline">
+      <div class="byline-avatar">NP</div>
+      <div>
+        <div class="byline-name">Naitik Pal</div>
+        <div class="byline-meta">VexGrind · Apr 13, 2026</div>
+      </div>
+      <div class="byline-divider"></div>
+      <div class="byline-stat">
+        <div class="byline-stat-val">6 min</div>
+        <div class="byline-stat-label">read</div>
+      </div>
+      <div class="byline-divider"></div>
+      <div class="byline-stat">
+        <div class="byline-stat-val">Apr 24</div>
+        <div class="byline-stat-label">full reveal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="article-layout">
+  <aside class="toc-sidebar">
+    <div class="toc-label">In this article</div>
+    <ul class="toc-list">
+      <li><a class="toc-link" href="#teaser">The Name Reveal Teaser</a></li>
+      <li><a class="toc-link" href="#video">Watch the Video</a></li>
+      <li><a class="toc-link" href="#history">Season Name History</a></li>
+      <li><a class="toc-link" href="#timeline">Full Reveal Timeline</a></li>
+      <li><a class="toc-link" href="#expect">What to Expect</a></li>
+      <li><a class="toc-link" href="#prep">How to Prepare</a></li>
+    </ul>
+    <div class="toc-divider"></div>
+    <div class="share-label">Share this post</div>
+    <div class="share-btns">
+      <button class="share-btn" id="copy-btn">🔗 Copy link</button>
+      <button class="share-btn">Post on X</button>
+      <button class="share-btn">💬 Share to Discord</button>
+    </div>
+    <div class="reading-box">
+      <div class="reading-box-label">Your progress</div>
+      <div class="reading-progress-track"><div class="reading-progress-fill" id="sidebar-progress"></div></div>
+      <div class="reading-pct" id="sidebar-pct">0%</div>
+    </div>
+  </aside>
+
+  <article class="article-body" id="article-body">
+    <a href="blog.html" class="back-btn">← Back to Blog</a>
+
+    <p class="article-lead">
+      VEX Robotics dropped a name reveal teaser this week — and the robotics community has been buzzing ever since. The full 2026–27 game unveil is locked in for April 24 at VEX Worlds in St. Louis. Here's everything we know so far, and what to expect when the curtain fully lifts.
+    </p>
+
+    <!-- SECTION 1 -->
+    <div class="article-section" id="teaser">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">01</span> The Name Reveal Teaser</h2>
+      <p>
+        On April 8, 2026 — about a week before VEX Worlds kicks off in St. Louis — VEX Robotics posted a teaser video across their social channels with a simple, spine-tingling message: <strong>"This FRIDAY, your 2026–2027 game names will be revealed."</strong> That Friday is April 11, when the game names for both V5RC and VIQRC were officially teased to the community — though the full game rules, field elements, and manual drop at the main event on April 24.
+      </p>
+      <p>
+        VEX traditionally reveals the new season's game name before Worlds as a hype-building move. It gives competitors something to speculate about while the championship is still happening, and creates a natural crescendo — the community spends the week theorising, then gets the full rules reveal at the closing ceremony. It's a format that has worked brilliantly for past seasons like High Stakes and Push Back, and 2026–27 is no different.
+      </p>
+      <div class="pull-quote">
+        "This FRIDAY, your 2026-2027 game names will be revealed. Stay tuned. #VEXWorlds" — VEX Robotics, April 8, 2026
+      </div>
+      <div class="info-box">
+        <div class="info-box-head">📌 Key dates</div>
+        <p>Name reveal teaser: April 8-11, 2026 · Full V5RC game reveal: April 24, 2026 (VEX Worlds, St. Louis, following finals) · Full VIQRC game reveal: April 30, 2026 · Game manual release: April 27, 2026</p>
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="article-section" id="video">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">02</span> Watch the Teaser Video</h2>
+      <p>
+        VEX posted the name reveal teaser live on their official channels. The video is short, punchy, and deliberately vague on details — but the excitement it generates every year is real. Watch it below, then come back for our full breakdown.
+      </p>
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed?listType=search&list=VEX+Robotics+2026+2027+game+name+reveal"
+          title="VEX Robotics 2026-27 Game Name Reveal Teaser"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="background:#0d1220;">
+        </iframe>
+        <div class="video-caption">VEX Robotics 2026-27 Game Name Reveal teaser — posted April 8, 2026. Full game reveal airs April 24 on VEX TV at VEX Worlds, St. Louis.</div>
+      </div>
+      <p style="margin-top:1rem;">
+        If the embed above doesn't load, you can watch it directly on <a href="https://www.youtube-nocookie.com/@VEXRobotics" target="_blank" rel="noopener" style="color:var(--accent2);text-decoration:none;">VEX Robotics' official YouTube channel</a> or their <a href="https://www.facebook.com/vexrobotics" target="_blank" rel="noopener" style="color:var(--accent2);text-decoration:none;">Facebook page</a>, where they streamed it live. The April 24 full game reveal will stream on <strong>VEX TV</strong> — we'll post the link here when it goes live.
+      </p>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="article-section" id="history">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">03</span> Season Name History</h2>
+      <p>
+        Understanding where VEX has been helps predict where it might be going. Looking back at recent season names, there's a clear pattern: names tend to be action-oriented, physics-flavoured, or describe the primary robot mechanic. Here's a quick look at recent history:
+      </p>
+      <div class="season-grid">
+        <div class="season-card">
+          <div class="year">2022-23</div>
+          <div class="name">Over Under</div>
+          <div class="detail">Triballs scored under a bar or over it</div>
+        </div>
+        <div class="season-card">
+          <div class="year">2023-24</div>
+          <div class="name">Spin Up</div>
+          <div class="detail">Disc-based scoring game with rollers</div>
+        </div>
+        <div class="season-card">
+          <div class="year">2024-25</div>
+          <div class="name">High Stakes</div>
+          <div class="detail">Rings on stakes + ladder climbing</div>
+        </div>
+        <div class="season-card current">
+          <div class="year">2025-26 (current)</div>
+          <div class="name">Push Back</div>
+          <div class="detail">Goals pushed into zones for scoring</div>
+        </div>
+        <div class="season-card" style="border-color:rgba(172,46,68,0.5); background:rgba(172,46,68,0.08); grid-column: span 2;">
+          <div class="year">2026-27 (upcoming)</div>
+          <div class="name" style="color:var(--accent2);">OVERRIDE!</div>
+          <div class="detail">Game name announced April 11 · Rules drop April 24 at VEX Worlds St. Louis</div>
+        </div>
+      </div>
+      <p>
+        VEX IQ runs a parallel but separate game. This season (2025-26) they played <strong>Mix &amp; Match</strong>, and their 2026-27 name was also teased alongside V5RC. The IQ full reveal happens on April 30 at Worlds.
+      </p>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="article-section" id="timeline">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">04</span> Full Reveal Timeline</h2>
+      <p>
+        Here's the complete roadmap from now until the season kicks off — everything you need to calendar:
+      </p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 8, 2026</div>
+          <div class="timeline-content">
+            <h4>Teaser Drops</h4>
+            <p>VEX announces "game names revealed this Friday" across social channels. Community speculation begins.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 11, 2026</div>
+          <div class="timeline-content">
+            <h4>Game Names Revealed</h4>
+            <p>The 2026-27 V5RC and VIQRC game names are officially announced — the name, not the full rules or field design.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 21-24, 2026</div>
+          <div class="timeline-content">
+            <h4>VEX Worlds — High School V5RC</h4>
+            <p>VEX Worlds 2026 underway in St. Louis, Missouri. America's Center Convention Complex.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 24, 2026</div>
+          <div class="timeline-content">
+            <h4>🎉 Full V5RC Game Reveal</h4>
+            <p>Full 2026-27 V5RC game revealed live on VEX TV after HS finals and closing ceremonies. This is the big one — field elements, scoring rules, the works.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 27, 2026</div>
+          <div class="timeline-content">
+            <h4>Game Manual Released</h4>
+            <p>Official 2026-27 game manual and all documentation go live on the VEX website. Time to study.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 30, 2026</div>
+          <div class="timeline-content">
+            <h4>VEX IQ Game Reveal</h4>
+            <p>Full 2026-27 VIQRC game revealed after IQ finals at Worlds.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Aug 2026</div>
+          <div class="timeline-content">
+            <h4>Season Kickoff</h4>
+            <p>Signature Events begin. The grind starts. First competitions of the 2026–27 season get underway.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="article-section" id="expect">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">05</span> What to Expect</h2>
+      <p>
+        Based on the pattern of recent seasons, there are a few educated guesses the community is making. Here's our honest read on what the 2026–27 game is likely to involve:
+      </p>
+      <h3>Object manipulation is almost certain</h3>
+      <p>
+        Every V5RC game in recent memory has involved picking up, placing, or sorting physical game objects — rings, triballs, discs, or goals. Expect something you'll need a well-engineered intake mechanism to handle. The name reveal teaser itself rarely gives this away, but the field element kit pre-order page confirms a new set of elements, which means new game objects entirely.
+      </p>
+      <h3>Autonomous will be a priority</h3>
+      <p>
+        VEX has doubled down on autonomous scoring importance across recent seasons. High Stakes gave six bonus points for autonomous wins — and that pressure pushed teams to invest seriously in odometry and path-planning. Expect the 2026–27 game to continue in this direction, possibly making auton even more decisive.
+      </p>
+      <h3>Endgame mechanics are likely</h3>
+      <p>
+        The ladder climb in High Stakes and the corner-rush in Push Back both rewarded endgame risk-taking. VEX loves an endgame moment — it's dramatic to watch and rewards strategic match play. We'd put money on an endgame element in 2026–27 as well.
+      </p>
+      <div class="takeaway">
+        <div class="takeaway-head">⚡ VexGrind Take</div>
+        <p>Whatever the name turns out to be, the fundamentals of what makes a great VEX robot don't change: a fast, consistent intake, a reliable autonomous routine, and a driver who's done the reps. Start training now, and you'll be ahead of the field when the manual drops April 27.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 6 -->
+    <div class="article-section" id="prep">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">06</span> How to Prepare Right Now</h2>
+      <p>
+        The game hasn't been fully revealed yet — but that doesn't mean you should be sitting still. Here's what elite teams are doing during this window:
+      </p>
+      <h3>Watch the full April 24 reveal live</h3>
+      <p>
+        Tune into VEX TV on April 24 immediately after the High School V5RC finals. Being among the first to understand the new game is a genuine competitive advantage — you can start sketching robot concepts while other teams are still finding the stream replay.
+      </p>
+      <h3>Read the manual the day it drops</h3>
+      <p>
+        The game manual goes live April 27. Read it end to end. Not a summary — the full thing. The rules that win matches are buried in the fine print, and teams who know the edge cases before anyone else consistently outperform at early-season events.
+      </p>
+      <h3>Pre-order the competition kit</h3>
+      <p>
+        VEX has already opened pre-orders for the 2026-27 full game and field element kits. Getting your kit early means more practice time with the actual game elements before your first tournament. Teams that build on mock fields from August onward enter their first event at a measurably higher skill level.
+      </p>
+      <h3>Strengthen your fundamentals now</h3>
+      <p>
+        Odometry, PID tuning, drive train consistency — these skills transfer across every VEX season. If your autonomous is reliable and your driver has logged serious hours, you'll be adapting to a new game from a position of strength.
+      </p>
+    </div>
+
+    <div class="art-divider"><span>✦</span></div>
+
+    <div class="author-box reveal">
+      <div class="author-box-avatar">SG</div>
+      <div>
+        <div class="author-box-name">Naitik Pal</div>
+        <div class="author-box-role">Driver · VexGrind</div>
+        <p>Spend their life smashing shuttlecocks and dodging bouncers, though they've recently added F1 to the mix—usually while debugging code or crashing virtual Ferraris in Monoposto.</p>
+      </div>
+    </div>
+  </article>
+</div>
+
+<div class="more-section">
+  <div class="more-label reveal">More from the blog</div>
+  <div class="more-grid">
+    <a href="blog_obstaclecoursesreview.html" class="more-card reveal">
+      <div class="more-thumb tb-driver"><span>🏁</span></div>
+      <div class="more-body">
+        <div class="more-tag">Driver Skills</div>
+        <h3>Experimenting with Obstacle Courses</h3>
+      </div>
+    </a>
+    <a href="blog_conventionalunconventional.html" class="more-card reveal">
+      <div class="more-thumb tb-auto"><span>🧠</span></div>
+      <div class="more-body">
+        <div class="more-tag">Autonomous</div>
+        <h3>Conventional and Unconventional Robots</h3>
+      </div>
+    </a>
+    <a href="#" class="more-card reveal">
+      <div class="more-thumb tb-build"><span>🔧</span></div>
+      <div class="more-body">
+        <div class="more-tag">Build Guide</div>
+        <h3>The 6-Motor Drivetrain Setup We Used to Win States</h3>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="nav-logo">VexGrind</a>
+  <p>© 2026 VexGrind. All rights reserved.</p>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="#" style="color:var(--muted);text-decoration:none;">Privacy</a>
+    <a href="#" style="color:var(--muted);text-decoration:none;">Terms</a>
+    <a href="#" style="color:var(--muted);text-decoration:none;">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Progress bar
+  function updateProgress() {
+    const body = document.getElementById('article-body');
+    const bar = document.getElementById('progress-bar');
+    const fill = document.getElementById('sidebar-progress');
+    const pct = document.getElementById('sidebar-pct');
+    const rect = body.getBoundingClientRect();
+    const total = body.offsetHeight - window.innerHeight;
+    const scrolled = Math.max(0, -rect.top);
+    const p = Math.min(100, Math.round((scrolled / total) * 100));
+    bar.style.width = p + '%';
+    if (fill) fill.style.width = p + '%';
+    if (pct) pct.textContent = p + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Active TOC
+  const sections = document.querySelectorAll('.article-section');
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const tocObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => tocObs.observe(s));
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 60);
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => revObs.observe(el));
+
+  // Copy link
+  document.getElementById('copy-btn').addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href).catch(() => {});
+    document.getElementById('copy-btn').textContent = '✅ Copied!';
+    setTimeout(() => document.getElementById('copy-btn').textContent = '🔗 Copy link', 2000);
+  });
+</script>
+</body>
+</html>
