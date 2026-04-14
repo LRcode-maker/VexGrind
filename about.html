@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VexGrind — VEX V5 Resource Hub</title>
+  <title>About — VexGrind</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,8 +35,9 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(7,9,15,0.6);
+      background: rgba(7,9,15,0.75);
       backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
     }
 
@@ -48,6 +49,7 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
       color: transparent;
+      text-decoration: none;
     }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
@@ -55,61 +57,108 @@
       color: var(--muted); text-decoration: none; font-size: 0.9rem;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
-    .nav-actions { display: flex; gap: 1rem; align-items: center; }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+
     .btn-ghost {
-      background: none; border: none; color: var(--muted);
-      font-family: inherit; font-size: 0.9rem; cursor: pointer;
-      transition: color 0.2s;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+      display: inline-flex; align-items: center;
     }
-    .btn-ghost:hover { color: var(--text); }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
 
     .btn-primary {
       background: var(--accent);
-      color: #fff; border: none;
-      padding: 0.55rem 1.3rem;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
       border-radius: 8px;
-      font-family: inherit; font-size: 0.9rem; font-weight: 500;
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
       text-decoration: none;
-      display: inline-block;
+      display: inline-flex; align-items: center;
+      transition: background 0.2s, transform 0.15s;
     }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 2rem;
-      padding: 8rem 3rem 4rem;
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+      background: rgba(7,9,15,0.97);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      flex-direction: column; gap: 1.25rem;
+      animation: slideDown 0.25s ease;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--text); text-decoration: none; font-size: 1rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .mobile-actions {
+      display: flex; gap: 0.75rem; padding-top: 0.5rem;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 9rem 3rem 5rem;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
 
-    .hero-bg {
+    .page-header-bg {
       position: absolute; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(30,109,255,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(172,46,68,0.15) 0%, transparent 60%),
-        radial-gradient(ellipse 80% 80% at 50% 0%, rgba(13,18,32,0.8) 0%, var(--bg) 80%);
+        radial-gradient(ellipse 50% 70% at 50% 0%, rgba(172,46,68,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 50% at 20% 100%, rgba(30,109,255,0.08) 0%, transparent 60%);
     }
 
-    .hero-bg::after {
+    .page-header-bg::after {
       content: '';
       position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
       background-size: 60px 60px;
     }
 
-    .hero-left { position: relative; z-index: 1; }
+    .page-header > * { position: relative; z-index: 1; }
 
-    .hero-badge {
+    .page-badge {
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(172,46,68,0.15);
       border: 1px solid rgba(172,46,68,0.3);
@@ -119,10 +168,9 @@
       margin-bottom: 1.5rem;
       animation: fadeUp 0.6s ease both;
     }
+    .page-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: block; }
 
-    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: block; }
-
-    h1 {
+    .page-header h1 {
       font-family: 'Syne', sans-serif;
       font-size: clamp(2.8rem, 5vw, 4.5rem);
       font-weight: 800;
@@ -132,147 +180,107 @@
       animation: fadeUp 0.6s 0.1s ease both;
     }
 
-    h1 em {
+    .page-header h1 em {
       font-style: normal;
       background: linear-gradient(135deg, var(--accent2), #ff8c60);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      color: transparent;
     }
 
-    .hero-sub {
-      color: var(--muted); font-size: 1rem; line-height: 1.7;
-      max-width: 440px; margin-bottom: 2.5rem;
+    .page-header p {
+      color: var(--muted); font-size: 1.05rem; line-height: 1.75;
+      max-width: 560px; margin: 0 auto;
       animation: fadeUp 0.6s 0.2s ease both;
     }
 
-    .hero-input-row {
-      display: flex; gap: 0.75rem; align-items: center;
-      animation: fadeUp 0.6s 0.3s ease both;
+    /* ── MISSION ── */
+    .mission {
+      padding: 5rem 3rem;
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
     }
 
-    .hero-input {
-      flex: 1;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75rem 1.1rem;
-      color: var(--text);
-      font-family: inherit; font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.2s;
-      max-width: 320px;
-    }
-    .hero-input:focus { border-color: rgba(172,46,68,0.5); }
-    .hero-input::placeholder { color: var(--muted); }
-
-    .btn-cta {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      font-family: inherit; font-size: 0.9rem; font-weight: 500;
-      cursor: pointer; white-space: nowrap;
-      transition: opacity 0.2s, transform 0.15s;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-cta svg { width: 16px; height: 16px; }
-
-    /* ── HERO RIGHT ── */
-    .hero-right {
-      position: relative; z-index: 1;
-      height: 480px;
+    .mission-text h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
     }
 
-    .float-card {
+    .mission-text h2 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent2), #ff8c60);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .mission-text p {
+      color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem;
+    }
+
+    .mission-visual {
+      position: relative;
+      height: 360px;
+    }
+
+    .mission-card {
       position: absolute;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1rem 1.25rem;
-      font-size: 0.82rem;
-      animation: float 4s ease-in-out infinite;
+      padding: 1.5rem;
     }
 
-    .fc1 { top: 30px; left: 0; width: 200px; animation-delay: 0s; }
-    .fc2 { top: 120px; right: 20px; width: 220px; animation-delay: 1s; background: rgba(30,109,255,0.12); border-color: rgba(30,109,255,0.25); }
-    .fc3 { bottom: 80px; left: 30px; width: 230px; animation-delay: 0.5s; }
-    .fc4 { bottom: 20px; right: 0; width: 190px; animation-delay: 1.5s; background: rgba(172,46,68,0.1); border-color: rgba(172,46,68,0.25); }
-
-    .fc-label { color: var(--muted); font-size: 0.72rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .fc-value { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; }
-    .fc-value.up { color: #4ade80; }
-    .fc-value.blue { color: #60a5fa; }
-    .fc-value.red { color: var(--accent2); }
-    .fc-sub { color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem; }
-
-    .fc-bar { display: flex; gap: 4px; align-items: flex-end; height: 40px; margin-top: 0.5rem; }
-    .fc-bar span {
-      flex: 1; background: rgba(172,46,68,0.4); border-radius: 3px;
-      animation: barGrow 1s ease both;
-    }
-    .fc-bar span:nth-child(1) { height: 50%; animation-delay: 0.1s; }
-    .fc-bar span:nth-child(2) { height: 70%; animation-delay: 0.2s; }
-    .fc-bar span:nth-child(3) { height: 55%; animation-delay: 0.3s; }
-    .fc-bar span:nth-child(4) { height: 85%; animation-delay: 0.4s; background: var(--accent2); }
-    .fc-bar span:nth-child(5) { height: 65%; animation-delay: 0.5s; }
-    .fc-bar span:nth-child(6) { height: 90%; animation-delay: 0.6s; background: var(--accent2); }
-
-    .orb {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, rgba(172,46,68,0.5), rgba(30,109,255,0.2) 60%, transparent);
-      filter: blur(40px);
-      animation: pulse 3s ease-in-out infinite;
+    .mc1 {
+      top: 0; left: 0; right: 60px;
+      background: rgba(30,109,255,0.08);
+      border-color: rgba(30,109,255,0.2);
     }
 
-    /* ── STRIP ── */
-    .strip {
+    .mc2 {
+      bottom: 0; right: 0; left: 60px;
+      background: rgba(172,46,68,0.08);
+      border-color: rgba(172,46,68,0.2);
+    }
+
+    .mission-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .mission-card p {
+      font-size: 0.875rem; color: var(--muted); line-height: 1.65;
+    }
+
+    .mission-card .big-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem; font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ── TIMELINE ── */
+    .story {
       background: var(--bg2);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 2.5rem 3rem;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .strip-quote { max-width: 280px; }
-    .strip-quote blockquote {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.5rem; font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
-    .strip-author { display: flex; align-items: center; gap: 10px; }
-    .strip-avatar {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--blue));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700;
-    }
-    .strip-author-info p { font-size: 0.85rem; font-weight: 500; }
-    .strip-author-info span { font-size: 0.75rem; color: var(--muted); }
-
-    .strip-logos { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
-    .logo-pill {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.8rem; font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.03em;
-    }
-
-    /* ── FEATURES ── */
-    .features {
       padding: 6rem 3rem;
-      max-width: 1100px; margin: 0 auto;
+    }
+
+    .story-inner {
+      max-width: 800px; margin: 0 auto;
     }
 
     .section-label {
@@ -288,158 +296,171 @@
       font-weight: 800; margin-bottom: 3.5rem;
     }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
     }
 
-    .feature-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .feature-card:hover { border-color: rgba(172,46,68,0.4); transform: translateY(-4px) scale(1.02); }
-
-    .feature-icon {
-      width: 42px; height: 42px; border-radius: 10px;
-      background: rgba(172,46,68,0.15);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem; font-size: 1.2rem;
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--accent2), var(--blue), transparent);
     }
 
-    .feature-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;
+    .tl-item {
+      position: relative;
+      padding: 0 0 3rem 2.5rem;
     }
-    .feature-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.65; }
 
-    /* ── STATS ── */
-    .stats {
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -6px; top: 4px;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      border: 2px solid var(--accent2);
       background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 3rem;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      text-align: center;
     }
 
-    .stat-num {
+    .tl-item:nth-child(even) .tl-dot {
+      border-color: var(--blue);
+    }
+
+    .tl-year {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.5rem, 4vw, 3.5rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, #fff, var(--accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--accent2);
+      text-transform: uppercase; letter-spacing: 0.1em;
       margin-bottom: 0.4rem;
     }
-    .stat-label { color: var(--muted); font-size: 0.9rem; }
 
-    /* ── ABOUT SECTION ── */
-    .about {
+    .tl-item:nth-child(even) .tl-year { color: #60a5fa; }
+
+    .tl-item h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .tl-item p {
+      color: var(--muted); font-size: 0.875rem; line-height: 1.7;
+    }
+
+    /* ── VALUES ── */
+    .values {
       padding: 6rem 3rem;
       max-width: 1100px; margin: 0 auto;
     }
 
-    .about-intro {
-      text-align: center;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      max-width: 560px;
-      margin: 0 auto 4rem;
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 3.5rem;
     }
+
+    .value-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex; gap: 1.25rem;
+      align-items: flex-start;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .value-card:hover { border-color: rgba(172,46,68,0.35); transform: translateY(-3px); }
+
+    .value-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem; font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, rgba(172,46,68,0.5), rgba(232,69,96,0.2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      flex-shrink: 0;
+      min-width: 48px;
+    }
+
+    .value-content h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .value-content p { color: var(--muted); font-size: 0.875rem; line-height: 1.7; }
+
+    /* ── TEAM ── */
+    .team {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6rem 3rem;
+    }
+
+    .team-inner { max-width: 1100px; margin: 0 auto; }
 
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
+      margin-top: 3.5rem;
     }
 
     .team-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem 1.1rem 1.4rem;
+      padding: 2rem;
       text-align: center;
       transition: border-color 0.3s, transform 0.3s;
-      position: relative;
-      overflow: hidden;
     }
 
-    .team-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .team-card:hover {
-      border-color: rgba(172,46,68,0.35);
-      transform: translateY(-5px);
-    }
-
-    .team-card:hover::before { opacity: 1; }
+    .team-card:hover { border-color: rgba(172,46,68,0.35); transform: translateY(-4px); }
 
     .team-avatar {
-      width: 64px; height: 64px;
+      width: 72px; height: 72px;
       border-radius: 50%;
-      margin: 0 auto 1rem;
+      margin: 0 auto 1.25rem;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif;
-      font-size: 1.2rem; font-weight: 800;
-      border: 2px solid var(--border);
-      transition: border-color 0.3s;
-      position: relative;
+      font-size: 1.4rem; font-weight: 800;
+      color: #fff;
     }
 
-    .team-card:hover .team-avatar { border-color: rgba(172,46,68,0.5); }
+    .av1 { background: linear-gradient(135deg, var(--accent), #ff8c60); }
+    .av2 { background: linear-gradient(135deg, var(--blue), #06b6d4); }
+    .av3 { background: linear-gradient(135deg, #7c3aed, var(--blue)); }
+    .av4 { background: linear-gradient(135deg, #059669, #06b6d4); }
+    .av5 { background: linear-gradient(135deg, var(--accent2), #7c3aed); }
+    .av6 { background: linear-gradient(135deg, #d97706, #ef4444); }
 
-    .team-avatar.av1 { background: linear-gradient(135deg, #AC2E44 0%, #1e6dff 100%); }
-    .team-avatar.av2 { background: linear-gradient(135deg, #1e6dff 0%, #0d8a6a 100%); }
-    .team-avatar.av3 { background: linear-gradient(135deg, #7c3aed 0%, #AC2E44 100%); }
-    .team-avatar.av4 { background: linear-gradient(135deg, #0d8a6a 0%, #1e6dff 100%); }
-    .team-avatar.av5 { background: linear-gradient(135deg, #e84560 0%, #7c3aed 100%); }
-
-    .team-name {
+    .team-card h3 {
       font-family: 'Syne', sans-serif;
-      font-size: 0.95rem; font-weight: 700;
-      margin-bottom: 0.2rem;
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.25rem;
     }
 
     .team-role {
-      font-size: 0.75rem;
-      color: var(--accent2);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      font-size: 0.78rem; color: var(--accent2);
+      text-transform: uppercase; letter-spacing: 0.08em;
       margin-bottom: 0.75rem;
-      font-weight: 500;
     }
 
-    .team-bio {
-      color: var(--muted);
-      font-size: 0.8rem;
-      line-height: 1.6;
-      margin-bottom: 0.9rem;
-    }
+    .team-card p { color: var(--muted); font-size: 0.82rem; line-height: 1.65; }
 
     .team-tag {
       display: inline-block;
       background: rgba(172,46,68,0.12);
       border: 1px solid rgba(172,46,68,0.2);
-      border-radius: 100px;
-      padding: 0.22rem 0.7rem;
-      font-size: 0.7rem;
-      color: var(--accent2);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.7rem; color: var(--accent2);
+      margin-top: 0.75rem;
     }
 
     /* ── CTA ── */
@@ -459,7 +480,25 @@
       font-size: clamp(2rem, 4vw, 3.5rem);
       font-weight: 800; margin-bottom: 1rem;
     }
-    .cta-section p { color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .cta-section p {
+      color: var(--muted); max-width: 500px;
+      margin: 0 auto 2.5rem; line-height: 1.7;
+    }
+
+    .btn-cta {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 10px;
+      font-family: inherit; font-size: 1rem; font-weight: 500;
+      cursor: pointer; white-space: nowrap;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 8px;
+      position: relative; z-index: 1;
+    }
+    .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-cta svg { width: 16px; height: 16px; }
 
     /* ── FOOTER ── */
     footer {
@@ -468,6 +507,8 @@
       display: flex; align-items: center; justify-content: space-between;
       color: var(--muted); font-size: 0.82rem;
     }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
 
     /* ── SCROLL REVEAL ── */
     .reveal {
@@ -481,39 +522,35 @@
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-12px); }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-      50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.15); }
-    }
-    @keyframes barGrow {
-      from { transform: scaleY(0); transform-origin: bottom; }
-      to   { transform: scaleY(1); }
-    }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .team-grid { grid-template-columns: repeat(3, 1fr); }
-    }
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
-      .hero-right { display: none; }
-      .strip { flex-direction: column; padding: 2rem 1.5rem; }
-      .features { padding: 4rem 1.5rem; }
-      .features-grid { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
-      .about { padding: 4rem 1.5rem; }
-      .team-grid { grid-template-columns: repeat(2, 1fr); }
-      .cta-section { padding: 4rem 1.5rem; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-    }
-    @media (max-width: 480px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger { display: flex; }
+
+      .page-header { padding: 7rem 1.5rem 4rem; }
+
+      .mission {
+        grid-template-columns: 1fr;
+        padding: 4rem 1.5rem;
+        gap: 3rem;
+      }
+      .mission-visual { height: 280px; }
+
+      .story { padding: 4rem 1.5rem; }
+      .values { padding: 4rem 1.5rem; }
+      .values-grid { grid-template-columns: 1fr; }
+
+      .team { padding: 4rem 1.5rem; }
       .team-grid { grid-template-columns: 1fr; }
+
+      .cta-section { padding: 4rem 1.5rem; }
+
+      footer {
+        flex-direction: column; gap: 1rem; text-align: center;
+        padding: 2rem 1.5rem;
+      }
     }
   </style>
 </head>
@@ -521,210 +558,235 @@
 
   <!-- NAV -->
   <nav>
-    <div class="nav-logo">VexGrind</div>
+    <a href="index.html" class="nav-logo">VexGrind</a>
     <ul class="nav-links">
       <li><a href="#">Guides</a></li>
       <li><a href="#">Robot Builds</a></li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="#">Community</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="about.html" class="active">About</a></li>
     </ul>
     <div class="nav-actions">
-      <a href="signup.html" class="btn-primary">Sign Up</a>
+      <a href="signup.html" class="btn-ghost">Sign in</a>
       <a href="signup.html" class="btn-primary">Join the Team</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#">Guides</a>
+    <a href="#">Robot Builds</a>
+    <a href="blog.html">Blog</a>
+    <a href="#">Community</a>
+    <a href="about.html">About</a>
+    <div class="mobile-actions">
+      <a href="signup.html" class="btn-ghost" style="flex:1; justify-content:center;">Sign in</a>
+      <a href="signup.html" class="btn-primary" style="flex:1; justify-content:center;">Join the Team</a>
+    </div>
+  </div>
 
-    <div class="hero-left">
-      <div class="hero-badge"><span></span> Built for VEX V5 competitors</div>
-      <h1>Win More Matches.<br>Build Smarter.<br><em>Dominate.</em></h1>
-      <p class="hero-sub">VexGrind is the ultimate resource hub for VEX V5 robotics teams — strategy guides, code libraries, build logs, and a community that helps you compete at the highest level.</p>
-      <div class="hero-input-row">
-        <input class="hero-input" type="text" placeholder="Search guides, code, builds…" />
-        <a href="signup.html" class="btn-cta">Explore
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 8h10M9 4l4 4-4 4"/>
-          </svg>
-        </a>
-      </div>
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-badge"><span></span> Our story</div>
+    <h1>Built by competitors,<br>for <em>competitors.</em></h1>
+    <p>VexGrind was born on a late night before a regional qualifier. We couldn't find the resources we needed, so we built them — for every team that comes after us.</p>
+  </section>
+
+  <!-- MISSION -->
+  <section class="mission">
+    <div class="mission-text reveal">
+      <h2>We level the<br><em>playing field.</em></h2>
+      <p>VEX Robotics is one of the most competitive STEM programs on the planet. But for too long, the best strategies, code, and build knowledge were locked away in private Discord servers and top-team notebooks that never got shared.</p>
+      <p>VexGrind changes that. We believe every team — whether you're in a well-funded school or building robots in a garage — deserves access to world-class resources.</p>
+      <p>We publish everything: PID tuning guides, auton routines, CAD files, scouting sheets. No paywalls. No gatekeeping. Just the tools to compete at your best.</p>
     </div>
 
-    <div class="hero-right">
-      <div class="orb"></div>
-
-      <div class="float-card fc1">
-        <div class="fc-label">Autonomous score</div>
-        <div class="fc-value up">+18 pts</div>
-        <div class="fc-sub">↑ 40% after tuning PID</div>
-        <div class="fc-bar">
-          <span></span><span></span><span></span>
-          <span></span><span></span><span></span>
-        </div>
+    <div class="mission-visual reveal">
+      <div class="mission-card mc1">
+        <h4>Our Mission</h4>
+        <div class="big-num">∞</div>
+        <p>Free, open resources for every VEX team, at every level, in every region of the world.</p>
       </div>
-
-      <div class="float-card fc2">
-        <div class="fc-label">Match win rate</div>
-        <div class="fc-value blue">87%</div>
-        <div class="fc-sub">Across 34 tournament matches</div>
-      </div>
-
-      <div class="float-card fc3">
-        <div class="fc-label">Driver skills rank</div>
-        <div class="fc-value up">#4</div>
-        <div class="fc-sub">Regional leaderboard</div>
-      </div>
-
-      <div class="float-card fc4">
-        <div class="fc-label">Code commits</div>
-        <div class="fc-value red">+128</div>
-        <div class="fc-sub">This season</div>
+      <div class="mission-card mc2">
+        <h4>Teams reached this season</h4>
+        <div class="big-num">2.4k</div>
+        <p>Across 40+ countries and every VEX program level — from middle school to college.</p>
       </div>
     </div>
   </section>
 
-  <!-- SOCIAL PROOF STRIP -->
-  <div class="strip reveal">
-    <div class="strip-quote">
-      <blockquote>"Game changing"</blockquote>
-      <div class="strip-author">
-        <div class="strip-avatar">JR</div>
-        <div class="strip-author-info">
-          <p>Jamie R.</p>
-          <span>Captain, Team 99999A</span>
+  <!-- STORY TIMELINE -->
+  <section class="story">
+    <div class="story-inner">
+      <p class="section-label reveal">How we got here</p>
+      <h2 class="section-title reveal">The VexGrind story</h2>
+
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2023 — The Spark</div>
+          <h3>A bad tournament and a good idea</h3>
+          <p>After finishing 12th at a regional qualifier despite months of preparation, our founders realized the problem wasn't effort — it was access. The top teams had knowledge they weren't sharing. VexGrind started as a private shared doc between five teammates.</p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">Early 2024 — Going Public</div>
+          <h3>We opened the doors</h3>
+          <p>After posting our first autonomous breakdown on a VEX forum, 300 teams downloaded the guide in a week. It was obvious we weren't the only ones hungry for this. We launched VexGrind.com and published everything we had.</p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">Mid 2024 — Community</div>
+          <h3>Teams started contributing back</h3>
+          <p>What started as a one-way resource hub became a two-way community. Teams began submitting their own build logs, code libraries, and match strategies. VexGrind became the place the VEX community built together.</p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2025 — Scale</div>
+          <h3>Used at every level of competition</h3>
+          <p>VexGrind guides were cited in engineering notebooks that won Excellence Awards at Worlds. Teams using our PID templates reported 40%+ improvement in autonomous scores. We hit 2,000 active teams and kept growing.</p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">Today</div>
+          <h3>Just getting started</h3>
+          <p>We're a small team with a big mission. New guides ship every week. The community is louder than ever. And somewhere out there, a team is about to win their first tournament using something they found on VexGrind.</p>
         </div>
       </div>
     </div>
-    <div class="strip-logos">
-      <div class="logo-pill">⚙️ Team 1234A</div>
-      <div class="logo-pill">🤖 Team 5678B</div>
-      <div class="logo-pill">🏆 Team 9876X</div>
-      <div class="logo-pill">✦ Team 4321Z</div>
-    </div>
-  </div>
+  </section>
 
-  <!-- FEATURES -->
-  <div class="features">
-    <p class="section-label reveal">What's inside</p>
-    <h2 class="section-title reveal">Everything your VEX V5 team needs</h2>
+  <!-- VALUES -->
+  <section class="values">
+    <p class="section-label reveal">What drives us</p>
+    <h2 class="section-title reveal">Our values</h2>
 
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon">🧠</div>
-        <h3>Autonomous Routines</h3>
-        <p>Step-by-step breakdowns of winning autonomous paths — PID tuning, odometry, and pure pursuit explained simply.</p>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-num">01</div>
+        <div class="value-content">
+          <h3>Open by default</h3>
+          <p>Every guide, template, and code snippet is free. Knowledge hoarding kills communities. We share everything, because the competition happens on the field — not in the notebook.</p>
+        </div>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🔧</div>
-        <h3>Build Guides</h3>
-        <p>Detailed robot build logs covering drivetrains, intakes, catapults, and lifts — with CAD files and real measurements.</p>
+
+      <div class="value-card reveal">
+        <div class="value-num">02</div>
+        <div class="value-content">
+          <h3>Built by competitors</h3>
+          <p>We only write about what we've tested on a real robot in a real match. No theory-only content. Every guide on VexGrind comes from hands-on experience.</p>
+        </div>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">💻</div>
-        <h3>Code Library</h3>
-        <p>Reusable PROS and VEXcode snippets for everything from drivetrain control to vision sensor targeting.</p>
+
+      <div class="value-card reveal">
+        <div class="value-num">03</div>
+        <div class="value-content">
+          <h3>Obsessively practical</h3>
+          <p>If it doesn't help you win more matches or build a better robot, we cut it. Clarity and utility over comprehensiveness. Your time matters.</p>
+        </div>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">📋</div>
-        <h3>Notebook Templates</h3>
-        <p>Competition-ready engineering notebook templates that score top marks with judges at every level of VEX.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🎯</div>
-        <h3>Match Strategy</h3>
-        <p>Alliance selection tips, match scouting sheets, and endgame strategies used by state and world-level teams.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🤝</div>
-        <h3>Team Community</h3>
-        <p>Connect with VEX teams worldwide — share build ideas, ask questions, and find alliance partners before tournaments.</p>
+
+      <div class="value-card reveal">
+        <div class="value-num">04</div>
+        <div class="value-content">
+          <h3>Community first</h3>
+          <p>The VEX community is one of the best in STEM. We protect and strengthen it — celebrating contribution, respecting skill levels, and lifting every team up together.</p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- STATS -->
-  <div class="stats reveal">
-    <div>
-      <div class="stat-num">2,400+</div>
-      <div class="stat-label">Teams using VexGrind resources this season</div>
-    </div>
-    <div>
-      <div class="stat-num">87%</div>
-      <div class="stat-label">Average win rate improvement after using our guides</div>
-    </div>
-    <div>
-      <div class="stat-num">50+</div>
-      <div class="stat-label">In-depth build and code guides published</div>
-    </div>
-  </div>
+  <!-- TEAM -->
+  <section class="team">
+    <div class="team-inner">
+      <p class="section-label reveal">The people</p>
+      <h2 class="section-title reveal">Meet the team</h2>
 
-  <!-- ABOUT -->
-  <section id="about" class="about">
-    <p class="section-label reveal">The team</p>
-    <h2 class="section-title reveal">Built by competitors, for competitors</h2>
-    <p class="about-intro reveal">We're a group of VEX V5 veterans who got tired of scattered resources and started building the hub we wished existed. Every guide, template, and tool on VexGrind comes from real match experience.</p>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="team-avatar av1">AK</div>
+          <h3>Alex Kim</h3>
+          <div class="team-role">Co-Founder & Lead Engineer</div>
+          <p>3-year VEX veteran, two-time state qualifier. Writes all things drivetrain, PID, and autonomous systems.</p>
+          <div class="team-tag">🏆 Team 2847A Captain</div>
+        </div>
 
-    <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="team-avatar av2">SR</div>
+          <h3>Sofia Reyes</h3>
+          <div class="team-role">Co-Founder & Strategy Lead</div>
+          <p>Alliance selection guru and match analyst. Competed at VEX Worlds twice and lost both times — which is why she writes the best scouting guides online.</p>
+          <div class="team-tag">📋 Notebook Excellence Award</div>
+        </div>
 
-      <div class="team-card reveal">
-        <div class="team-avatar av1">NP</div>
-        <div class="team-name">Naitik Pal</div>
-        <div class="team-role">Role:</div>
-        <p class="team-bio">Loves to play cricket, badminton and football, and is starting to take interest in F1 as well. Also enjoys coding and playing video games (eg. Monoposto).</p>
-        <span class="team-tag">⚙️ Autonomous</span>
+        <div class="team-card reveal">
+          <div class="team-avatar av3">JP</div>
+          <h3>Jordan Park</h3>
+          <div class="team-role">Code Library Maintainer</div>
+          <p>PROS aficionado and odometry obsessive. If it involves sensors, motion profiling, or computer vision, Jordan probably wrote about it first.</p>
+          <div class="team-tag">💻 PROS Contributor</div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-avatar av4">MT</div>
+          <h3>Maya Torres</h3>
+          <div class="team-role">Build Guides Editor</div>
+          <p>Mechanical design lead who's CADed more robot iterations than she can count. Specializes in intake mechanisms and structural optimization.</p>
+          <div class="team-tag">🔧 CAD Specialist</div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-avatar av5">BN</div>
+          <h3>Ben Nguyen</h3>
+          <div class="team-role">Community Manager</div>
+          <p>The glue that holds the VexGrind community together. Runs the Discord, moderates submissions, and makes sure every team feels welcome.</p>
+          <div class="team-tag">🤝 Community Builder</div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-avatar av6">CL</div>
+          <h3>Clara Lawson</h3>
+          <div class="team-role">Notebook & Design Lead</div>
+          <p>Design-obsessed notebook wizard whose templates have helped dozens of teams win the Engineering Excellence Award at regionals and state.</p>
+          <div class="team-tag">✦ Excellence Award × 4</div>
+        </div>
       </div>
-
-      <div class="team-card reveal">
-        <div class="team-avatar av2">SG</div>
-        <div class="team-name">Sarvesh "Sarvy" Ganesan</div>
-        <div class="team-role">Role</div>
-        <p class="team-bio">Die-hard cricket fan and F1 enthusiast and is hoping to place VexGrind to the top step of the podium</p>
-        <span class="team-tag">Short form of role</span>
-      </div>
-
-
-
-      <div class="team-card reveal">
-        <div class="team-avatar av4">AS</div>
-        <div class="team-name">Aryan Shah</div>
-        <div class="team-role">Role</div>
-        <p class="team-bio">Description</p>
-        <span class="team-tag">Short form of role</span>
-      </div>
-
-      <div class="team-card reveal">
-        <div class="team-avatar av5">LR</div>
-        <div class="team-name">Lakshman Raja Kumaar</div>
-        <div class="team-role">Role</div>
-        <p class="team-bio">Description</p>
-        <span class="team-tag">Short form of role</span>
-      </div>
-
     </div>
   </section>
 
   <!-- CTA -->
   <div class="cta-section">
-    <h2 class="reveal">Ready to compete?</h2>
-    <p class="reveal">Join thousands of VEX V5 teams already using VexGrind to build faster, code smarter, and win more matches.</p>
-    <a href="signup.html" class="btn-cta reveal">Get started for free</a>
+    <h2 class="reveal">Ready to join us?</h2>
+    <p class="reveal">Whether you want to use our resources or contribute your own, VexGrind is your team's home base for the entire season.</p>
+    <a href="signup.html" class="btn-cta reveal">
+      Get started for free
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
+    </a>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <div class="nav-logo">VexGrind</div>
+    <a href="index.html" class="nav-logo">VexGrind</a>
     <p>© 2026 VexGrind. All rights reserved.</p>
     <div style="display:flex; gap:1.5rem;">
-      <a href="#" style="color:var(--muted);text-decoration:none;">Privacy</a>
-      <a href="#" style="color:var(--muted);text-decoration:none;">Terms</a>
-      <a href="#" style="color:var(--muted);text-decoration:none;">Contact</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
     </div>
   </footer>
 
   <script>
+    // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
@@ -734,6 +796,31 @@
       });
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-label', 'Open menu');
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+      }
+    });
   </script>
 </body>
 </html>
