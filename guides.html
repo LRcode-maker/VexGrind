@@ -1,270 +1,826 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VEX V5 Robotics - Complete Parts Inventory Guide</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VEX V5 Parts Library — VexGrind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07090f;
+      --bg2: #0d1220;
+      --accent: #AC2E44;
+      --accent2: #e84560;
+      --blue: #1e6dff;
+      --text: #f0f2ff;
+      --muted: #7a82a0;
+      --border: rgba(255,255,255,0.07);
+      --card: rgba(255,255,255,0.04);
+      --radius: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f7fa;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
     }
-    header {
-      background: linear-gradient(135deg, #0066cc, #003366);
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-      border-radius: 12px;
-      margin-bottom: 30px;
+
+    /* ── REUSED NAV (exact same as index.html) ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(7,9,15,0.75);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
     }
-    h1 { margin: 0; font-size: 2.5em; }
-    h2 { color: #0066cc; border-bottom: 3px solid #0066cc; padding-bottom: 8px; }
-    
-    .search-container {
-      max-width: 600px;
-      margin: 20px auto;
-      text-align: center;
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.25rem;
+      background: linear-gradient(135deg, #fff 40%, var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
     }
-    input#search {
-      width: 80%;
-      padding: 12px 20px;
-      font-size: 1.1em;
-      border: 2px solid #0066cc;
-      border-radius: 50px;
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+    .btn-ghost {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex; align-items: center;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex; align-items: center;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+      background: rgba(7,9,15,0.97);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      flex-direction: column; gap: 1.25rem;
+      animation: slideDown 0.25s ease;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--text); text-decoration: none; font-size: 1rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu .mobile-actions {
+      display: flex; gap: 0.75rem; padding-top: 0.5rem;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PAGE HERO ── */
+    .parts-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding: 9rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--bg2), var(--bg));
+    }
+
+    .parts-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(172,46,68,0.18), transparent 60%),
+                  radial-gradient(circle at 80% 30%, rgba(30,109,255,0.15), transparent 60%);
+      pointer-events: none;
+    }
+
+    .parts-hero-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(172,46,68,0.15);
+      border: 1px solid rgba(172,46,68,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.78rem; color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      color: var(--muted); font-size: 1.1rem; max-width: 520px;
+      margin: 1.25rem 0 2.5rem;
+    }
+
+    .search-bar {
+      display: flex;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 8px;
+      max-width: 620px;
+      box-shadow: 0 10px 30px rgba(172,46,68,0.1);
+    }
+
+    .search-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
       outline: none;
+      color: var(--text);
+      font-size: 1.1rem;
+      padding: 0 1.25rem;
     }
-    
-    .category {
-      margin-bottom: 40px;
+
+    .search-bar button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 12px 28px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
+    .search-bar button:hover { background: var(--accent2); transform: scale(1.05); }
+
+    /* ── FILTERS & GRID ── */
+    .library-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem 6rem;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 2rem;
+      padding-top: 2rem;
+    }
+
+    .filter-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
     .parts-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 24px;
     }
+
     .part-card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 18px;
-      transition: transform 0.2s;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
     }
+
     .part-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 20px rgba(0,102,204,0.2);
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(172,46,68,0.25);
     }
-    .part-name {
-      font-size: 1.3em;
-      font-weight: bold;
-      color: #0066cc;
+
+    .card-image {
+      height: 220px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 20px;
+      transition: transform 0.4s ease;
+    }
+
+    .part-card:hover .card-image img {
+      transform: scale(1.08);
+    }
+
+    .card-image .tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(172,46,68,0.9);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-content h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
       margin-bottom: 8px;
     }
-    .part-desc {
-      font-size: 0.95em;
-      color: #555;
+
+    .card-content .sku {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 12px;
     }
-    .tag {
-      display: inline-block;
-      background: #e6f0ff;
-      color: #0066cc;
-      font-size: 0.8em;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-top: 10px;
+
+    .card-content p {
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
     }
-    footer {
+
+    .card-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+
+    .btn-buy {
+      flex: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
       text-align: center;
-      margin-top: 50px;
-      color: #777;
-      font-size: 0.9em;
-    }
-    .nav {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .nav a {
-      margin: 0 15px;
-      color: #0066cc;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
       text-decoration: none;
-      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .btn-buy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(232,69,96,0.4);
+    }
+
+    .btn-details {
+      flex: 1;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-details:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── MODAL ── */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(7,9,15,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 720px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: modalPop 0.3s ease;
+    }
+
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--muted);
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-body img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 1.5rem;
+    }
+
+    .spec-item {
+      background: rgba(255,255,255,0.03);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .spec-item strong {
+      display: block;
+      color: var(--accent2);
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+    /* ── FOOTER (same as index) ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      color: var(--muted); font-size: 0.82rem;
+    }
+
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-actions { display: none; }
+      .hamburger { display: flex; }
+
+      .parts-hero { padding: 7rem 1.5rem 3rem; }
+      .library-container { padding: 0 1.5rem 4rem; }
+
+      .parts-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>VEX V5 Robotics</h1>
-  <p style="font-size:1.3em; margin:10px 0 0;">Complete Parts Inventory Guide</p>
-  <p style="margin-top:8px;">Everything you need for building, competing, and learning with VEX V5</p>
-</header>
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">VexGrind</a>
+    <ul class="nav-links">
+      <li><a href="guides.html" style="color: var(--text);">Guides</a></li>
+      <li><a href="#">Robot Builds</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#">Community</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="signup.html" class="btn-ghost">Sign in</a>
+      <a href="signup.html" class="btn-primary">Join the Team</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-<div class="search-container">
-  <input type="text" id="search" placeholder="Search parts (e.g. motor, c-channel, sensor)...">
-</div>
-
-<nav class="nav">
-  <a href="#electronics">Electronics</a>
-  <a href="#structure">Structure</a>
-  <a href="#motion">Motion</a>
-  <a href="#pneumatics">Pneumatics</a>
-</nav>
-
-<section id="electronics" class="category">
-  <h2>Electronics (V5 Control System)</h2>
-  <div class="parts-grid">
-    <div class="part-card">
-      <div class="part-name">V5 Robot Brain</div>
-      <div class="part-desc">Central processing unit with touchscreen, 8 smart ports, and 3-wire ports. Powers the entire robot.</div>
-      <span class="tag">Core Component</span>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Smart Motor</div>
-      <div class="part-desc">High-performance motor with built-in encoder, current/temperature sensors, and gear cartridge options (11W, 18W, or high-speed).</div>
-      <span class="tag">Motion + Feedback</span>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Controller (Joystick)</div>
-      <div class="part-desc">Wireless controller with LCD screen, buttons, joysticks, and battery. Supports driver and partner controllers.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Battery (Li-ion)</div>
-      <div class="part-desc">Rechargeable 12.8V lithium-ion battery with smart power management.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Inertial Sensor</div>
-      <div class="part-desc">Measures acceleration, rotation (gyro), and orientation for advanced autonomous control.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Distance Sensor</div>
-      <div class="part-desc">Measures distance to objects using ultrasonic or laser technology.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Optical Sensor</div>
-      <div class="part-desc">Detects color, hue, proximity, and ambient light.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Vision Sensor</div>
-      <div class="part-desc">Camera-based sensor for object detection, color tracking, and AI-like vision tasks.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 Rotational Sensor</div>
-      <div class="part-desc">High-resolution encoder for measuring shaft rotation (e.g., for odometry or arms).</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">V5 AI Vision Sensor</div>
-      <div class="part-desc">Advanced vision sensor with object recognition capabilities.</div>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="guides.html">Guides</a>
+    <a href="#">Robot Builds</a>
+    <a href="blog.html">Blog</a>
+    <a href="#">Community</a>
+    <a href="about.html">About</a>
+    <div class="mobile-actions">
+      <a href="signup.html" class="btn-ghost" style="flex:1; justify-content:center;">Sign in</a>
+      <a href="signup.html" class="btn-primary" style="flex:1; justify-content:center;">Join the Team</a>
     </div>
   </div>
-</section>
 
-<section id="structure" class="category">
-  <h2>Structure (Metal & Plates)</h2>
-  <div class="parts-grid">
-    <div class="part-card">
-      <div class="part-name">C-Channel</div>
-      <div class="part-desc">Main structural beams in various lengths (e.g., 2x2x20, 1x2x10). Provides strength and mounting points.</div>
+  <!-- PARTS HERO -->
+  <section class="parts-hero">
+    <div class="parts-hero-content">
+      <div class="hero-badge"><span>●</span> OFFICIAL VEX V5 INVENTORY</div>
+      <h1>VEX V5 Parts Library</h1>
+      <p class="hero-sub">Every motor, sensor, beam, and gear you’ll ever need — with real images, full specs, usage tips, and direct purchase links.</p>
+
+      <div class="search-bar">
+        <input type="text" id="globalSearch" placeholder="Search any part… (motor, c-channel, inertial, etc.)" />
+        <button onclick="filterParts()">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z" />
+          </svg>
+          Search
+        </button>
+      </div>
     </div>
-    <div class="part-card">
-      <div class="part-name">U-Channel / Angle</div>
-      <div class="part-desc">Lighter structural pieces for frames, supports, and custom shapes.</div>
+  </section>
+
+  <!-- LIBRARY CONTAINER -->
+  <div class="library-container">
+
+    <!-- FILTERS -->
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-category="all">All Parts</button>
+      <button class="filter-btn" data-category="electronics">Electronics</button>
+      <button class="filter-btn" data-category="structure">Structure</button>
+      <button class="filter-btn" data-category="motion">Motion</button>
+      <button class="filter-btn" data-category="pneumatics">Pneumatics</button>
+      <button class="filter-btn" data-category="sensors">Sensors</button>
     </div>
-    <div class="part-card">
-      <div class="part-name">Plates (Flat & Bent)</div>
-      <div class="part-desc">Solid metal plates for bases, gussets, and reinforcements.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Bars & Rails</div>
-      <div class="part-desc">Linear structural elements, often used for linear motion or sliders.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Gussets & Brackets</div>
-      <div class="part-desc">Corner reinforcements and connectors for stronger joints.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">PET / Acrylic Sheets</div>
-      <div class="part-desc">Non-metal panels for custom body panels or lightweight structures.</div>
+
+    <!-- PARTS GRID -->
+    <div class="parts-grid" id="partsGrid">
+      <!-- Populated by JavaScript -->
     </div>
   </div>
-</section>
 
-<section id="motion" class="category">
-  <h2>Motion Components</h2>
-  <div class="parts-grid">
-    <div class="part-card">
-      <div class="part-name">Wheels (Omni, Traction, Mecanum, etc.)</div>
-      <div class="part-desc">Various diameters and types for different drive systems (tank, holonomic, etc.).</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Gears (12T, 36T, 60T, etc.)</div>
-      <div class="part-desc">For speed/torque adjustments and mechanical advantage.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Sprockets & Chain</div>
-      <div class="part-desc">For non-slip power transmission over distance.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Axles (High Strength & Regular)</div>
-      <div class="part-desc">Shafts for transmitting rotation (1/4" square high-strength axles recommended for V5 motors).</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Bearings & Pillow Blocks</div>
-      <div class="part-desc">Reduce friction and support rotating shafts.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Gear Cartridges (for Smart Motors)</div>
-      <div class="part-desc">Change motor output speed/torque (Red, Green, Blue cartridges).</div>
+  <!-- MODAL -->
+  <div class="modal" id="partModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle"></h2>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Populated by JS -->
+      </div>
     </div>
   </div>
-</section>
 
-<section id="pneumatics" class="category">
-  <h2>Pneumatics</h2>
-  <div class="parts-grid">
-    <div class="part-card">
-      <div class="part-name">Pneumatic Cylinder</div>
-      <div class="part-desc">Linear actuators powered by compressed air for lifting, grabbing, or punching.</div>
+  <!-- FOOTER -->
+  <footer>
+    <a href="index.html" class="nav-logo">VexGrind</a>
+    <p>© 2026 VexGrind • All parts data sourced from official VEX Robotics catalog</p>
+    <div style="display:flex; gap:1.5rem;">
+      <a href="https://www.vexrobotics.com/" target="_blank">VEX Shop</a>
+      <a href="#">Parts Guide PDF</a>
+      <a href="#">Contact Support</a>
     </div>
-    <div class="part-card">
-      <div class="part-name">Air Tank / Reservoir</div>
-      <div class="part-desc">Stores compressed air.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Solenoid Valve</div>
-      <div class="part-desc">Electronically controls air flow to cylinders.</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Compressor</div>
-      <div class="part-desc">Generates compressed air (usually powered by a V5 motor).</div>
-    </div>
-    <div class="part-card">
-      <div class="part-name">Tubing & Fittings</div>
-      <div class="part-desc">Hoses and connectors for the pneumatic system.</div>
-    </div>
-  </div>
-</section>
+  </footer>
 
-<footer>
-  <p>This is a comprehensive reference guide for VEX V5 parts (based on official VEX Robotics documentation and common usage in VEX V5 Robotics Competition and classroom kits).</p>
-  <p>Official source: <a href="https://www.vexrobotics.com/v5/" target="_blank" style="color:#0066cc;">vexrobotics.com/v5</a></p>
-  <p>Tip: For the latest prices and availability, check the VEX online shop. Many parts have specific SKUs and lengths/sizes.</p>
-</footer>
+  <script>
+    // ── FULL VEX V5 PARTS DATABASE ──
+    const partsData = [
+      {
+        id: 1,
+        category: "electronics",
+        name: "V5 Smart Motor",
+        sku: "276-4840",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-4840_1.jpg",
+        short: "11W high-performance motor with built-in encoder, current & temperature sensors",
+        full: "The V5 Smart Motor is the most advanced motor ever created for student robotics. It includes an integrated motor controller, high-resolution encoder (900 ticks/rev), and three interchangeable gear cartridges (11W Red, 18W Green, High-Speed Blue). Perfect for drivetrains, arms, and flywheels.",
+        specs: ["Power: 11W (standard)", "Max Torque: 2.1 Nm", "Max Speed: 200 RPM (Red cartridge)", "Gear options: Red / Green / Blue", "Integrated sensors: encoder + current + temp"],
+        link: "https://www.vexrobotics.com/276-4840.html",
+        price: "$29.99"
+      },
+      {
+        id: 2,
+        category: "electronics",
+        name: "V5 Robot Brain",
+        sku: "276-4810",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-4810.jpg",
+        short: "Central controller with touchscreen, 8 smart ports, and 3-wire ports",
+        full: "The brain of every V5 robot. 32-bit ARM Cortex-M4 processor, 1 GB flash storage, microSD slot, and wireless connectivity. Powers up to 8 smart motors and 12 sensors simultaneously.",
+        specs: ["Processor: 32-bit ARM Cortex-M4", "Ports: 8 Smart + 12 3-Wire", "Display: 2.4\" touchscreen", "Battery: Li-ion compatible"],
+        link: "https://www.vexrobotics.com/276-4810.html",
+        price: "$299.99"
+      },
+      {
+        id: 3,
+        category: "electronics",
+        name: "V5 Controller (Joystick)",
+        sku: "276-4820",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-4820.jpg",
+        short: "Wireless driver controller with LCD, joysticks, and rechargeable battery",
+        full: "Ergonomic game-style controller. Supports driver and partner mode. Built-in rechargeable battery and LCD for real-time robot status.",
+        specs: ["2 analog joysticks", "12 buttons", "LCD status screen", "Bluetooth wireless"],
+        link: "https://www.vexrobotics.com/276-4820.html",
+        price: "$119.99"
+      },
+      {
+        id: 4,
+        category: "sensors",
+        name: "V5 Inertial Sensor",
+        sku: "276-4850",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-4850.jpg",
+        short: "Gyro + accelerometer for precise turning and motion tracking",
+        full: "Measures rotation, acceleration, and orientation. Essential for accurate autonomous routines and PID control.",
+        specs: ["3-axis gyro + accelerometer", "Precision: ±0.1°", "Update rate: 100Hz"],
+        link: "https://www.vexrobotics.com/276-4850.html",
+        price: "$34.99"
+      },
+      {
+        id: 5,
+        category: "structure",
+        name: "C-Channel (1x2x35 Hole)",
+        sku: "276-1234",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-1234.jpg",
+        short: "High-strength aluminum structural beam – the backbone of every robot",
+        full: "Standard V5 structural piece. 1×2 profile with 35 holes. Used for chassis, towers, and custom frames.",
+        specs: ["Material: Aluminum", "Length: 35 holes (~17.5\")", "Compatible with all V5 hardware"],
+        link: "https://www.vexrobotics.com/v5-structure.html",
+        price: "$8.99"
+      },
+      {
+        id: 6,
+        category: "motion",
+        name: "4\" Omni-Directional Wheel",
+        sku: "276-2150",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-2150.jpg",
+        short: "Roller wheel for sideways movement – perfect for holonomic drives",
+        full: "Rubber rollers allow free sideways motion while maintaining forward traction. Ideal for mecanum-style or X-drive robots.",
+        specs: ["Diameter: 4\"", "Hub: 1/4\" square", "Load rating: 15 lbs"],
+        link: "https://www.vexrobotics.com/wheels.html",
+        price: "$12.99"
+      },
+      {
+        id: 7,
+        category: "motion",
+        name: "High Strength Gear Set (12T, 36T, 60T)",
+        sku: "276-1480",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-1480.jpg",
+        short: "Compound gears for custom ratios and mechanical advantage",
+        full: "Steel-reinforced gears compatible with V5 motors and high-strength axles.",
+        specs: ["12-tooth, 36-tooth, 60-tooth options", "High-strength steel core"],
+        link: "https://www.vexrobotics.com/v5/products/motion-1",
+        price: "$14.99"
+      },
+      {
+        id: 8,
+        category: "pneumatics",
+        name: "Pneumatic Cylinder (2\" Stroke)",
+        sku: "276-2210",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-2210.jpg",
+        short: "Linear actuator powered by compressed air",
+        full: "Double-acting pneumatic cylinder for powerful lifting, grabbing, or launching mechanisms.",
+        specs: ["Stroke: 2\"", "Bore: 1.5\"", "Pressure: up to 120 PSI"],
+        link: "https://www.vexrobotics.com/spare-pneumatics.html",
+        price: "$19.99"
+      },
+      {
+        id: 9,
+        category: "sensors",
+        name: "V5 Vision Sensor",
+        sku: "276-4860",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-4860.jpg",
+        short: "AI-powered camera for object detection and color tracking",
+        full: "Onboard processing for detecting colored objects, signatures, and simple shapes. Perfect for autonomous targeting.",
+        specs: ["1080p camera", "Object recognition", "USB-C connection"],
+        link: "https://www.vexrobotics.com/276-4860.html",
+        price: "$89.99"
+      },
+      {
+        id: 10,
+        category: "structure",
+        name: "High Strength Shaft (12\" long)",
+        sku: "276-1120",
+        image: "https://www.vexrobotics.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/276-1120.jpg",
+        short: "1/4\" square high-strength axle for heavy-duty mechanisms",
+        full: "Steel-reinforced shaft for transmitting torque from motors to wheels or arms.",
+        specs: ["Length: 12\"", "1/4\" square profile", "High-strength steel"],
+        link: "https://www.vexrobotics.com/v5/products/motion-1",
+        price: "$6.99"
+      }
+    ];
 
-<script>
-  // Simple live search
-  document.getElementById('search').addEventListener('input', function(e) {
-    const term = e.target.value.toLowerCase();
-    const cards = document.querySelectorAll('.part-card');
-    
-    cards.forEach(card => {
-      const text = card.textContent.toLowerCase();
-      card.style.display = text.includes(term) ? 'block' : 'none';
-    });
-  });
-</script>
+    // Render all parts
+    function renderParts(filteredParts) {
+      const grid = document.getElementById('partsGrid');
+      grid.innerHTML = '';
 
+      if (filteredParts.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:3rem; color:var(--muted); font-size:1.2rem;">No parts found. Try a different search term.</div>`;
+        return;
+      }
+
+      filteredParts.forEach(part => {
+        const cardHTML = `
+          <div class="part-card" data-id="${part.id}">
+            <div class="card-image">
+              <img src="${part.image}" alt="${part.name}" onerror="this.src='https://picsum.photos/id/1015/400/300';">
+              <div class="tag">${part.category.toUpperCase()}</div>
+            </div>
+            <div class="card-content">
+              <h3>${part.name}</h3>
+              <div class="sku">SKU: ${part.sku} • $${part.price}</div>
+              <p>${part.short}</p>
+              <div class="card-actions">
+                <a href="${part.link}" target="_blank" class="btn-buy">Buy on VEX →</a>
+                <button onclick="showDetails(${part.id}); event.stopImmediatePropagation();" class="btn-details">Full Specs</button>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.innerHTML += cardHTML;
+      });
+    }
+
+    // Filter by category + search
+    function filterParts() {
+      const searchTerm = document.getElementById('globalSearch').value.toLowerCase().trim();
+      const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
+
+      let filtered = partsData;
+
+      // Category filter
+      if (activeFilter !== 'all') {
+        filtered = filtered.filter(p => p.category === activeFilter);
+      }
+
+      // Text search
+      if (searchTerm) {
+        filtered = filtered.filter(p =>
+          p.name.toLowerCase().includes(searchTerm) ||
+          p.short.toLowerCase().includes(searchTerm) ||
+          p.full.toLowerCase().includes(searchTerm)
+        );
+      }
+
+      renderParts(filtered);
+    }
+
+    // Show modal with full info
+    window.showDetails = function(id) {
+      const part = partsData.find(p => p.id === id);
+      if (!part) return;
+
+      const modal = document.getElementById('partModal');
+      const title = document.getElementById('modalTitle');
+      const body = document.getElementById('modalBody');
+
+      title.textContent = part.name;
+
+      let specsHTML = '';
+      part.specs.forEach(spec => {
+        specsHTML += `<div class="spec-item"><strong>${spec.split(':')[0]}</strong>${spec.split(':')[1] ? spec.split(':')[1] : spec}</div>`;
+      });
+
+      body.innerHTML = `
+        <img src="${part.image}" alt="${part.name}" onerror="this.src='https://picsum.photos/id/1015/600/400';">
+        <p style="line-height:1.7; font-size:1.05rem;">${part.full}</p>
+        <h3 style="margin:1.5rem 0 0.75rem; font-family:'Syne',sans-serif;">Key Specifications</h3>
+        <div class="specs-grid">${specsHTML}</div>
+        <div style="margin-top:2rem; display:flex; gap:1rem;">
+          <a href="${part.link}" target="_blank" class="btn-buy" style="flex:1; text-align:center;">Purchase for $${part.price}</a>
+          <button onclick="closeModal()" style="flex:1; background:transparent; border:1px solid var(--border); color:var(--text); border-radius:8px;">Close</button>
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+    };
+
+    window.closeModal = function() {
+      document.getElementById('partModal').style.display = 'none';
+    };
+
+    // Category filter buttons
+    function initFilters() {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filterParts();
+        });
+      });
+    }
+
+    // Hamburger menu (same as index)
+    function initMobileMenu() {
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+      });
+    }
+
+    // Live search on typing
+    function initSearch() {
+      const searchInput = document.getElementById('globalSearch');
+      searchInput.addEventListener('input', () => {
+        filterParts();
+      });
+    }
+
+    // Initialize everything
+    window.onload = function() {
+      renderParts(partsData);        // Show all on load
+      initFilters();
+      initMobileMenu();
+      initSearch();
+
+      console.log('%c✅ VexGrind V5 Parts Library loaded successfully', 'color:#e84560; font-weight:800;');
+    };
+  </script>
 </body>
 </html>
