@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEX V5 Robotics - Complete Parts Inventory Guide</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f7fa;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, #0066cc, #003366);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+    h1 { margin: 0; font-size: 2.5em; }
+    h2 { color: #0066cc; border-bottom: 3px solid #0066cc; padding-bottom: 8px; }
+    
+    .search-container {
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    input#search {
+      width: 80%;
+      padding: 12px 20px;
+      font-size: 1.1em;
+      border: 2px solid #0066cc;
+      border-radius: 50px;
+      outline: none;
+    }
+    
+    .category {
+      margin-bottom: 40px;
+    }
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .part-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 18px;
+      transition: transform 0.2s;
+    }
+    .part-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,102,204,0.2);
+    }
+    .part-name {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #0066cc;
+      margin-bottom: 8px;
+    }
+    .part-desc {
+      font-size: 0.95em;
+      color: #555;
+    }
+    .tag {
+      display: inline-block;
+      background: #e6f0ff;
+      color: #0066cc;
+      font-size: 0.8em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #777;
+      font-size: 0.9em;
+    }
+    .nav {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .nav a {
+      margin: 0 15px;
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>VEX V5 Robotics</h1>
+  <p style="font-size:1.3em; margin:10px 0 0;">Complete Parts Inventory Guide</p>
+  <p style="margin-top:8px;">Everything you need for building, competing, and learning with VEX V5</p>
+</header>
+
+<div class="search-container">
+  <input type="text" id="search" placeholder="Search parts (e.g. motor, c-channel, sensor)...">
+</div>
+
+<nav class="nav">
+  <a href="#electronics">Electronics</a>
+  <a href="#structure">Structure</a>
+  <a href="#motion">Motion</a>
+  <a href="#pneumatics">Pneumatics</a>
+</nav>
+
+<section id="electronics" class="category">
+  <h2>Electronics (V5 Control System)</h2>
+  <div class="parts-grid">
+    <div class="part-card">
+      <div class="part-name">V5 Robot Brain</div>
+      <div class="part-desc">Central processing unit with touchscreen, 8 smart ports, and 3-wire ports. Powers the entire robot.</div>
+      <span class="tag">Core Component</span>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Smart Motor</div>
+      <div class="part-desc">High-performance motor with built-in encoder, current/temperature sensors, and gear cartridge options (11W, 18W, or high-speed).</div>
+      <span class="tag">Motion + Feedback</span>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Controller (Joystick)</div>
+      <div class="part-desc">Wireless controller with LCD screen, buttons, joysticks, and battery. Supports driver and partner controllers.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Battery (Li-ion)</div>
+      <div class="part-desc">Rechargeable 12.8V lithium-ion battery with smart power management.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Inertial Sensor</div>
+      <div class="part-desc">Measures acceleration, rotation (gyro), and orientation for advanced autonomous control.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Distance Sensor</div>
+      <div class="part-desc">Measures distance to objects using ultrasonic or laser technology.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Optical Sensor</div>
+      <div class="part-desc">Detects color, hue, proximity, and ambient light.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Vision Sensor</div>
+      <div class="part-desc">Camera-based sensor for object detection, color tracking, and AI-like vision tasks.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 Rotational Sensor</div>
+      <div class="part-desc">High-resolution encoder for measuring shaft rotation (e.g., for odometry or arms).</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">V5 AI Vision Sensor</div>
+      <div class="part-desc">Advanced vision sensor with object recognition capabilities.</div>
+    </div>
+  </div>
+</section>
+
+<section id="structure" class="category">
+  <h2>Structure (Metal & Plates)</h2>
+  <div class="parts-grid">
+    <div class="part-card">
+      <div class="part-name">C-Channel</div>
+      <div class="part-desc">Main structural beams in various lengths (e.g., 2x2x20, 1x2x10). Provides strength and mounting points.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">U-Channel / Angle</div>
+      <div class="part-desc">Lighter structural pieces for frames, supports, and custom shapes.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Plates (Flat & Bent)</div>
+      <div class="part-desc">Solid metal plates for bases, gussets, and reinforcements.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Bars & Rails</div>
+      <div class="part-desc">Linear structural elements, often used for linear motion or sliders.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Gussets & Brackets</div>
+      <div class="part-desc">Corner reinforcements and connectors for stronger joints.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">PET / Acrylic Sheets</div>
+      <div class="part-desc">Non-metal panels for custom body panels or lightweight structures.</div>
+    </div>
+  </div>
+</section>
+
+<section id="motion" class="category">
+  <h2>Motion Components</h2>
+  <div class="parts-grid">
+    <div class="part-card">
+      <div class="part-name">Wheels (Omni, Traction, Mecanum, etc.)</div>
+      <div class="part-desc">Various diameters and types for different drive systems (tank, holonomic, etc.).</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Gears (12T, 36T, 60T, etc.)</div>
+      <div class="part-desc">For speed/torque adjustments and mechanical advantage.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Sprockets & Chain</div>
+      <div class="part-desc">For non-slip power transmission over distance.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Axles (High Strength & Regular)</div>
+      <div class="part-desc">Shafts for transmitting rotation (1/4" square high-strength axles recommended for V5 motors).</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Bearings & Pillow Blocks</div>
+      <div class="part-desc">Reduce friction and support rotating shafts.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Gear Cartridges (for Smart Motors)</div>
+      <div class="part-desc">Change motor output speed/torque (Red, Green, Blue cartridges).</div>
+    </div>
+  </div>
+</section>
+
+<section id="pneumatics" class="category">
+  <h2>Pneumatics</h2>
+  <div class="parts-grid">
+    <div class="part-card">
+      <div class="part-name">Pneumatic Cylinder</div>
+      <div class="part-desc">Linear actuators powered by compressed air for lifting, grabbing, or punching.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Air Tank / Reservoir</div>
+      <div class="part-desc">Stores compressed air.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Solenoid Valve</div>
+      <div class="part-desc">Electronically controls air flow to cylinders.</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Compressor</div>
+      <div class="part-desc">Generates compressed air (usually powered by a V5 motor).</div>
+    </div>
+    <div class="part-card">
+      <div class="part-name">Tubing & Fittings</div>
+      <div class="part-desc">Hoses and connectors for the pneumatic system.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>This is a comprehensive reference guide for VEX V5 parts (based on official VEX Robotics documentation and common usage in VEX V5 Robotics Competition and classroom kits).</p>
+  <p>Official source: <a href="https://www.vexrobotics.com/v5/" target="_blank" style="color:#0066cc;">vexrobotics.com/v5</a></p>
+  <p>Tip: For the latest prices and availability, check the VEX online shop. Many parts have specific SKUs and lengths/sizes.</p>
+</footer>
+
+<script>
+  // Simple live search
+  document.getElementById('search').addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase();
+    const cards = document.querySelectorAll('.part-card');
+    
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(term) ? 'block' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
