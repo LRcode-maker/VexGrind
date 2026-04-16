@@ -1,1 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community — VexGrind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07090f; --bg2: #0d1220; --bg3: #111827;
+      --accent: #AC2E44; --accent2: #e84560;
+      --blue: #1e6dff; --text: #f0f2ff; --muted: #7a82a0;
+      --border: rgba(255,255,255,0.07); --card: rgba(255,255,255,0.04); --radius: 14px;
+      --green: #4ade80;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(7,9,15,0.75); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; background: linear-gradient(135deg, #fff 40%, var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-ghost { background: none; border: 1px solid var(--border); color: var(--muted); font-family: inherit; font-size: 0.88rem; font-weight: 500; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; text-decoration: none; transition: color 0.2s, border-color 0.2s; display: inline-flex; align-items: center; }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1.2rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 99; background: rgba(7,9,15,0.97); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; flex-direction: column; gap: 1.25rem; animation: slideDown 0.25s ease; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .mobile-actions { display: flex; gap: 0.75rem; padding-top: 0.5rem; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* PAGE HERO */
+    .page-hero { padding: 8rem 3rem 3rem; position: relative; overflow: hidden; }
+    .page-hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 50% 60% at 80% 40%, rgba(172,46,68,0.1) 0%, transparent 65%), radial-gradient(ellipse 40% 50% at 10% 70%, rgba(30,109,255,0.06) 0%, transparent 60%); }
+    .page-hero-bg::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px; }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+    .page-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(172,46,68,0.15); border: 1px solid rgba(172,46,68,0.3); border-radius: 100px; padding: 0.35rem 1rem; font-size: 0.78rem; color: var(--accent2); margin-bottom: 1.2rem; }
+    .page-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: block; animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .page-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 0.75rem; }
+    .page-hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent2), #ff8c60); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .page-hero p { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 520px; }
+
+    /* USERNAME BANNER */
+    .user-banner { max-width: 1200px; margin: 0 auto 0; padding: 1rem 3rem 0; }
+    .user-pill { display: inline-flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 0.45rem 1rem 0.45rem 0.6rem; font-size: 0.82rem; }
+    .user-avatar { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
+    .user-name { font-weight: 500; color: var(--text); }
+    .user-change { color: var(--accent2); font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-left: 4px; }
+
+    /* LAYOUT */
+    .community-layout { max-width: 1200px; margin: 0 auto; padding: 2rem 3rem 6rem; display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
+
+    /* POST COMPOSER */
+    .composer { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.5rem; }
+    .composer-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 0.75rem; }
+    .composer-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .composer-body { flex: 1; }
+    .composer-title-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; margin-bottom: 0.6rem; transition: border-color 0.2s; resize: none; }
+    .composer-title-input:focus { border-color: rgba(172,46,68,0.5); }
+    .composer-title-input::placeholder { color: var(--muted); }
+    .composer-textarea { width: 100%; min-height: 90px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.88rem; line-height: 1.6; outline: none; resize: vertical; transition: border-color 0.2s; }
+    .composer-textarea:focus { border-color: rgba(172,46,68,0.5); }
+    .composer-textarea::placeholder { color: var(--muted); }
+    .composer-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem; }
+    .composer-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag-btn { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.75rem; color: var(--muted); cursor: pointer; transition: all 0.2s; font-family: inherit; }
+    .tag-btn:hover, .tag-btn.selected { background: rgba(172,46,68,0.15); border-color: rgba(172,46,68,0.4); color: var(--accent2); }
+    .post-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    .post-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .post-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* FILTER BAR */
+    .filter-bar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .filter-chip { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.9rem; font-size: 0.8rem; color: var(--muted); cursor: pointer; transition: all 0.2s; font-family: inherit; }
+    .filter-chip:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+    .filter-chip.active { background: rgba(172,46,68,0.15); border-color: rgba(172,46,68,0.4); color: var(--accent2); }
+
+    /* POST CARDS */
+    .posts-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .post-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.3s, transform 0.2s; animation: fadeIn 0.4s ease both; }
+    .post-card:hover { border-color: rgba(172,46,68,0.25); transform: translateY(-2px); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    .post-inner { display: flex; gap: 0; }
+
+    /* VOTE COLUMN */
+    .vote-col { display: flex; flex-direction: column; align-items: center; padding: 1rem 0.75rem; gap: 4px; background: rgba(255,255,255,0.02); border-right: 1px solid var(--border); min-width: 52px; }
+    .vote-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; line-height: 1; padding: 4px; border-radius: 4px; transition: color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
+    .vote-btn:hover { background: rgba(255,255,255,0.06); }
+    .vote-btn.upvoted { color: var(--accent2); }
+    .vote-btn.downvoted { color: #60a5fa; }
+    .vote-count { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text); min-width: 24px; text-align: center; }
+    .vote-count.positive { color: var(--accent2); }
+    .vote-count.negative { color: #60a5fa; }
+
+    /* POST BODY */
+    .post-body { flex: 1; padding: 1rem 1.25rem; min-width: 0; }
+    .post-meta-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .post-author-avatar { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; }
+    .post-author { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+    .post-author.anon { color: var(--muted); }
+    .post-time { font-size: 0.73rem; color: var(--muted); }
+    .post-flair { display: inline-block; font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .flair-strategy { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+    .flair-build    { background: rgba(30,109,255,0.12); color: #60a5fa; border: 1px solid rgba(30,109,255,0.2); }
+    .flair-code     { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.18); }
+    .flair-discuss  { background: rgba(172,46,68,0.12); color: var(--accent2); border: 1px solid rgba(172,46,68,0.22); }
+    .flair-auton    { background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.18); }
+    .flair-news     { background: rgba(249,115,22,0.1); color: #f97316; border: 1px solid rgba(249,115,22,0.18); }
+    .post-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.4rem; cursor: pointer; }
+    .post-title:hover { color: var(--accent2); }
+    .post-preview { color: var(--muted); font-size: 0.82rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.75rem; }
+    .post-actions { display: flex; align-items: center; gap: 1rem; }
+    .action-btn { background: none; border: none; color: var(--muted); font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 0.3rem 0.5rem; border-radius: 6px; transition: color 0.2s, background 0.2s; font-family: inherit; }
+    .action-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .action-btn svg { width: 14px; height: 14px; }
+
+    /* EXPANDED POST (comments) */
+    .post-expanded { border-top: 1px solid var(--border); background: rgba(255,255,255,0.02); padding: 1.25rem; display: none; }
+    .post-expanded.open { display: block; }
+    .post-full-body { color: var(--text); font-size: 0.9rem; line-height: 1.75; margin-bottom: 1.25rem; white-space: pre-wrap; }
+
+    /* COMMENT COMPOSER */
+    .comment-composer { display: flex; gap: 10px; margin-bottom: 1.25rem; }
+    .comment-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .comment-input-wrap { flex: 1; }
+    .comment-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.85rem; color: var(--text); font-family: inherit; font-size: 0.85rem; outline: none; resize: none; min-height: 70px; transition: border-color 0.2s; }
+    .comment-input:focus { border-color: rgba(172,46,68,0.45); }
+    .comment-input::placeholder { color: var(--muted); }
+    .comment-submit { margin-top: 0.5rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.45rem 1rem; border-radius: 7px; font-family: inherit; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; float: right; }
+    .comment-submit:hover { opacity: 0.9; }
+
+    /* COMMENTS */
+    .comments-section { display: flex; flex-direction: column; gap: 1rem; clear: both; }
+    .comment { display: flex; gap: 10px; }
+    .comment-body { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1rem; }
+    .comment-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+    .comment-author { font-size: 0.78rem; font-weight: 600; }
+    .comment-time { font-size: 0.72rem; color: var(--muted); }
+    .comment-text { color: var(--text2, #c8cde8); font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; }
+    .comment-vote-row { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
+    .c-vote-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.82rem; padding: 2px 5px; border-radius: 4px; transition: color 0.2s; font-family: inherit; display: flex; align-items: center; gap: 3px; }
+    .c-vote-btn:hover { color: var(--text); }
+    .c-vote-btn.upvoted { color: var(--accent2); }
+    .c-vote-btn.downvoted { color: #60a5fa; }
+    .c-vote-count { font-size: 0.78rem; font-weight: 600; min-width: 20px; text-align: center; }
+    .no-comments { color: var(--muted); font-size: 0.82rem; font-style: italic; text-align: center; padding: 1rem 0; }
+
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+    .empty-state-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .empty-state p { font-size: 0.88rem; line-height: 1.6; }
+
+    /* SIDEBAR */
+    .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .sidebar-card-header { background: linear-gradient(135deg, var(--accent), var(--accent2)); padding: 0.85rem 1.1rem; font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .sidebar-card-body { padding: 1.1rem; }
+    .sidebar-card-body p { color: var(--muted); font-size: 0.82rem; line-height: 1.65; margin-bottom: 0.75rem; }
+    .sidebar-stat-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+    .sidebar-stat-row:last-child { border-bottom: none; }
+    .sidebar-stat-label { color: var(--muted); }
+    .sidebar-stat-val { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent2); }
+    .rule-item { display: flex; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+    .rule-item:last-child { border-bottom: none; }
+    .rule-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent2); flex-shrink: 0; width: 18px; }
+    .top-user { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+    .top-user:last-child { border-bottom: none; }
+    .top-user-info { flex: 1; }
+    .top-user-name { font-size: 0.82rem; font-weight: 600; }
+    .top-user-posts { font-size: 0.73rem; color: var(--muted); }
+    .top-user-pts { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--green); }
+
+    /* USERNAME MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: flex; align-items: center; justify-content: center; animation: fadeOverlay 0.2s ease; }
+    .modal-overlay.hidden { display: none; }
+    @keyframes fadeOverlay { from{opacity:0} to{opacity:1} }
+    .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; width: 360px; max-width: 90vw; animation: scaleIn 0.2s ease; }
+    @keyframes scaleIn { from{opacity:0;transform:scale(0.93)} to{opacity:1;transform:scale(1)} }
+    .modal h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .modal p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.25rem; }
+    .modal-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 1rem; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; margin-bottom: 0.75rem; transition: border-color 0.2s; }
+    .modal-input:focus { border-color: rgba(172,46,68,0.5); }
+    .modal-input::placeholder { color: var(--muted); }
+    .modal-actions { display: flex; gap: 0.75rem; }
+    .modal-cancel { flex: 1; background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 0.6rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .modal-cancel:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .modal-confirm { flex: 2; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.6rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
+    .modal-confirm:hover { opacity: 0.9; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1.25rem; font-size: 0.85rem; color: var(--text); z-index: 300; transform: translateY(20px); opacity: 0; transition: all 0.3s ease; pointer-events: none; display: flex; align-items: center; gap: 8px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) { .community-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .nav-actions { display: none; } .hamburger { display: flex; }
+      .page-hero { padding: 7rem 1.5rem 2rem; }
+      .user-banner { padding: 0.75rem 1.5rem 0; }
+      .community-layout { padding: 1.5rem 1.5rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">VexGrind</a>
+  <ul class="nav-links">
+    <li><a href="#">Guides</a></li>
+    <li><a href="#">Robot Builds</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="community.html" class="active">Community</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="signup.html" class="btn-ghost">Sign in</a>
+    <a href="signup.html" class="btn-primary">Join the Team</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Guides</a>
+  <a href="#">Robot Builds</a>
+  <a href="blog.html">Blog</a>
+  <a href="community.html">Community</a>
+  <a href="index.html#about">About</a>
+  <div class="mobile-actions">
+    <a href="signup.html" class="btn-ghost" style="flex:1;justify-content:center;">Sign in</a>
+    <a href="signup.html" class="btn-primary" style="flex:1;justify-content:center;">Join the Team</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-inner">
+    <div class="page-badge"><span></span> Live community</div>
+    <h1>VexGrind <em>Community</em></h1>
+    <p>Ask questions, share builds, debate strategies. The hub where VEX V5 teams actually talk to each other.</p>
+  </div>
+</div>
+
+<!-- USERNAME BANNER -->
+<div class="user-banner">
+  <div class="user-pill" id="userPill">
+    <div class="user-avatar" id="navAvatar" style="background: linear-gradient(135deg, #AC2E44, #1e6dff);">?</div>
+    <span class="user-name" id="navUsername">Anonymous</span>
+    <span class="user-change" onclick="openUsernameModal()">change</span>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="community-layout">
+  <div class="main-col">
+
+    <!-- COMPOSER -->
+    <div class="composer reveal">
+      <div class="composer-top">
+        <div class="composer-avatar" id="composerAvatar" style="background: linear-gradient(135deg, #AC2E44, #1e6dff);">?</div>
+        <div class="composer-body">
+          <input class="composer-title-input" id="postTitle" type="text" placeholder="Post title — what's this about?" maxlength="120"/>
+          <textarea class="composer-textarea" id="postBody" placeholder="Share a build tip, ask a question, or start a discussion…" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="composer-footer">
+        <div class="composer-tags" id="composerTags">
+          <button class="tag-btn" data-tag="discuss" onclick="selectTag(this)">💬 Discuss</button>
+          <button class="tag-btn" data-tag="build" onclick="selectTag(this)">🔧 Build</button>
+          <button class="tag-btn" data-tag="code" onclick="selectTag(this)">💻 Code</button>
+          <button class="tag-btn" data-tag="strategy" onclick="selectTag(this)">🎯 Strategy</button>
+          <button class="tag-btn" data-tag="auton" onclick="selectTag(this)">🧠 Auton</button>
+          <button class="tag-btn" data-tag="news" onclick="selectTag(this)">🚨 News</button>
+        </div>
+        <button class="post-btn" id="postBtn" onclick="submitPost()" disabled>Post</button>
+      </div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar reveal">
+      <button class="filter-chip active" data-filter="hot" onclick="setFilter(this)">🔥 Hot</button>
+      <button class="filter-chip" data-filter="new" onclick="setFilter(this)">✨ New</button>
+      <button class="filter-chip" data-filter="top" onclick="setFilter(this)">🏆 Top</button>
+      <button class="filter-chip" data-filter="discuss" onclick="setFilter(this)">💬 Discuss</button>
+      <button class="filter-chip" data-filter="build" onclick="setFilter(this)">🔧 Build</button>
+      <button class="filter-chip" data-filter="code" onclick="setFilter(this)">💻 Code</button>
+      <button class="filter-chip" data-filter="strategy" onclick="setFilter(this)">🎯 Strategy</button>
+    </div>
+
+    <!-- POSTS -->
+    <div class="posts-list" id="postsList"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">About the Community</div>
+      <div class="sidebar-card-body">
+        <p>The VexGrind community is for VEX V5 teams to share builds, code, strategy, and competition tips. Ask questions, get answers, and help fellow competitors improve.</p>
+        <div class="sidebar-stat-row"><span class="sidebar-stat-label">Members</span><span class="sidebar-stat-val" id="memberCount">2,418</span></div>
+        <div class="sidebar-stat-row"><span class="sidebar-stat-label">Posts today</span><span class="sidebar-stat-val" id="postsTodayCount">0</span></div>
+        <div class="sidebar-stat-row"><span class="sidebar-stat-label">Online now</span><span class="sidebar-stat-val">🟢 Live</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Community Rules</div>
+      <div class="sidebar-card-body">
+        <div class="rule-item"><span class="rule-num">1</span><span>Be respectful — we're all here to learn and compete.</span></div>
+        <div class="rule-item"><span class="rule-num">2</span><span>Stay on topic — VEX V5, robotics, and related STEM.</span></div>
+        <div class="rule-item"><span class="rule-num">3</span><span>No spam or self-promotion without context.</span></div>
+        <div class="rule-item"><span class="rule-num">4</span><span>Share your sources when posting strategies or code.</span></div>
+        <div class="rule-item"><span class="rule-num">5</span><span>Help beginners — you were one once.</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Top Contributors</div>
+      <div class="sidebar-card-body" id="topContributors">
+        <div class="top-user">
+          <div class="composer-avatar" style="background:linear-gradient(135deg,#AC2E44,#1e6dff);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">NP</div>
+          <div class="top-user-info"><div class="top-user-name">Naitik_Pal</div><div class="top-user-posts">12 posts</div></div>
+          <div class="top-user-pts">+847</div>
+        </div>
+        <div class="top-user">
+          <div class="composer-avatar" style="background:linear-gradient(135deg,#1e6dff,#0d8a6a);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">SG</div>
+          <div class="top-user-info"><div class="top-user-name">SarveshG</div><div class="top-user-posts">9 posts</div></div>
+          <div class="top-user-pts">+612</div>
+        </div>
+        <div class="top-user">
+          <div class="composer-avatar" style="background:linear-gradient(135deg,#7c3aed,#AC2E44);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">LR</div>
+          <div class="top-user-info"><div class="top-user-name">Lakshman_R</div><div class="top-user-posts">7 posts</div></div>
+          <div class="top-user-pts">+491</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- USERNAME MODAL -->
+<div class="modal-overlay hidden" id="usernameModal">
+  <div class="modal">
+    <h2>Set your username</h2>
+    <p>This is how you'll appear on posts and comments. Leave blank to post as Anonymous.</p>
+    <input class="modal-input" id="usernameInput" type="text" placeholder="e.g. VEX_Team9999A" maxlength="30"/>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeUsernameModal()">Cancel</button>
+      <button class="modal-confirm" onclick="saveUsername()">Save username</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-dot"></div>
+  <span id="toastMsg">Done!</span>
+</div>
+
+<script>
+// ── STATE ──
+let username = localStorage.getItem('vg_username') || '';
+let selectedTag = '';
+let activeFilter = 'hot';
+let posts = JSON.parse(localStorage.getItem('vg_posts') || '[]');
+
+// Seed posts if empty
+if (posts.length === 0) {
+  posts = [
+    { id: 'seed1', author: 'Naitik_Pal', title: 'Best PID tuning approach for a 4-motor drivetrain?', body: "We've been struggling with our PID constants for the current season. Found that starting with a P value around 0.15 and keeping I near zero works well on our tile floor. What are your setups?\n\nAlso — is anyone using feedforward control alongside PID? Curious if the gains are worth the complexity.", tag: 'auton', votes: 42, upvoted: false, downvoted: false, comments: [{ id:'c1', author:'SarveshG', text:"We tuned ours to P=0.12, D=0.08 and it's been rock solid. Key was testing on the actual field tiles not carpet.", votes:14, upvoted:false, downvoted:false, time: Date.now()-3600000}], time: Date.now()-86400000 },
+    { id: 'seed2', author: 'SarveshG', title: '6-bar lift vs 4-bar for High Stakes — which did your team go with?', body: 'Debating whether the extra range of a 6-bar is worth the increased complexity and rubber band management. Our 4-bar has been consistent but we\'re hitting a ceiling on ring stack height.\n\nAnyone have data on cycle times for each?', tag: 'build', votes: 38, upvoted: false, downvoted: false, comments: [{ id:'c2', author:'Anonymous', text:'We ran a 6-bar all season. Yes it\'s more finicky but the extra extension is worth it at high-level tournaments.', votes:8, upvoted:false, downvoted:false, time: Date.now()-7200000}], time: Date.now()-172800000 },
+    { id: 'seed3', author: 'Lakshman_R', title: 'PROS vs VEXcode — honest comparison after a full season on both', body: "Ran VEXcode in Skills and PROS in match auton all season. Here's my honest take:\n\nPROS: Better for complex auton, great toolchain, steeper learning curve. PROS + LVGL for GUI is brilliant.\nVEXcode: Faster to prototype, easier for newer programmers, blocks mode is great for middle school teams.\n\nFor a competitive high school team in 2026-27, I'd still go PROS. The ecosystem is just more powerful.", tag: 'code', votes: 61, upvoted: false, downvoted: false, comments: [], time: Date.now()-259200000 },
+    { id: 'seed4', author: 'Anonymous', title: 'Alliance selection tip that actually worked at our regional', body: 'Something our team figured out: at alliance selection, walk up to the teams you want and introduce yourself BEFORE they get picked. Teams that already know you by name will pick you over a stranger with similar rankings.\n\nWe placed 7th at qualifiers but got picked 3rd overall because we spent lunch talking to every top-5 team.', tag: 'strategy', votes: 55, upvoted: false, downvoted: false, comments: [{ id:'c3', author:'Naitik_Pal', text:'This is underrated advice. Social capital is real at tournaments. We do the same thing.', votes:19, upvoted:false, downvoted:false, time: Date.now()-43200000}], time: Date.now()-345600000 },
+    { id: 'seed5', author: 'Anonymous', title: 'VEX 2026-27 Name Reveal — what do you think the game will be?', body: 'The name dropped this week and everyone\'s speculating. Based on recent seasons: Over Under (2022), Spin Up (2023), High Stakes (2024), Push Back (2025)...\n\nPatterns I see: physical verb + direction/modifier. My guess for the new game is something with elevation or reach mechanics — VEX loves a good endgame climb.\n\nWhat\'s your theory?', tag: 'discuss', votes: 29, upvoted: false, downvoted: false, comments: [], time: Date.now()-43200000 },
+  ];
+  savePosts();
+}
+
+// ── INIT ──
+function init() {
+  updateUserUI();
+  renderPosts();
+  updateStats();
+  setupComposerListeners();
+}
+
+function updateUserUI() {
+  const display = username || 'Anonymous';
+  const initials = username ? username.slice(0,2).toUpperCase() : '?';
+  const color = username ? getAvatarColor(username) : 'linear-gradient(135deg,#AC2E44,#1e6dff)';
+
+  document.getElementById('navUsername').textContent = display;
+  document.getElementById('navAvatar').textContent = initials;
+  document.getElementById('navAvatar').style.background = color;
+  document.getElementById('composerAvatar').textContent = initials;
+  document.getElementById('composerAvatar').style.background = color;
+}
+
+function getAvatarColor(name) {
+  const colors = [
+    'linear-gradient(135deg,#AC2E44,#1e6dff)',
+    'linear-gradient(135deg,#1e6dff,#0d8a6a)',
+    'linear-gradient(135deg,#7c3aed,#AC2E44)',
+    'linear-gradient(135deg,#0d8a6a,#1e6dff)',
+    'linear-gradient(135deg,#e84560,#7c3aed)',
+    'linear-gradient(135deg,#fbbf24,#f97316)',
+    'linear-gradient(135deg,#4ade80,#22d3ee)',
+  ];
+  let hash = 0;
+  for (let i=0;i<name.length;i++) hash = name.charCodeAt(i)+((hash<<5)-hash);
+  return colors[Math.abs(hash) % colors.length];
+}
+
+function getFlairClass(tag) {
+  const map = { discuss:'flair-discuss', build:'flair-build', code:'flair-code', strategy:'flair-strategy', auton:'flair-auton', news:'flair-news' };
+  return map[tag] || 'flair-discuss';
+}
+
+function getFlairLabel(tag) {
+  const map = { discuss:'💬 Discuss', build:'🔧 Build', code:'💻 Code', strategy:'🎯 Strategy', auton:'🧠 Auton', news:'🚨 News' };
+  return map[tag] || tag;
+}
+
+function timeAgo(ts) {
+  const s = Math.floor((Date.now()-ts)/1000);
+  if (s<60) return 'just now';
+  if (s<3600) return Math.floor(s/60)+'m ago';
+  if (s<86400) return Math.floor(s/3600)+'h ago';
+  return Math.floor(s/86400)+'d ago';
+}
+
+function savePosts() {
+  localStorage.setItem('vg_posts', JSON.stringify(posts));
+}
+
+function updateStats() {
+  const today = new Date().toDateString();
+  const todayCount = posts.filter(p => new Date(p.time).toDateString() === today).length;
+  document.getElementById('postsTodayCount').textContent = todayCount;
+  document.getElementById('memberCount').textContent = (2418 + posts.filter(p=>p.author!=='Anonymous'&&!['Naitik_Pal','SarveshG','Lakshman_R'].includes(p.author)).length).toLocaleString();
+}
+
+// ── FILTER & SORT ──
+function setFilter(btn) {
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = btn.dataset.filter;
+  renderPosts();
+}
+
+function getFilteredPosts() {
+  let filtered = [...posts];
+  if (['discuss','build','code','strategy','auton','news'].includes(activeFilter)) {
+    filtered = filtered.filter(p=>p.tag===activeFilter);
+  }
+  if (activeFilter==='new') filtered.sort((a,b)=>b.time-a.time);
+  else if (activeFilter==='top') filtered.sort((a,b)=>b.votes-a.votes);
+  else filtered.sort((a,b)=>(b.votes*0.7+(1/(Date.now()-b.time+1))*1e10)-(a.votes*0.7+(1/(Date.now()-a.time+1))*1e10));
+  return filtered;
+}
+
+// ── RENDER ──
+function renderPosts() {
+  const list = document.getElementById('postsList');
+  const filtered = getFilteredPosts();
+  if (filtered.length===0) {
+    list.innerHTML=`<div class="empty-state"><div class="empty-state-icon">🤖</div><h3>No posts yet</h3><p>Be the first to post in this category!</p></div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(p=>renderPost(p)).join('');
+}
+
+function renderPost(p) {
+  const voteClass = p.votes>0?'positive':p.votes<0?'negative':'';
+  const upClass = p.upvoted?'upvoted':'';
+  const downClass = p.downvoted?'downvoted':'';
+  const initials = p.author==='Anonymous'?'?':p.author.slice(0,2).toUpperCase();
+  const avatarColor = p.author==='Anonymous'?'background:#444':('background:'+getAvatarColor(p.author)).replace('background:linear','background:linear');
+  const avatarStyle = p.author==='Anonymous'?'background:#3a3a4a':getAvatarColor(p.author);
+  const authorClass = p.author==='Anonymous'?'anon':'';
+  const commentCount = p.comments.length;
+  return `
+  <div class="post-card" id="post-${p.id}">
+    <div class="post-inner">
+      <div class="vote-col">
+        <button class="vote-btn ${upClass}" onclick="vote('${p.id}','up')" title="Upvote">▲</button>
+        <span class="vote-count ${voteClass}">${p.votes}</span>
+        <button class="vote-btn ${downClass}" onclick="vote('${p.id}','down')" title="Downvote">▼</button>
+      </div>
+      <div class="post-body">
+        <div class="post-meta-row">
+          <div class="post-author-avatar" style="background:${avatarStyle}">${initials}</div>
+          <span class="post-author ${authorClass}">${p.author}</span>
+          <span class="post-time">${timeAgo(p.time)}</span>
+          <span class="post-flair ${getFlairClass(p.tag)}">${getFlairLabel(p.tag)}</span>
+        </div>
+        <div class="post-title" onclick="toggleExpand('${p.id}')">${escHtml(p.title)}</div>
+        <div class="post-preview">${escHtml(p.body)}</div>
+        <div class="post-actions">
+          <button class="action-btn" onclick="toggleExpand('${p.id}')">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h6"/></svg>
+            ${commentCount} comment${commentCount!==1?'s':''}
+          </button>
+          <button class="action-btn" onclick="sharePost('${p.id}')">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="4" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="12" r="1.5"/><path d="M5.5 7.2L10.5 4.8M5.5 8.8L10.5 11.2"/></svg>
+            Share
+          </button>
+          ${canDelete(p.author)?`<button class="action-btn" onclick="deletePost('${p.id}')" style="color:var(--accent2)">✕ Delete</button>`:''}
+        </div>
+      </div>
+    </div>
+    <div class="post-expanded" id="expand-${p.id}">
+      <div class="post-full-body">${escHtml(p.body)}</div>
+      <div class="comment-composer">
+        <div class="comment-avatar" id="cAvatar-${p.id}" style="background:${getAvatarColor(username||'anon')}">${username?username.slice(0,2).toUpperCase():'?'}</div>
+        <div class="comment-input-wrap">
+          <textarea class="comment-input" id="commentInput-${p.id}" placeholder="Add a comment…" rows="3"></textarea>
+          <button class="comment-submit" onclick="submitComment('${p.id}')">Comment</button>
+        </div>
+      </div>
+      <div class="comments-section" id="comments-${p.id}">
+        ${renderComments(p)}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderComments(p) {
+  if (p.comments.length===0) return '<div class="no-comments">No comments yet — be the first!</div>';
+  return p.comments.map(c=>{
+    const ci = c.author==='Anonymous'?'?':c.author.slice(0,2).toUpperCase();
+    const ca = c.author==='Anonymous'?'#3a3a4a':getAvatarColor(c.author);
+    const aClass = c.author==='Anonymous'?'anon':'';
+    return `
+    <div class="comment" id="comment-${c.id}">
+      <div class="comment-avatar" style="background:${ca};width:28px;height:28px;font-size:0.62rem;">${ci}</div>
+      <div class="comment-body">
+        <div class="comment-header">
+          <span class="comment-author ${aClass}" style="color:${c.author==='Anonymous'?'var(--muted)':'var(--text)'}">${c.author}</span>
+          <span class="comment-time">${timeAgo(c.time)}</span>
+        </div>
+        <div class="comment-text">${escHtml(c.text)}</div>
+        <div class="comment-vote-row">
+          <button class="c-vote-btn ${c.upvoted?'upvoted':''}" onclick="voteComment('${p.id}','${c.id}','up')">▲</button>
+          <span class="c-vote-count">${c.votes}</span>
+          <button class="c-vote-btn ${c.downvoted?'downvoted':''}" onclick="voteComment('${p.id}','${c.id}','down')">▼</button>
+          ${canDelete(c.author)?`<button class="c-vote-btn" onclick="deleteComment('${p.id}','${c.id}')" style="color:var(--accent2);margin-left:0.5rem;">✕ delete</button>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function canDelete(author) {
+  if (!username) return false;
+  return username===author || username==='Anonymous'&&author==='Anonymous';
+}
+
+// ── EXPAND / COLLAPSE ──
+function toggleExpand(id) {
+  const el = document.getElementById('expand-'+id);
+  el.classList.toggle('open');
+}
+
+// ── VOTING ──
+function vote(id, dir) {
+  const post = posts.find(p=>p.id===id);
+  if (!post) return;
+  if (dir==='up') {
+    if (post.upvoted) { post.votes--; post.upvoted=false; }
+    else { if (post.downvoted) { post.votes++; post.downvoted=false; } post.votes++; post.upvoted=true; }
+  } else {
+    if (post.downvoted) { post.votes++; post.downvoted=false; }
+    else { if (post.upvoted) { post.votes--; post.upvoted=false; } post.votes--; post.downvoted=true; }
+  }
+  savePosts();
+  // Update just the vote col
+  const card = document.getElementById('post-'+id);
+  const voteCount = card.querySelector('.vote-count');
+  const upBtn = card.querySelector('.vote-btn:first-child');
+  const downBtn = card.querySelector('.vote-btn:last-of-type');
+  voteCount.textContent = post.votes;
+  voteCount.className = 'vote-count'+(post.votes>0?' positive':post.votes<0?' negative':'');
+  upBtn.className = 'vote-btn'+(post.upvoted?' upvoted':'');
+  downBtn.className = 'vote-btn'+(post.downvoted?' downvoted':'');
+}
+
+function voteComment(postId, commentId, dir) {
+  const post = posts.find(p=>p.id===postId);
+  if (!post) return;
+  const comment = post.comments.find(c=>c.id===commentId);
+  if (!comment) return;
+  if (dir==='up') {
+    if (comment.upvoted) { comment.votes--; comment.upvoted=false; }
+    else { if (comment.downvoted){comment.votes++;comment.downvoted=false;} comment.votes++; comment.upvoted=true; }
+  } else {
+    if (comment.downvoted) { comment.votes++; comment.downvoted=false; }
+    else { if (comment.upvoted){comment.votes--;comment.upvoted=false;} comment.votes--; comment.downvoted=true; }
+  }
+  savePosts();
+  const commentEl = document.getElementById('comment-'+commentId);
+  const count = commentEl.querySelector('.c-vote-count');
+  const up = commentEl.querySelector('.c-vote-btn:first-child');
+  const down = commentEl.querySelectorAll('.c-vote-btn')[1];
+  count.textContent = comment.votes;
+  up.className = 'c-vote-btn'+(comment.upvoted?' upvoted':'');
+  down.className = 'c-vote-btn'+(comment.downvoted?' downvoted':'');
+}
+
+// ── POST SUBMISSION ──
+function setupComposerListeners() {
+  const title = document.getElementById('postTitle');
+  const body = document.getElementById('postBody');
+  const btn = document.getElementById('postBtn');
+  const check = ()=>{ btn.disabled = title.value.trim().length<3; };
+  title.addEventListener('input', check);
+  body.addEventListener('input', check);
+}
+
+function selectTag(btn) {
+  document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedTag = btn.dataset.tag;
+}
+
+function submitPost() {
+  const title = document.getElementById('postTitle').value.trim();
+  const body = document.getElementById('postBody').value.trim();
+  if (!title) return;
+  const newPost = {
+    id: 'p'+Date.now(),
+    author: username||'Anonymous',
+    title, body,
+    tag: selectedTag||'discuss',
+    votes: 1, upvoted: true, downvoted: false,
+    comments: [],
+    time: Date.now()
+  };
+  posts.unshift(newPost);
+  savePosts();
+  // Reset
+  document.getElementById('postTitle').value='';
+  document.getElementById('postBody').value='';
+  document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('selected'));
+  selectedTag='';
+  document.getElementById('postBtn').disabled=true;
+  activeFilter='new';
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  document.querySelector('[data-filter="new"]').classList.add('active');
+  renderPosts();
+  updateStats();
+  showToast('✅ Post published!');
+}
+
+// ── COMMENT SUBMISSION ──
+function submitComment(postId) {
+  const input = document.getElementById('commentInput-'+postId);
+  const text = input.value.trim();
+  if (!text) return;
+  const post = posts.find(p=>p.id===postId);
+  if (!post) return;
+  const newComment = {
+    id: 'c'+Date.now(),
+    author: username||'Anonymous',
+    text,
+    votes: 1, upvoted: true, downvoted: false,
+    time: Date.now()
+  };
+  post.comments.push(newComment);
+  savePosts();
+  input.value='';
+  document.getElementById('comments-'+postId).innerHTML = renderComments(post);
+  // update comment count in action btn
+  const card = document.getElementById('post-'+postId);
+  const actionBtn = card.querySelector('.action-btn');
+  actionBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h6"/></svg> ${post.comments.length} comment${post.comments.length!==1?'s':''}`;
+  showToast('💬 Comment added!');
+}
+
+// ── DELETE ──
+function deletePost(id) {
+  posts = posts.filter(p=>p.id!==id);
+  savePosts();
+  renderPosts();
+  updateStats();
+  showToast('🗑️ Post deleted');
+}
+
+function deleteComment(postId, commentId) {
+  const post = posts.find(p=>p.id===postId);
+  if (!post) return;
+  post.comments = post.comments.filter(c=>c.id!==commentId);
+  savePosts();
+  document.getElementById('comments-'+postId).innerHTML = renderComments(post);
+  showToast('🗑️ Comment deleted');
+}
+
+// ── USERNAME ──
+function openUsernameModal() {
+  document.getElementById('usernameInput').value = username;
+  document.getElementById('usernameModal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('usernameInput').focus(),100);
+}
+
+function closeUsernameModal() {
+  document.getElementById('usernameModal').classList.add('hidden');
+}
+
+function saveUsername() {
+  const val = document.getElementById('usernameInput').value.trim().replace(/\s+/g,'_').slice(0,30);
+  username = val;
+  localStorage.setItem('vg_username', val);
+  closeUsernameModal();
+  updateUserUI();
+  renderPosts();
+  showToast(val?`👋 Welcome, ${val}!`:'Posting as Anonymous');
+}
+
+document.getElementById('usernameInput').addEventListener('keydown', e=>{ if(e.key==='Enter') saveUsername(); });
+document.getElementById('usernameModal').addEventListener('click', e=>{ if(e.target===document.getElementById('usernameModal')) closeUsernameModal(); });
+
+// ── SHARE ──
+function sharePost(id) {
+  navigator.clipboard.writeText(window.location.href+'#post-'+id).catch(()=>{});
+  showToast('🔗 Link copied!');
+}
+
+// ── TOAST ──
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ── UTILS ──
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{ if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*80); });
+},{threshold:0.08});
+reveals.forEach(el=>revObs.observe(el));
+
+// ── NAV HAMBURGER ──
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open',open);
+});
+mobileMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{
+  mobileMenu.classList.remove('open'); hamburger.classList.remove('open');
+}));
+window.addEventListener('resize',()=>{ if(window.innerWidth>768){ mobileMenu.classList.remove('open'); hamburger.classList.remove('open'); }});
+
+// Auto-refresh time labels
+setInterval(()=>{
+  document.querySelectorAll('.post-time,.comment-time').forEach(el=>{
+    // times are static in the DOM, re-render would be needed for live update — skip for performance
+  });
+}, 60000);
+
+init();
+</script>
+</body>
+</html>
