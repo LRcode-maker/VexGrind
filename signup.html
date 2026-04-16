@@ -32,7 +32,6 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -50,7 +49,6 @@
       text-decoration: none;
     }
 
-    /* ── BACKGROUND ── */
     .page-bg {
       position: fixed; inset: 0; z-index: 0;
       background:
@@ -66,7 +64,6 @@
       background-size: 60px 60px;
     }
 
-    /* ── MAIN LAYOUT ── */
     .main {
       position: relative; z-index: 1;
       min-height: 100vh;
@@ -76,7 +73,6 @@
       padding: 7rem 1.5rem 3rem;
     }
 
-    /* ── AUTH CARD ── */
     .auth-card {
       background: rgba(13,18,32,0.85);
       border: 1px solid rgba(255,255,255,0.1);
@@ -101,7 +97,7 @@
       font-size: 0.75rem; color: var(--accent2);
       margin-bottom: 1.5rem;
     }
-    .auth-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
+    .auth-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: inline-block; }
 
     .auth-title {
       font-family: 'Syne', sans-serif;
@@ -110,7 +106,6 @@
     }
     .auth-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 2rem; line-height: 1.6; }
 
-    /* ── TABS ── */
     .tabs {
       display: flex;
       background: rgba(255,255,255,0.04);
@@ -135,7 +130,6 @@
       color: #fff;
     }
 
-    /* ── FORM ── */
     .form-group { margin-bottom: 1.1rem; }
     .form-label {
       display: block; font-size: 0.8rem; font-weight: 500;
@@ -158,12 +152,10 @@
       background: rgba(172,46,68,0.05);
     }
     .form-input::placeholder { color: var(--muted); }
-    .form-input.error { border-color: var(--accent2); }
 
     .form-row { display: flex; gap: 0.75rem; }
     .form-row .form-group { flex: 1; }
 
-    /* ── SUBMIT BTN ── */
     .btn-submit {
       width: 100%;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -179,7 +171,6 @@
     .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
     .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    /* ── ERROR / SUCCESS ── */
     .msg {
       padding: 0.7rem 1rem;
       border-radius: 8px;
@@ -199,85 +190,6 @@
       cursor: pointer; text-decoration: underline; padding: 0;
     }
 
-    /* ── DASHBOARD (logged in view) ── */
-    #dashboard { display: none; }
-
-    .dash-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .dash-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem;
-    }
-    .dash-card-label { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
-    .dash-card-val {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.6rem; font-weight: 700;
-    }
-    .dash-card-val.green { color: var(--green); }
-    .dash-card-val.blue { color: #60a5fa; }
-    .dash-card-val.red { color: var(--accent2); }
-
-    .activity-list { margin-top: 1.5rem; }
-    .activity-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem;
-    }
-    .activity-item {
-      display: flex; align-items: center; gap: 0.85rem;
-      padding: 0.7rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-      animation: slideUp 0.3s ease both;
-    }
-    .activity-item:last-child { border-bottom: none; }
-    .activity-icon {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: rgba(172,46,68,0.15);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; flex-shrink: 0;
-    }
-    .activity-info { flex: 1; }
-    .activity-action { font-weight: 500; }
-    .activity-time { color: var(--muted); font-size: 0.75rem; margin-top: 1px; }
-
-    .no-activity { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 2rem 0; }
-
-    /* User header */
-    .user-header {
-      display: flex; align-items: center; gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .user-avatar {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--blue));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem; font-weight: 700;
-    }
-    .user-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; }
-    .user-meta { color: var(--muted); font-size: 0.8rem; }
-
-    .btn-logout {
-      margin-left: auto;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.45rem 0.9rem;
-      color: var(--muted);
-      font-family: inherit; font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-logout:hover { border-color: var(--accent2); color: var(--accent2); }
-
-    /* loading spinner */
     .spinner {
       width: 18px; height: 18px;
       border: 2px solid rgba(255,255,255,0.2);
@@ -287,17 +199,11 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* member since */
-    .since { color: var(--muted); font-size: 0.75rem; margin-top: 2px; }
-
-    /* Wide card for activity */
-    .dash-card.full { grid-column: 1 / -1; }
-
     @media (max-width: 500px) {
       .auth-card { padding: 1.75rem 1.25rem; }
-      .dash-grid { grid-template-columns: 1fr; }
       .main { padding: 6rem 1rem 2rem; }
       nav { padding: 1rem 1.25rem; }
+      .form-row { flex-direction: column; gap: 0; }
     }
   </style>
 </head>
@@ -310,8 +216,6 @@
 </nav>
 
 <div class="main">
-
-  <!-- AUTH FORMS -->
   <div class="auth-card" id="authCard">
     <div class="auth-badge"><span></span> VEX V5 Competitor Portal</div>
     <h1 class="auth-title" id="authTitle">Join VexGrind</h1>
@@ -341,16 +245,14 @@
         <input class="form-input" id="su_email" type="email" placeholder="you@team.com" required autocomplete="email"/>
       </div>
       <div class="form-group">
-        <label class="form-label">Team Number</label>
-        <input class="form-input" id="su_team" type="text" placeholder="e.g. 99999A" />
+        <label class="form-label">Team Number <span style="color:var(--muted);font-size:0.75rem;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input class="form-input" id="su_team" type="text" placeholder="e.g. 99999A"/>
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
         <input class="form-input" id="su_pass" type="password" placeholder="Min. 6 characters" required autocomplete="new-password"/>
       </div>
-      <button type="submit" class="btn-submit" id="signupBtn">
-        Create Account →
-      </button>
+      <button type="submit" class="btn-submit" id="signupBtn">Create Account →</button>
     </form>
 
     <!-- SIGN IN FORM -->
@@ -363,269 +265,128 @@
         <label class="form-label">Password</label>
         <input class="form-input" id="si_pass" type="password" placeholder="Your password" required autocomplete="current-password"/>
       </div>
-      <button type="submit" class="btn-submit" id="signinBtn">
-        Sign In →
-      </button>
+      <button type="submit" class="btn-submit" id="signinBtn">Sign In →</button>
       <div class="divider">or</div>
       <div style="text-align:center; font-size:0.85rem; color:var(--muted)">
         No account? <button type="button" class="link-btn" onclick="switchTab('signup')">Sign up free</button>
       </div>
     </form>
   </div>
-
-  <!-- DASHBOARD (shown when logged in) -->
-  <div class="auth-card" id="dashboard">
-    <div class="user-header">
-      <div class="user-avatar" id="dashAvatar"></div>
-      <div>
-        <div class="user-name" id="dashName"></div>
-        <div class="user-meta" id="dashMeta"></div>
-        <div class="since" id="dashSince"></div>
-      </div>
-      <button class="btn-logout" onclick="logout()">Sign out</button>
-    </div>
-
-    <div id="msgBox2" class="msg"></div>
-
-    <div class="dash-grid">
-      <div class="dash-card">
-        <div class="dash-card-label">Total Visits</div>
-        <div class="dash-card-val green" id="dashVisits">0</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-card-label">Pages Viewed</div>
-        <div class="dash-card-val blue" id="dashPages">0</div>
-      </div>
-      <div class="dash-card full">
-        <div class="activity-title">Recent Activity</div>
-        <div id="activityList"></div>
-      </div>
-    </div>
-
-    <div style="margin-top:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-      <a href="index.html" style="flex:1;">
-        <button class="btn-submit" style="margin-top:0;" onclick="trackActivity('Visited Homepage', '🏠')">
-          Go to Homepage
-        </button>
-      </a>
-    </div>
-  </div>
-
 </div>
 
 <script>
-// ─── STORAGE HELPERS ───
-// We use localStorage since window.storage is only in artifact context.
-// All user data is keyed by email.
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem('vexgrind_users') || '{}'); } catch { return {}; }
+  }
+  function saveUsers(u) { localStorage.setItem('vexgrind_users', JSON.stringify(u)); }
 
-function getUsers() {
-  try { return JSON.parse(localStorage.getItem('vexgrind_users') || '{}'); } catch { return {}; }
-}
-function saveUsers(u) { localStorage.setItem('vexgrind_users', JSON.stringify(u)); }
+  function getUserData(email) { return getUsers()[email] || null; }
+  function saveUserData(email, data) {
+    const users = getUsers();
+    users[email] = data;
+    saveUsers(users);
+  }
 
-function getSession() {
-  try { return JSON.parse(localStorage.getItem('vexgrind_session') || 'null'); } catch { return null; }
-}
-function saveSession(s) { localStorage.setItem('vexgrind_session', JSON.stringify(s)); }
-function clearSession() { localStorage.removeItem('vexgrind_session'); }
+  function saveSession(s) { localStorage.setItem('vexgrind_session', JSON.stringify(s)); }
+  function getSession() {
+    try { return JSON.parse(localStorage.getItem('vexgrind_session') || 'null'); } catch { return null; }
+  }
 
-function getUserData(email) {
-  const users = getUsers();
-  return users[email] || null;
-}
-function saveUserData(email, data) {
-  const users = getUsers();
-  users[email] = data;
-  saveUsers(users);
-}
+  function switchTab(tab) {
+    clearMsg();
+    const isSignup = tab === 'signup';
+    document.getElementById('signupForm').style.display = isSignup ? '' : 'none';
+    document.getElementById('signinForm').style.display = isSignup ? 'none' : '';
+    document.getElementById('tabSignup').classList.toggle('active', isSignup);
+    document.getElementById('tabSignin').classList.toggle('active', !isSignup);
+    document.getElementById('authTitle').textContent = isSignup ? 'Join VexGrind' : 'Welcome back';
+    document.getElementById('authSub').textContent = isSignup
+      ? 'Create your account and start winning more matches.'
+      : 'Sign in to access your guides and activity.';
+  }
 
-// ─── ACTIVITY ───
-function trackActivity(action, icon = '🔗') {
-  const session = getSession();
-  if (!session) return;
-  const data = getUserData(session.email);
-  if (!data) return;
-  if (!data.activity) data.activity = [];
-  data.activity.unshift({ action, icon, time: new Date().toISOString() });
-  if (data.activity.length > 30) data.activity = data.activity.slice(0, 30);
-  data.stats = data.stats || { visits: 0, pages: 0 };
-  data.stats.pages = (data.stats.pages || 0) + 1;
-  saveUserData(session.email, data);
-  renderDashboard(data);
-}
+  function showMsg(text, type) {
+    const el = document.getElementById('msgBox');
+    el.textContent = text;
+    el.className = 'msg ' + type;
+  }
+  function clearMsg() { document.getElementById('msgBox').className = 'msg'; }
 
-// ─── TAB SWITCH ───
-function switchTab(tab) {
-  clearMsg();
-  const isSignup = tab === 'signup';
-  document.getElementById('signupForm').style.display = isSignup ? '' : 'none';
-  document.getElementById('signinForm').style.display = isSignup ? 'none' : '';
-  document.getElementById('tabSignup').classList.toggle('active', isSignup);
-  document.getElementById('tabSignin').classList.toggle('active', !isSignup);
-  document.getElementById('authTitle').textContent = isSignup ? 'Join VexGrind' : 'Welcome back';
-  document.getElementById('authSub').textContent = isSignup
-    ? 'Create your account and start winning more matches.'
-    : 'Sign in to access your guides and activity.';
-}
+  function handleSignup(e) {
+    e.preventDefault();
+    clearMsg();
+    const first = document.getElementById('su_first').value.trim();
+    const last  = document.getElementById('su_last').value.trim();
+    const email = document.getElementById('su_email').value.trim().toLowerCase();
+    const team  = document.getElementById('su_team').value.trim();
+    const pass  = document.getElementById('su_pass').value;
 
-function showMsg(text, type, box = 'msgBox') {
-  const el = document.getElementById(box);
-  el.textContent = text;
-  el.className = 'msg ' + type;
-}
-function clearMsg() {
-  document.getElementById('msgBox').className = 'msg';
-}
+    if (pass.length < 6) { showMsg('Password must be at least 6 characters.', 'error'); return; }
 
-// ─── SIGN UP ───
-function handleSignup(e) {
-  e.preventDefault();
-  clearMsg();
-  const first = document.getElementById('su_first').value.trim();
-  const last  = document.getElementById('su_last').value.trim();
-  const email = document.getElementById('su_email').value.trim().toLowerCase();
-  const team  = document.getElementById('su_team').value.trim();
-  const pass  = document.getElementById('su_pass').value;
+    const users = getUsers();
+    if (users[email]) { showMsg('An account with this email already exists. Sign in instead.', 'error'); return; }
 
-  if (pass.length < 6) { showMsg('Password must be at least 6 characters.', 'error'); return; }
+    const btn = document.getElementById('signupBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div>';
 
-  const users = getUsers();
-  if (users[email]) { showMsg('An account with this email already exists. Sign in instead.', 'error'); return; }
+    setTimeout(() => {
+      const newUser = {
+        first, last, email, team,
+        passwordHash: btoa(unescape(encodeURIComponent(pass))),
+        createdAt: new Date().toISOString(),
+        stats: { visits: 1, pages: 0 },
+        activity: [{ action: 'Created account', icon: '🎉', time: new Date().toISOString() }]
+      };
+      saveUserData(email, newUser);
+      saveSession({ email, loginAt: new Date().toISOString() });
 
-  const btn = document.getElementById('signupBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner"></div>';
+      // Redirect to success page with name
+      window.location.href = signup-success.html?name=${encodeURIComponent(first)}&team=${encodeURIComponent(team)};
+    }, 800);
+  }
 
-  setTimeout(() => {
-    const newUser = {
-      first, last, email, team,
-      passwordHash: btoa(pass), // simple obfuscation (not production crypto)
-      createdAt: new Date().toISOString(),
-      stats: { visits: 1, pages: 0 },
-      activity: [{ action: 'Created account', icon: '🎉', time: new Date().toISOString() }]
-    };
-    saveUserData(email, newUser);
-    saveSession({ email, loginAt: new Date().toISOString() });
-    showDashboard(newUser, true);
-    btn.disabled = false;
-    btn.innerHTML = 'Create Account →';
-  }, 700);
-}
+  function handleSignin(e) {
+    e.preventDefault();
+    clearMsg();
+    const email = document.getElementById('si_email').value.trim().toLowerCase();
+    const pass  = document.getElementById('si_pass').value;
 
-// ─── SIGN IN ───
-function handleSignin(e) {
-  e.preventDefault();
-  clearMsg();
-  const email = document.getElementById('si_email').value.trim().toLowerCase();
-  const pass  = document.getElementById('si_pass').value;
+    const btn = document.getElementById('signinBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div>';
 
-  const btn = document.getElementById('signinBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner"></div>';
+    setTimeout(() => {
+      const data = getUserData(email);
+      const hash = btoa(unescape(encodeURIComponent(pass)));
+      if (!data || data.passwordHash !== hash) {
+        showMsg('Incorrect email or password.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = 'Sign In →';
+        return;
+      }
+      data.stats = data.stats || { visits: 0, pages: 0 };
+      data.stats.visits = (data.stats.visits || 0) + 1;
+      data.activity = data.activity || [];
+      data.activity.unshift({ action: 'Signed in', icon: '🔑', time: new Date().toISOString() });
+      if (data.activity.length > 30) data.activity = data.activity.slice(0, 30);
+      saveUserData(email, data);
+      saveSession({ email, loginAt: new Date().toISOString() });
 
-  setTimeout(() => {
-    const data = getUserData(email);
-    if (!data || data.passwordHash !== btoa(pass)) {
-      showMsg('Incorrect email or password.', 'error');
+      showMsg('Signed in! Redirecting…', 'success');
+      setTimeout(() => { window.location.href = 'index.html'; }, 1000);
       btn.disabled = false;
       btn.innerHTML = 'Sign In →';
-      return;
+    }, 700);
+  }
+
+  // Auto-redirect if already logged in
+  window.addEventListener('DOMContentLoaded', () => {
+    const session = getSession();
+    if (session && getUserData(session.email)) {
+      window.location.href = 'index.html';
     }
-    data.stats = data.stats || { visits: 0, pages: 0 };
-    data.stats.visits = (data.stats.visits || 0) + 1;
-    if (!data.activity) data.activity = [];
-    data.activity.unshift({ action: 'Signed in', icon: '🔑', time: new Date().toISOString() });
-    if (data.activity.length > 30) data.activity = data.activity.slice(0, 30);
-    saveUserData(email, data);
-    saveSession({ email, loginAt: new Date().toISOString() });
-    showDashboard(data);
-    btn.disabled = false;
-    btn.innerHTML = 'Sign In →';
-  }, 700);
-}
-
-// ─── DASHBOARD RENDER ───
-function showDashboard(data, isNew = false) {
-  document.getElementById('authCard').style.display = 'none';
-  document.getElementById('dashboard').style.display = '';
-
-  if (isNew) {
-    showMsg('🎉 Account created! Welcome to VexGrind.', 'success', 'msgBox2');
-    setTimeout(() => { document.getElementById('msgBox2').className = 'msg'; }, 4000);
-  }
-  renderDashboard(data);
-}
-
-function renderDashboard(data) {
-  const initials = (data.first[0] + data.last[0]).toUpperCase();
-  document.getElementById('dashAvatar').textContent = initials;
-  document.getElementById('dashName').textContent = data.first + ' ' + data.last;
-  document.getElementById('dashMeta').textContent = data.team ? 'Team ' + data.team : 'No team set';
-  document.getElementById('dashSince').textContent = 'Member since ' + new Date(data.createdAt).toLocaleDateString('en-GB', { month:'long', year:'numeric' });
-  document.getElementById('dashVisits').textContent = data.stats?.visits || 0;
-  document.getElementById('dashPages').textContent  = data.stats?.pages  || 0;
-
-  const list = document.getElementById('activityList');
-  const acts = data.activity || [];
-  if (acts.length === 0) {
-    list.innerHTML = '<div class="no-activity">No activity yet — start exploring!</div>';
-    return;
-  }
-  list.innerHTML = acts.slice(0, 8).map(a => `
-    <div class="activity-item">
-      <div class="activity-icon">${a.icon}</div>
-      <div class="activity-info">
-        <div class="activity-action">${a.action}</div>
-        <div class="activity-time">${formatTime(a.time)}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function formatTime(iso) {
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = Math.floor((now - d) / 1000);
-  if (diff < 60) return 'Just now';
-  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
-  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
-  return d.toLocaleDateString('en-GB', { day:'numeric', month:'short' });
-}
-
-// ─── LOGOUT ───
-function logout() {
-  const session = getSession();
-  if (session) {
-    const data = getUserData(session.email);
-    if (data) {
-      data.activity = data.activity || [];
-      data.activity.unshift({ action: 'Signed out', icon: '👋', time: new Date().toISOString() });
-      if (data.activity.length > 30) data.activity = data.activity.slice(0, 30);
-      saveUserData(session.email, data);
-    }
-  }
-  clearSession();
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('authCard').style.display = '';
-  switchTab('signin');
-}
-
-// ─── AUTO-LOGIN ON LOAD ───
-window.addEventListener('DOMContentLoaded', () => {
-  const session = getSession();
-  if (session) {
-    const data = getUserData(session.email);
-    if (data) {
-      // Track page visit
-      data.stats = data.stats || { visits: 0, pages: 0 };
-      data.activity = data.activity || [];
-      data.activity.unshift({ action: 'Opened VexGrind', icon: '🌐', time: new Date().toISOString() });
-      if (data.activity.length > 30) data.activity = data.activity.slice(0, 30);
-      saveUserData(session.email, data);
-      showDashboard(data);
-    }
-  }
-});
+  });
 </script>
 
 </body>
