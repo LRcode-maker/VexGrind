@@ -524,7 +524,77 @@
     footer a:hover { color: var(--text); }
 
     /* ── SCROLL REVEAL ── */
-    .reveal {
+    .reveal {    /* ── TOP CONTRIBUTORS ── */
+    .contributors {
+      padding: 6rem 3rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .sidebar-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .sidebar-card-header {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      padding: 0.85rem 1.1rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-card-body {
+      padding: 1.1rem;
+    }
+
+    .top-user {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .top-user:last-child {
+      border-bottom: none;
+    }
+
+    .composer-avatar {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .top-user-info {
+      flex: 1;
+    }
+
+    .top-user-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .top-user-posts {
+      font-size: 0.73rem;
+      color: var(--muted);
+    }
+
+    .top-user-pts {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #4ade80;
+    }
       opacity: 0; transform: translateY(30px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
@@ -771,6 +841,32 @@
           <div class="team-role">DA GOAT</div>
           <p>fish</p>
           <div class="team-tag">✦ Excellence Award × 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP CONTRIBUTORS -->
+  <section class="contributors">
+    <p class="section-label reveal">Community Leaders</p>
+    <h2 class="section-title reveal">Top Contributors</h2>
+    <div class="sidebar-card reveal">
+      <div class="sidebar-card-header">Top Contributors</div>
+      <div class="sidebar-card-body" id="topContributors">
+        <div class="top-user">
+          <div class="composer-avatar" style="background:linear-gradient(135deg,#AC2E44,#1e6dff);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">NP</div>
+          <div class="top-user-info"><div class="top-user-name">Naitik_Pal</div><div class="top-user-posts">12 posts</div></div>
+          <div class="top-user-pts">+847</div>
+        </div>
+        <div class="top-user">
+          <div class="composer-avatar" style="background:linear-gradient(135deg,#1e6dff,#0d8a6a);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">SG</div>
+          <div class="top-user-info"><div class="top-user-name">SarveshG</div><div class="top-user-posts">9 posts</div></div>
+          <div class="top-user-pts">+612</div>
+        </div>
+        <div class="top-user">
+          <div class="composer-avatar" style="background:linear-gradient(135deg,#7c3aed,#AC2E44);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">LR</div>
+          <div class="top-user-info"><div class="top-user-name">Lakshman_R</div><div class="top-user-posts">7 posts</div></div>
+          <div class="top-user-pts">+491</div>
         </div>
       </div>
     </div>
