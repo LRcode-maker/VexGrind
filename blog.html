@@ -30,7 +30,6 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -41,280 +40,110 @@
     }
 
     .fullscreen-btn {
-      position: fixed;
-      top: 1rem;
-      right: 3rem;
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
+      position: fixed; top: 1rem; right: 3rem;
+      width: 42px; height: 42px; border-radius: 999px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.06);
       color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      z-index: 110;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s, transform 0.15s; z-index: 110;
     }
     .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
     .fullscreen-btn svg { width: 18px; height: 18px; }
-
-    @media (max-width: 768px) {
-      .fullscreen-btn { right: 5rem; }
-    }
+    @media (max-width: 768px) { .fullscreen-btn { right: 5rem; } }
 
     .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 1.25rem;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
       background: linear-gradient(135deg, #fff 40%, var(--accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      text-decoration: none;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent; text-decoration: none;
     }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted); text-decoration: none; font-size: 0.9rem;
-      transition: color 0.2s;
-    }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
     .nav-actions { display: flex; gap: 1rem; align-items: center; }
-    .btn-ghost {
-      background: none; border: none; color: var(--muted);
-      font-family: inherit; font-size: 0.9rem; cursor: pointer;
-      transition: color 0.2s;
-    }
+    .btn-ghost { background: none; border: none; color: var(--muted); font-family: inherit; font-size: 0.9rem; cursor: pointer; transition: color 0.2s; }
     .btn-ghost:hover { color: var(--text); }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff; border: none;
-      padding: 0.55rem 1.3rem;
-      border-radius: 8px;
-      font-family: inherit; font-size: 0.9rem; font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-    }
+    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.15s; }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
 
-    /* ── BLOG HERO ── */
     .blog-hero {
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      padding: 9rem 3rem 4rem;
-      position: relative;
-      overflow: hidden;
+      min-height: 60vh; display: flex; align-items: center;
+      padding: 9rem 3rem 4rem; position: relative; overflow: hidden;
       background: linear-gradient(135deg, var(--bg2), var(--bg));
     }
-
     .blog-hero::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background:
         radial-gradient(ellipse 50% 70% at 80% 30%, rgba(172,46,68,0.18) 0%, transparent 65%),
         radial-gradient(ellipse 40% 50% at 10% 70%, rgba(30,109,255,0.12) 0%, transparent 60%);
       pointer-events: none;
     }
-
-    .blog-hero-inner {
-      position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto;
-      width: 100%;
-    }
-
+    .blog-hero-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; }
     .blog-hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(172,46,68,0.15);
-      border: 1px solid rgba(172,46,68,0.3);
-      border-radius: 100px;
-      padding: 0.35rem 1rem;
-      font-size: 0.78rem; color: var(--accent2);
-      margin-bottom: 1rem;
+      background: rgba(172,46,68,0.15); border: 1px solid rgba(172,46,68,0.3);
+      border-radius: 100px; padding: 0.35rem 1rem;
+      font-size: 0.78rem; color: var(--accent2); margin-bottom: 1rem;
     }
+    .blog-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+    .blog-hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent2), #ff8c60); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .blog-hero p { color: var(--muted); font-size: 1.1rem; max-width: 520px; margin: 1.25rem 0 2.5rem; }
 
-    .blog-hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-    }
-
-    .blog-hero h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--accent2), #ff8c60);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .blog-hero p {
-      color: var(--muted); font-size: 1.1rem; max-width: 520px;
-      margin: 1.25rem 0 2.5rem;
-    }
-
-    /* ── SEARCH BAR (matching parts library) ── */
     .search-bar {
-      display: flex;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      padding: 8px;
-      max-width: 620px;
+      display: flex; background: var(--card); border: 1px solid var(--border);
+      border-radius: 9999px; padding: 8px; max-width: 620px;
       box-shadow: 0 10px 30px rgba(172,46,68,0.1);
     }
-
-    .search-bar input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--text);
-      font-size: 1.1rem;
-      padding: 0 1.25rem;
-    }
-
+    .search-bar input { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-size: 1.1rem; padding: 0 1.25rem; }
     .search-bar input::placeholder { color: var(--muted); }
-
     .search-bar button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 9999px;
-      padding: 12px 28px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.9rem;
-      transition: all 0.2s;
+      background: var(--accent); color: #fff; border: none; border-radius: 9999px;
+      padding: 12px 28px; font-weight: 500; display: flex; align-items: center; gap: 8px;
+      cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.2s;
     }
     .search-bar button:hover { background: var(--accent2); transform: scale(1.05); }
 
-    /* ── LIBRARY CONTAINER ── */
-    .library-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 3rem 6rem;
-    }
+    .library-container { max-width: 1200px; margin: 0 auto; padding: 0 3rem 3rem; }
 
-    /* ── FILTERS (matching parts library) ── */
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 2rem;
-      padding-top: 2rem;
-    }
-
+    .filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 2rem; padding-top: 2rem; }
     .filter-btn {
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 0.6rem 1.4rem;
-      border-radius: 9999px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.2s;
+      background: var(--card); border: 1px solid var(--border); color: var(--muted);
+      padding: 0.6rem 1.4rem; border-radius: 9999px; font-size: 0.9rem; font-weight: 500;
+      cursor: pointer; font-family: inherit; transition: all 0.2s;
     }
-    .filter-btn.active,
-    .filter-btn:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
+    .filter-btn.active, .filter-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-    /* ── NO RESULTS ── */
-    .no-results {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 3rem;
-      color: var(--muted);
-      font-size: 1.2rem;
-    }
+    .no-results { grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--muted); font-size: 1.2rem; }
 
-    /* ── FEATURED POST ── */
     .featured-post {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; margin-bottom: 2rem;
       transition: border-color 0.3s, transform 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
+      cursor: pointer; text-decoration: none; color: inherit;
     }
-    .featured-post:hover {
-      border-color: rgba(172,46,68,0.4);
-      transform: translateY(-3px);
-    }
-
+    .featured-post:hover { border-color: rgba(172,46,68,0.4); transform: translateY(-3px); }
     .featured-visual {
       position: relative;
       background: linear-gradient(135deg, rgba(172,46,68,0.25) 0%, rgba(30,109,255,0.15) 60%, rgba(7,9,15,0.9) 100%);
-      min-height: 320px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
+      min-height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
-
     .featured-visual::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
       background-size: 40px 40px;
     }
-
-    .featured-visual-icon {
-      font-size: 5rem;
-      position: relative; z-index: 1;
-      filter: drop-shadow(0 0 40px rgba(172,46,68,0.6));
-      animation: float 4s ease-in-out infinite;
-    }
-
-    .featured-content {
-      padding: 2.5rem;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-
-    .featured-content h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.6rem; font-weight: 800;
-      line-height: 1.2; margin-bottom: 0.75rem;
-    }
-
+    .featured-visual-icon { font-size: 5rem; position: relative; z-index: 1; filter: drop-shadow(0 0 40px rgba(172,46,68,0.6)); animation: float 4s ease-in-out infinite; }
+    .featured-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .featured-content h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.75rem; }
     .featured-content p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
-
-    .featured-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: var(--accent2); font-size: 0.85rem; font-weight: 500;
-      text-decoration: none;
-      transition: gap 0.2s;
-    }
+    .featured-cta { display: inline-flex; align-items: center; gap: 6px; color: var(--accent2); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: gap 0.2s; }
     .featured-cta:hover { gap: 10px; }
 
-    /* ── POST TAGS ── */
-    .post-tag {
-      display: inline-block;
-      padding: 0.3rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em;
-      margin-bottom: 1rem;
-    }
+    .post-tag { display: inline-block; padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
     .tag-auto { background: rgba(172,46,68,0.15); color: var(--accent2); border: 1px solid rgba(172,46,68,0.25); }
     .tag-build { background: rgba(30,109,255,0.15); color: #60a5fa; border: 1px solid rgba(30,109,255,0.25); }
     .tag-code { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
@@ -322,55 +151,30 @@
     .tag-notebook { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
     .tag-community { background: rgba(249,115,22,0.12); color: #f97316; border: 1px solid rgba(249,115,22,0.2); }
 
-    /* ── POST META ── */
-    .post-meta {
-      display: flex; align-items: center; gap: 1rem;
-      font-size: 0.78rem; color: var(--muted);
-    }
-
-    .post-meta-avatar {
-      width: 28px; height: 28px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.65rem; font-weight: 700;
-      flex-shrink: 0;
-    }
+    .post-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.78rem; color: var(--muted); }
+    .post-meta-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
     .av1 { background: linear-gradient(135deg, var(--accent), #ff8c60); }
     .av2 { background: linear-gradient(135deg, var(--blue), #60a5fa); }
     .av3 { background: linear-gradient(135deg, #4ade80, #22d3ee); }
     .av4 { background: linear-gradient(135deg, #a78bfa, #e879f9); }
     .av5 { background: linear-gradient(135deg, #fbbf24, #f97316); }
-
     .post-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
 
-    /* ── POSTS GRID ── */
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
+    /* invisible anchor so smooth-scroll lands just above the grid */
+    #postsAnchor { display: block; height: 0; position: relative; top: -110px; }
+
+    .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 
     .post-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color 0.3s, transform 0.3s;
-      text-decoration: none;
-      color: inherit;
-      display: block;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; cursor: pointer; transition: border-color 0.3s, transform 0.3s;
+      text-decoration: none; color: inherit; display: block;
     }
-    .post-card:hover {
-      border-color: rgba(172,46,68,0.35);
-      transform: translateY(-4px);
-    }
+    .post-card:hover { border-color: rgba(172,46,68,0.35); transform: translateY(-4px); }
 
     .post-thumb {
-      height: 160px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem;
-      position: relative;
-      overflow: hidden;
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
     }
     .thumb-auto { background: linear-gradient(135deg, rgba(172,46,68,0.3), rgba(7,9,15,0.8)); }
     .thumb-build { background: linear-gradient(135deg, rgba(30,109,255,0.3), rgba(7,9,15,0.8)); }
@@ -378,181 +182,83 @@
     .thumb-strategy { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(7,9,15,0.8)); }
     .thumb-notebook { background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(7,9,15,0.8)); }
     .thumb-community { background: linear-gradient(135deg, rgba(249,115,22,0.2), rgba(7,9,15,0.8)); }
-
     .post-thumb::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
       background-size: 30px 30px;
     }
-
     .post-thumb-emoji { position: relative; z-index: 1; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
 
     .post-body { padding: 1.4rem; }
-    .post-body h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem; font-weight: 700; margin: 0.6rem 0 0.5rem;
-      line-height: 1.3;
-    }
+    .post-body h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin: 0.6rem 0 0.5rem; line-height: 1.3; }
     .post-body p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1.1rem; }
-
-    .post-footer {
-      display: flex; align-items: center; justify-content: space-between;
-    }
-
+    .post-footer { display: flex; align-items: center; justify-content: space-between; }
     .read-more {
       font-size: 0.78rem; color: var(--accent2);
       display: inline-flex; align-items: center; gap: 4px;
-      transition: gap 0.2s, color 0.2s;
-      text-decoration: none;
-      font-weight: 500;
-      padding: 0.3rem 0.7rem;
-      border-radius: 6px;
-      background: rgba(232,69,96,0.08);
-      border: 1px solid rgba(232,69,96,0.18);
+      transition: gap 0.2s, color 0.2s; text-decoration: none; font-weight: 500;
+      padding: 0.3rem 0.7rem; border-radius: 6px;
+      background: rgba(232,69,96,0.08); border: 1px solid rgba(232,69,96,0.18);
     }
-    .read-more:hover {
-      gap: 8px;
-      background: rgba(232,69,96,0.16);
-      border-color: rgba(232,69,96,0.35);
-      color: #ff6b84;
-    }
+    .read-more:hover { gap: 8px; background: rgba(232,69,96,0.16); border-color: rgba(232,69,96,0.35); color: #ff6b84; }
     .post-card:hover .read-more { gap: 8px; }
 
-    /* ── SIDEBAR ── */
     .blog-main-layout {
       max-width: 1200px; margin: 0 auto;
       padding: 0 3rem 6rem;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 2.5rem;
+      display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem;
     }
-
     .sidebar { position: sticky; top: 100px; height: fit-content; }
-
-    .sidebar-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .sidebar-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem;
-    }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.25rem; }
+    .sidebar-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; }
     .sidebar-card p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1rem; }
-
-    .sidebar-input {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.6rem 0.9rem;
-      color: var(--text);
-      font-family: inherit; font-size: 0.82rem;
-      outline: none;
-      margin-bottom: 0.65rem;
-      transition: border-color 0.2s;
-    }
+    .sidebar-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.82rem; outline: none; margin-bottom: 0.65rem; transition: border-color 0.2s; }
     .sidebar-input:focus { border-color: rgba(172,46,68,0.5); }
     .sidebar-input::placeholder { color: var(--muted); }
-
-    .sidebar-btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none;
-      padding: 0.6rem;
-      border-radius: 8px;
-      font-family: inherit; font-size: 0.82rem; font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
+    .sidebar-btn { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.6rem; border-radius: 8px; font-family: inherit; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
     .sidebar-btn:hover { opacity: 0.9; }
-
     .trending-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-    .trending-item {
-      display: flex; gap: 0.75rem; align-items: flex-start;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
+    .trending-item { display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer; transition: opacity 0.2s; }
     .trending-item:hover { opacity: 0.75; }
-    .trending-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem; font-weight: 800;
-      color: rgba(172,46,68,0.4);
-      flex-shrink: 0; line-height: 1.3;
-      min-width: 24px;
-    }
+    .trending-num { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: rgba(172,46,68,0.4); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
     .trending-item p { font-size: 0.82rem; line-height: 1.4; font-weight: 500; }
     .trending-item span { font-size: 0.73rem; color: var(--muted); }
-
-    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
     /* ── PAGINATION ── */
     .pagination {
       display: flex; align-items: center; justify-content: center;
       gap: 0.5rem; padding: 0 3rem 4rem;
     }
-
     .page-btn {
-      width: 38px; height: 38px;
+      min-width: 38px; height: 38px; padding: 0 12px;
       display: flex; align-items: center; justify-content: center;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: inherit; font-size: 0.85rem; color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; font-family: inherit; font-size: 0.85rem; color: var(--muted);
+      cursor: pointer; transition: all 0.2s;
     }
-    .page-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
-    .page-btn.active {
-      background: rgba(172,46,68,0.15);
-      border-color: rgba(172,46,68,0.4);
-      color: var(--accent2);
-    }
+    .page-btn:hover:not(:disabled) { color: var(--text); border-color: rgba(255,255,255,0.15); }
+    .page-btn.active { background: rgba(172,46,68,0.15); border-color: rgba(172,46,68,0.4); color: var(--accent2); font-weight: 600; }
+    .page-btn:disabled { opacity: 0.3; cursor: default; }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
-    }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .blog-main-layout { grid-template-columns: 1fr; }
-      .sidebar { position: static; }
-      .posts-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (max-width: 900px) { .blog-main-layout { grid-template-columns: 1fr; } .sidebar { position: static; } .posts-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
       .blog-hero { padding: 7rem 1.5rem 3rem; }
-      .library-container { padding: 0 1.5rem 4rem; }
+      .library-container { padding: 0 1.5rem 3rem; }
       .blog-main-layout { padding: 0 1.5rem 4rem; }
       .pagination { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .featured-post { grid-template-columns: 1fr; }
-      .featured-visual { min-height: 180px; }
+      .featured-post { grid-template-columns: 1fr; } .featured-visual { min-height: 180px; }
       .posts-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">VexGrind</a>
     <ul class="nav-links">
@@ -568,19 +274,17 @@
     </div>
   </nav>
 
-  <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+  <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
     </svg>
   </button>
 
-  <!-- BLOG HERO -->
   <section class="blog-hero">
     <div class="blog-hero-inner">
       <div class="blog-hero-badge"><span>●</span> Fresh from the pit</div>
       <h1>The VexGrind <em>Blog</em></h1>
       <p>Deep dives, build breakdowns, and strategy guides written by teams that compete. No fluff — just what actually wins matches.</p>
-
       <div class="search-bar">
         <input type="text" id="globalSearch" placeholder="Search posts… (autonomous, build, strategy, etc.)" />
         <button onclick="filterPosts()">
@@ -593,9 +297,7 @@
     </div>
   </section>
 
-  <!-- FILTERS + CONTENT -->
   <div class="library-container">
-
     <div class="filters" id="filters">
       <button class="filter-btn active" data-category="all">All Posts</button>
       <button class="filter-btn" data-category="community">Community</button>
@@ -606,9 +308,11 @@
       <button class="filter-btn" data-category="auto">Autonomous</button>
     </div>
 
-    <!-- FEATURED (only shown when no filter/search is active) -->
+    <!-- Invisible scroll target — sits just above the content -->
+    <span id="postsAnchor"></span>
+
     <div id="featuredWrapper">
-      <a href="blog_obstaclecourses.html" class="featured-post reveal" id="featuredPost">
+      <a href="blog_obstaclecourses.html" class="featured-post reveal">
         <div class="featured-visual">
           <div class="featured-visual-icon">🎮</div>
         </div>
@@ -629,14 +333,11 @@
       </a>
     </div>
 
-    <!-- POSTS GRID -->
     <div class="posts-grid" id="postsGrid"></div>
-
   </div>
 
-  <!-- SIDEBAR + PAGINATION -->
-  <div class="blog-main-layout" id="sidebarLayout" style="padding-top: 0;">
-    <div><!-- spacer --></div>
+  <div class="blog-main-layout" style="padding-top: 0;">
+    <div></div>
     <aside class="sidebar">
       <div class="sidebar-card reveal">
         <h3>📬 Get the digest</h3>
@@ -644,15 +345,21 @@
         <input class="sidebar-input" type="email" placeholder="your@email.com" />
         <button class="sidebar-btn">Subscribe for free</button>
       </div>
+      <div class="sidebar-card reveal">
+        <h3 style="margin-bottom:1rem;">🔥 Trending this week</h3>
+        <ul class="trending-list">
+          <li class="trending-item"><span class="trending-num">01</span><div><p>Odometry in 48 Hours: A Beginner's Survival Guide</p><span>1.2k reads</span></div></li>
+          <li class="trending-item"><span class="trending-num">02</span><div><p>PROS 4 vs VEXcode: Which Should Your Team Use?</p><span>940 reads</span></div></li>
+          <li class="trending-item"><span class="trending-num">03</span><div><p>Alliance Selection Psychology</p><span>780 reads</span></div></li>
+          <li class="trending-item"><span class="trending-num">04</span><div><p>Engineering Notebook Template — 35/40</p><span>650 reads</span></div></li>
+        </ul>
+      </div>
     </aside>
   </div>
 
-  <div class="pagination reveal">
-    <button class="page-btn">←</button>
-    <button class="page-btn active">1</button>
-  </div>
+  <!-- PAGINATION — built dynamically -->
+  <div class="pagination" id="pagination"></div>
 
-  <!-- FOOTER -->
   <footer style="border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 0.82rem;">
     <a href="index.html" class="nav-logo" style="font-size:1.1rem;">VexGrind</a>
     <p>© 2026 VexGrind. All rights reserved.</p>
@@ -664,73 +371,113 @@
   </footer>
 
   <script>
-    // ── BLOG POSTS DATABASE ──
+    // ── ALL BLOG POSTS ──
+    // To add a new page, just push another object into this array.
+    // The pagination updates automatically — 6 posts per page.
     const postsData = [
       {
-        id: 1,
-        category: "community",
-        link: "blog_vexnamereveal.html",
-        emoji: "🤝",
-        thumb: "thumb-community",
-        tagClass: "tag-community",
-        tagLabel: "Community",
+        id: 1, category: "community", link: "blog_vexnamereveal.html",
+        emoji: "🤝", thumb: "thumb-community", tagClass: "tag-community", tagLabel: "Community",
         title: "VEX NAME REVEAL!!",
         excerpt: "The official VEX Robotics game names for the 2026-2027 season were recently revealed in a retro-style announcement a few days ago. Click here to find out more!",
-        avatarClass: "av2",
-        avatarInitials: "NP",
-        date: "Mar4",
-        readTime: "8min"
+        avatarClass: "av2", avatarInitials: "NP", date: "Mar 4", readTime: "8min"
       },
       {
-        id: 2,
-        category: "build",
-        link: "blog_obstaclecourses.html",
-        emoji: "🎮",
-        thumb: "thumb-build",
-        tagClass: "tag-build",
-        tagLabel: "Build Guide",
+        id: 2, category: "build", link: "blog_obstaclecourses.html",
+        emoji: "🎮", thumb: "thumb-build", tagClass: "tag-build", tagLabel: "Build Guide",
         title: "Experimenting with obstacle courses",
         excerpt: "A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.",
-        avatarClass: "av2",
-        avatarInitials: "SG",
-        date: "Apr2",
-        readTime: "5min"
+        avatarClass: "av2", avatarInitials: "SG", date: "Apr 2", readTime: "5min"
       },
       {
-        id: 3,
-        category: "code",
-        link: "blog_conventionalunconventional.html",
-        emoji: "🧠",
-        thumb: "thumb-code",
-        tagClass: "tag-code",
-        tagLabel: "Code",
+        id: 3, category: "code", link: "blog_conventionalunconventional.html",
+        emoji: "🧠", thumb: "thumb-code", tagClass: "tag-code", tagLabel: "Code",
         title: "Conventional and Unconventional Robots",
         excerpt: "Conventional robots often fit the stereotypes that a 'robot' carries. One popular example of unconventional robots is the branch of 'soft robots' — utilising compliant materials, contrary to their conventional counterparts.",
-        avatarClass: "av3",
-        avatarInitials: "LR",
-        date: "Mar28",
-        readTime: "7min"
+        avatarClass: "av3", avatarInitials: "LR", date: "Mar 28", readTime: "7min"
+      },
+      {
+        id: 4, category: "strategy", link: "#",
+        emoji: "🎯", thumb: "thumb-strategy", tagClass: "tag-strategy", tagLabel: "Strategy",
+        title: "Alliance Selection Psychology: How to Get Picked Every Time",
+        excerpt: "Rankings don't always predict picks. Here's the meta-game of alliance selection — what top teams look for and how to market yourself.",
+        avatarClass: "av4", avatarInitials: "JP", date: "Mar 22", readTime: "6min"
+      },
+      {
+        id: 5, category: "notebook", link: "#",
+        emoji: "📋", thumb: "thumb-notebook", tagClass: "tag-notebook", tagLabel: "Notebook",
+        title: "We Scored 35/40 on Our Engineering Notebook. Here's Our Template",
+        excerpt: "Breaking down the design decision format, team meeting logs, and section ordering that helped us nearly ace our notebook at Worlds.",
+        avatarClass: "av5", avatarInitials: "AW", date: "Mar 17", readTime: "10min"
+      },
+      {
+        id: 6, category: "auto", link: "#",
+        emoji: "🧠", thumb: "thumb-auto", tagClass: "tag-auto", tagLabel: "Autonomous",
+        title: "Odometry in 48 Hours: A Beginner's Survival Guide",
+        excerpt: "When our qualifier was 2 days away and we had zero odometry code, we pulled this off. Annotated code, diagrams, and all the gotchas included.",
+        avatarClass: "av1", avatarInitials: "MK", date: "Mar 10", readTime: "15min"
+      },
+      {
+        id: 7, category: "build", link: "#",
+        emoji: "⚙️", thumb: "thumb-build", tagClass: "tag-build", tagLabel: "Build Guide",
+        title: "Catapult vs Flywheel in High Stakes: A Data-Driven Breakdown",
+        excerpt: "We built both and tested them back-to-back over 200 shots. Here are the shot consistency numbers, build complexity scores, and our final verdict.",
+        avatarClass: "av3", avatarInitials: "SR", date: "Feb 26", readTime: "11min"
+      },
+      {
+        id: 8, category: "code", link: "#",
+        emoji: "🖥️", thumb: "thumb-code", tagClass: "tag-code", tagLabel: "Code",
+        title: "Vision Sensor Targeting: A Working Auto-Aim Implementation",
+        excerpt: "Full code walkthrough of our vision-sensor-based goal tracking system. Covers PID control loop, latency compensation, and field calibration.",
+        avatarClass: "av4", avatarInitials: "JP", date: "Feb 18", readTime: "13min"
+      },
+      {
+        id: 9, category: "strategy", link: "#",
+        emoji: "🏆", thumb: "thumb-strategy", tagClass: "tag-strategy", tagLabel: "Strategy",
+        title: "Match Scouting 101: The Sheet We Use at Every Tournament",
+        excerpt: "Our printable scouting sheet + digital spreadsheet for tracking opponent tendencies, auto consistency, and driver control strength across a full event.",
+        avatarClass: "av5", avatarInitials: "AW", date: "Feb 11", readTime: "5min"
       },
     ];
 
-    function renderPosts(filtered) {
+    const POSTS_PER_PAGE = 6;
+    let currentPage = 1;
+    let filteredPosts = [...postsData];
+
+    // ── Reveal animation observer ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 70);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Render the current page slice ──
+    function renderPage() {
       const grid = document.getElementById('postsGrid');
       const featuredWrapper = document.getElementById('featuredWrapper');
       const searchTerm = document.getElementById('globalSearch').value.trim();
       const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
 
-      // Hide featured if filtering/searching
+      // Hide featured banner when user is filtering or searching
       const isFiltering = activeFilter !== 'all' || searchTerm !== '';
       featuredWrapper.style.display = isFiltering ? 'none' : 'block';
 
       grid.innerHTML = '';
 
-      if (filtered.length === 0) {
+      if (filteredPosts.length === 0) {
         grid.innerHTML = `<div class="no-results">No posts found. Try a different search term.</div>`;
+        buildPagination();
         return;
       }
 
-      filtered.forEach(post => {
+      const start = (currentPage - 1) * POSTS_PER_PAGE;
+      const slice = filteredPosts.slice(start, start + POSTS_PER_PAGE);
+
+      slice.forEach(post => {
         grid.innerHTML += `
           <a href="${post.link}" class="post-card reveal">
             <div class="post-thumb ${post.thumb}">
@@ -743,7 +490,7 @@
               <div class="post-footer">
                 <div class="post-meta">
                   <div class="post-meta-avatar ${post.avatarClass}">${post.avatarInitials}</div>
-                  <span style="font-size:0.78rem; color:var(--muted)">${post.date} · ${post.readTime}</span>
+                  <span style="font-size:0.78rem;color:var(--muted)">${post.date} · ${post.readTime}</span>
                 </div>
                 <span class="read-more">Read <span>→</span></span>
               </div>
@@ -752,43 +499,77 @@
         `;
       });
 
-      // Re-observe new reveal elements
-      document.querySelectorAll('.post-card.reveal:not(.visible)').forEach(el => observer.observe(el));
+      grid.querySelectorAll('.post-card.reveal').forEach(el => observer.observe(el));
+      buildPagination();
     }
 
-    function filterPosts() {
-      const searchTerm = document.getElementById('globalSearch').value.toLowerCase().trim();
-      const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
+    // ── Build pagination buttons ──
+    function buildPagination() {
+      const container = document.getElementById('pagination');
+      const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+      container.innerHTML = '';
 
-      let filtered = postsData;
+      if (totalPages <= 1) return;
 
-      if (activeFilter !== 'all') {
-        filtered = filtered.filter(p => p.category === activeFilter);
-      }
-
-      if (searchTerm) {
-        filtered = filtered.filter(p =>
-          p.title.toLowerCase().includes(searchTerm) ||
-          p.excerpt.toLowerCase().includes(searchTerm) ||
-          p.tagLabel.toLowerCase().includes(searchTerm)
-        );
-      }
-
-      renderPosts(filtered);
-    }
-
-    // Intersection observer for reveal animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 70);
+      function makeBtn(label, targetPage, disabled = false) {
+        const btn = document.createElement('button');
+        btn.className = 'page-btn' + (targetPage === currentPage ? ' active' : '');
+        btn.textContent = label;
+        btn.disabled = disabled;
+        if (!disabled) {
+          btn.addEventListener('click', () => goToPage(targetPage));
         }
+        return btn;
+      }
+
+      // ← Prev
+      container.appendChild(makeBtn('←', currentPage - 1, currentPage === 1));
+
+      // Smart page number window: always first, last, and ±1 around current
+      const pageSet = new Set([1, totalPages]);
+      for (let p = Math.max(1, currentPage - 1); p <= Math.min(totalPages, currentPage + 1); p++) pageSet.add(p);
+      const pages = [...pageSet].sort((a, b) => a - b);
+
+      let prev = 0;
+      pages.forEach(p => {
+        if (prev && p - prev > 1) {
+          const dots = document.createElement('button');
+          dots.className = 'page-btn';
+          dots.textContent = '…';
+          dots.disabled = true;
+          container.appendChild(dots);
+        }
+        container.appendChild(makeBtn(p, p));
+        prev = p;
       });
-    }, { threshold: 0.08 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      // → Next
+      container.appendChild(makeBtn('→', currentPage + 1, currentPage === totalPages));
+    }
 
-    // Category filter buttons
+    // ── Go to page and scroll up to posts ──
+    function goToPage(page) {
+      currentPage = page;
+      renderPage();
+      document.getElementById('postsAnchor').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ── Filter + search ──
+    function filterPosts() {
+      const term = document.getElementById('globalSearch').value.toLowerCase().trim();
+      const cat = document.querySelector('.filter-btn.active').dataset.category;
+
+      filteredPosts = postsData.filter(p => {
+        const catOk = cat === 'all' || p.category === cat;
+        const termOk = !term || p.title.toLowerCase().includes(term) || p.excerpt.toLowerCase().includes(term) || p.tagLabel.toLowerCase().includes(term);
+        return catOk && termOk;
+      });
+
+      currentPage = 1;
+      renderPage();
+    }
+
+    // ── Wire up filter buttons ──
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -797,36 +578,24 @@
       });
     });
 
-    // Live search
+    // ── Live search ──
     document.getElementById('globalSearch').addEventListener('input', filterPosts);
 
-    // Pagination
-    document.querySelectorAll('.page-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        if (['←','→','…'].includes(this.textContent)) return;
-        document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-
-    // Fullscreen
+    // ── Fullscreen ──
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     if (fullscreenBtn) {
-      const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-      const toggleFullscreen = async () => {
-        if (isFullscreen()) {
-          const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-          if (exitFn) await exitFn.call(document);
+      fullscreenBtn.addEventListener('click', async () => {
+        const isFS = document.fullscreenElement || document.webkitFullscreenElement;
+        if (isFS) {
+          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
         } else {
-          const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
-          if (requestFn) await requestFn.call(document.documentElement);
+          (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen).call(document.documentElement);
         }
-      };
-      fullscreenBtn.addEventListener('click', toggleFullscreen);
+      });
     }
 
-    // Initial render
-    renderPosts(postsData);
+    // ── Init ──
+    renderPage();
   </script>
 </body>
 </html>
