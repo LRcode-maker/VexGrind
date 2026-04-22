@@ -548,7 +548,8 @@
     </div>
   </section>
 
- 
+
+
   <!-- FEATURED POST -->
       <div class="blog-grid-wrap">
     <a href="blog_obstaclecourses.html" class="featured-post reveal">
@@ -556,7 +557,7 @@
         <div class="featured-visual-icon">🎮</div>
       </div>
       <div class="featured-content">
-        <span class="post-tag tag-build">🎮Driver Skills</span>
+        <span class="post-tag tag-auto">🎮Driver Skills</span>
         <h2>Experimenting with Obstacle Courses</h2>
         <p>A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through 
           for our starting two in the challenges in the future.</p>
@@ -586,6 +587,7 @@
 
         <!-- Card 1 — Obstacle Courses (LINKED) -->
         <a href="blog_vexnamereveal.html" class="post-card reveal">
+        <div class="post-card reveal">
           <div class="post-thumb thumb-community">
             <span class="post-thumb-emoji">🤝</span>
           </div>
@@ -602,6 +604,7 @@
             </div>
           </div>
         </div>
+        </a>
 
         <a href="blog_obstaclecourses.html" class="post-card reveal">
           <div class="post-thumb thumb-build">
@@ -806,12 +809,12 @@
       <div class="sidebar-card reveal">
         <h3 style="margin-bottom:1rem;">Browse by topic</h3>
         <div class="tag-cloud">
-          <span class="post-tag tag-auto" style="cursor:pointer;" onclick="setFilter(this,'auto')">🧠 Autonomous</span>
-          <span class="post-tag tag-build" style="cursor:pointer;" onclick="setFilter(this,'build')">🔧 Build</span>
-          <span class="post-tag tag-code" style="cursor:pointer;" onclick="setFilter(this,'code')">💻 Code</span>
-          <span class="post-tag tag-strategy" style="cursor:pointer;" onclick="setFilter(this,'strategy')">🎯 Strategy</span>
-          <span class="post-tag tag-notebook" style="cursor:pointer;" onclick="setFilter(this,'notebook')">📋 Notebook</span>
-          <span class="post-tag tag-community" style="cursor:pointer;" onclick="setFilter(this,'community')">🤝 Community</span>
+          <span class="post-tag tag-auto" style="cursor:pointer;">🧠 Autonomous</span>
+          <span class="post-tag tag-build" style="cursor:pointer;">🔧 Build</span>
+          <span class="post-tag tag-code" style="cursor:pointer;">💻 Code</span>
+          <span class="post-tag tag-strategy" style="cursor:pointer;">🎯 Strategy</span>
+          <span class="post-tag tag-notebook" style="cursor:pointer;">📋 Notebook</span>
+          <span class="post-tag tag-community" style="cursor:pointer;">🤝 Community</span>
         </div>
       </div>
     </aside>
@@ -851,28 +854,8 @@
     reveals.forEach(el => observer.observe(el));
 
     function setFilter(btn, cat) {
-      // Remove active from all filter tabs
       document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      
-      // If btn is provided and is a filter-tab, set it active
-      if (btn && btn.classList.contains('filter-tab')) {
-        btn.classList.add('active');
-      } else {
-        // Find the filter-tab with matching cat
-        const filterBtn = Array.from(document.querySelectorAll('.filter-tab')).find(t => t.getAttribute('onclick')?.includes(`'${cat}'`));
-        if (filterBtn) filterBtn.classList.add('active');
-      }
-      
-      const posts = document.querySelectorAll('.post-card, .featured-post');
-      posts.forEach(post => {
-        if (cat === 'all') {
-          post.style.display = 'block';
-        } else {
-          const tagClass = 'tag-' + cat;
-          const hasTag = post.querySelector('.' + tagClass);
-          post.style.display = hasTag ? 'block' : 'none';
-        }
-      });
+      btn.classList.add('active');
     }
 
     document.querySelectorAll('.page-btn').forEach(btn => {
