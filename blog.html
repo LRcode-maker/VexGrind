@@ -160,7 +160,6 @@
     .av5 { background: linear-gradient(135deg, #fbbf24, #f97316); }
     .post-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
 
-    /* invisible anchor so smooth-scroll lands just above the grid */
     #postsAnchor { display: block; height: 0; position: relative; top: -110px; }
 
     .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
@@ -224,7 +223,6 @@
     .trending-item p { font-size: 0.82rem; line-height: 1.4; font-weight: 500; }
     .trending-item span { font-size: 0.73rem; color: var(--muted); }
 
-    /* ── PAGINATION ── */
     .pagination {
       display: flex; align-items: center; justify-content: center;
       gap: 0.5rem; padding: 0 3rem 4rem;
@@ -282,6 +280,7 @@
 
   <section class="blog-hero">
     <div class="blog-hero-inner">
+      <div class="blog-hero-badge"><span>●</span> Fresh from the pit</div>
       <h1>The VexGrind <em>Blog</em></h1>
       <p>Deep dives, build breakdowns, and strategy guides written by teams that compete. No fluff — just what actually wins matches.</p>
       <div class="search-bar">
@@ -307,23 +306,23 @@
       <button class="filter-btn" data-category="auto">Autonomous</button>
     </div>
 
-    <!-- Invisible scroll target — sits just above the content -->
     <span id="postsAnchor"></span>
 
+    <!-- Featured post — update this whenever you want a new one highlighted -->
     <div id="featuredWrapper">
-      <a href="blog_obstaclecourses.html" class="featured-post reveal">
+      <a href="blog_autonomousmazeescaper.html" class="featured-post reveal">
         <div class="featured-visual">
-          <div class="featured-visual-icon">🎮</div>
+          <div class="featured-visual-icon">🤖</div>
         </div>
         <div class="featured-content">
-          <span class="post-tag tag-auto">🎮 Driver Skills</span>
-          <h2>Experimenting with Obstacle Courses</h2>
-          <p>A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.</p>
+          <span class="post-tag tag-auto">Autonomous</span>
+          <h2>Autonomous Maze Escaper</h2>
+          <p>Full breakdown of our autonomous maze-solving robot — the sensor stack, the wall-following algorithm, the dead-end recovery logic, and everything we learned building it from scratch.</p>
           <div class="post-meta" style="margin-bottom:1.25rem;">
-            <div class="post-meta-avatar av1">MK</div>
-            <span>Sarvesh.G & Naitik.P · VexGrind</span>
+            <div class="post-meta-avatar av1">AS</div>
+            <span>Aryan.S & Naitik.P · VexGrind</span>
             <div class="post-meta-sep"></div>
-            <span>Apr 14, 2026</span>
+            <span>Apr 22, 2026</span>
             <div class="post-meta-sep"></div>
             <span>5 min read</span>
           </div>
@@ -333,34 +332,7 @@
     </div>
 
     <div class="posts-grid" id="postsGrid"></div>
-
-    
   </div>
-
-
- <div id="featuredWrapper">
-      <a href="blog_autonomousmazeescaper.html" class="featured-post reveal" id="featuredPost">
-        <div class="featured-visual">
-          <div class="featured-visual-icon"></div>
-        </div>
-        <div class="featured-content">
-          <span class="post-tag tag-auto"> Autonomous</span>
-          <h2>Autonomous Maze Escaper </h2>
-          <p>Full breakdown of our autonomous maze-solving robot — the sensor stack, the wall-following algorithm, the dead-end recovery logic, and everything we learned building it from scratch.</p>
-          <div class="post-meta" style="margin-bottom:1.25rem;">
-            <div class="post-meta-avatar av1">MK</div>
-            <span>Aryan.S & Naitik.P · VexGrind</span>
-            <div class="post-meta-sep"></div>
-            <span>Apr 22, 2026</span>
-            <div class="post-meta-sep"></div>
-            <span>5 min read</span>
-          </div>
-          <span class="featured-cta">Read full article <span>→</span>
-        </div>
-      </a>
-    </div>
-          
-     
 
   <div class="blog-main-layout" style="padding-top: 0;">
     <div></div>
@@ -368,13 +340,12 @@
       <div class="sidebar-card reveal">
         <h3>📬 Get the digest</h3>
         <p>New build guides, code drops, and strategy breakdowns — straight to your inbox every week.</p>
-        <input class="sidebar-input" type="email" placeholder="your@email.com" />
-        <button class="sidebar-btn">Subscribe for free</button>
+        <input class="sidebar-input" type="email" id="digestEmail" placeholder="your@email.com" />
+        <button class="sidebar-btn" onclick="handleSubscribe()">Subscribe for free</button>
       </div>
     </aside>
   </div>
 
-  <!-- PAGINATION — built dynamically -->
   <div class="pagination" id="pagination"></div>
 
   <footer style="border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 0.82rem;">
@@ -389,14 +360,14 @@
 
   <script>
     // ── ALL BLOG POSTS ──
-    // To add a new page, just push another object into this array.
-    // The pagination updates automatically — 6 posts per page.
+    // To add a new post: add an object to this array. Pagination updates automatically (6 per page).
+    // Also update the #featuredWrapper HTML above to point to your newest post.
     const postsData = [
       {
         id: 1, category: "community", link: "blog_vexnamereveal.html",
         emoji: "🤝", thumb: "thumb-community", tagClass: "tag-community", tagLabel: "Community",
         title: "VEX NAME REVEAL!!",
-        excerpt: "The official VEX Robotics game names for the 2026-2027 season were recently revealed in a retro-style announcement a few days ago. Click here to find out more!",
+        excerpt: "The official VEX Robotics game names for the 2026-2027 season were recently revealed in a retro-style announcement. Click here to find out more!",
         avatarClass: "av2", avatarInitials: "NP", date: "Mar 4", readTime: "8min"
       },
       {
@@ -414,23 +385,12 @@
         avatarClass: "av3", avatarInitials: "LR", date: "Mar 28", readTime: "7min"
       },
       {
-        id: 4, category: "code", link: "blog_autonomousmazeescaper.html",
-        emoji: "🧠", thumb: "thumb-code", tagClass: "tag-code", tagLabel: "Code",
+        id: 4, category: "auto", link: "blog_autonomousmazeescaper.html",
+        emoji: "🤖", thumb: "thumb-auto", tagClass: "tag-auto", tagLabel: "Autonomous",
         title: "Autonomous Maze Escaper",
-        excerpt: "Naitik and Aryan coded the robot to escape a maze ... autonomously!",
-        avatarClass: "av3", avatarInitials: "AS", date: "Apr 22", readTime: "2min"
+        excerpt: "Full breakdown of our autonomous maze-solving robot — the sensor stack, the wall-following algorithm, the dead-end recovery logic, and everything we learned building it from scratch.",
+        avatarClass: "av1", avatarInitials: "AS", date: "Apr 22", readTime: "5min"
       },
-
-    ];
-
-    const POSTS_PER_PAGE = 6;
-    let currentPage = 1;
-    let filteredPosts = [...postsData];
-
-    // ── Reveal animation observer ──
-    const observer = new IntersectionObserver((entries) => {
-      },
-
     ];
 
     const POSTS_PER_PAGE = 6;
@@ -455,7 +415,6 @@
       const searchTerm = document.getElementById('globalSearch').value.trim();
       const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
 
-      // Hide featured banner when user is filtering or searching
       const isFiltering = activeFilter !== 'all' || searchTerm !== '';
       featuredWrapper.style.display = isFiltering ? 'none' : 'block';
 
@@ -509,16 +468,12 @@
         btn.className = 'page-btn' + (targetPage === currentPage ? ' active' : '');
         btn.textContent = label;
         btn.disabled = disabled;
-        if (!disabled) {
-          btn.addEventListener('click', () => goToPage(targetPage));
-        }
+        if (!disabled) btn.addEventListener('click', () => goToPage(targetPage));
         return btn;
       }
 
-      // ← Prev
       container.appendChild(makeBtn('←', currentPage - 1, currentPage === 1));
 
-      // Smart page number window: always first, last, and ±1 around current
       const pageSet = new Set([1, totalPages]);
       for (let p = Math.max(1, currentPage - 1); p <= Math.min(totalPages, currentPage + 1); p++) pageSet.add(p);
       const pages = [...pageSet].sort((a, b) => a - b);
@@ -536,11 +491,10 @@
         prev = p;
       });
 
-      // → Next
       container.appendChild(makeBtn('→', currentPage + 1, currentPage === totalPages));
     }
 
-    // ── Go to page and scroll up to posts ──
+    // ── Go to page and scroll up ──
     function goToPage(page) {
       currentPage = page;
       renderPage();
@@ -562,7 +516,32 @@
       renderPage();
     }
 
-    // ── Wire up filter buttons ──
+    // ── Subscribe button (shows confirmation; wire to a real email service when ready) ──
+    function handleSubscribe() {
+      const input = document.getElementById('digestEmail');
+      const email = input.value.trim();
+      const card = input.closest('.sidebar-card');
+
+      if (!email || !email.includes('@')) {
+        input.style.borderColor = 'rgba(232,69,96,0.6)';
+        input.focus();
+        return;
+      }
+
+      // Replace card content with a thank-you message
+      card.innerHTML = `
+        <div style="text-align:center; padding: 0.5rem 0;">
+          <div style="font-size:2rem; margin-bottom:0.75rem;">✅</div>
+          <h3 style="font-family:'Syne',sans-serif; margin-bottom:0.5rem;">You're in!</h3>
+          <p style="color:var(--muted); font-size:0.82rem; line-height:1.6;">
+            <strong style="color:var(--text)">${email}</strong> is now subscribed.<br>
+            You'll get notified whenever a new post drops.
+          </p>
+        </div>
+      `;
+    }
+
+    // ── Filter button wiring ──
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
