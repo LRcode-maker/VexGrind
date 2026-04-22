@@ -630,12 +630,10 @@
 
     <div class="post-meta-row">
       <span class="tag">Autonomous</span>
-      <span class="tag blue">Sensors</span>
-      <span class="tag green">Build Log</span>
       <span class="meta-dot">·</span>
       <span class="meta-date">April 2026</span>
       <span class="meta-dot">·</span>
-      <span class="meta-read">8 min read</span>
+      <span class="meta-read">4 min read</span>
     </div>
 
     <h1 class="post-title">We Built a VEX V5 Robot That<br><em>Escapes Any Maze.</em></h1>
@@ -709,110 +707,39 @@
 
 
 
-    <h2>The Robot Thing process </h2>
+    <h2>The Robot Code Process </h2>
   
     <ul class="phase-list reveal">
       <li>
         <div class="phase-num">1</div>
         <div class="phase-body">
-          <h4>FOLLOW_LEFT</h4>
-          <p>Normal operation. Left sensor reads a wall at 80–140mm. Robot drives forward while a P-controller keeps that distance constant. Any deviation triggers a proportional correction to steering.</p>
+          <h4>Drive Forward</h4>
+          <p>The normal operation - the robot drives forward</p>
         </div>
       </li>
       <li>
         <div class="phase-num">2</div>
         <div class="phase-body">
-          <h4>TURN_LEFT</h4>
-          <p>Left sensor drops below threshold (open space to the left). Robot completes its forward stride to round the corner fully, then executes a 90° left turn using the IMU for precision heading.</p>
+          <h4>Wait Until - Bumper Pressed </h4>
+          <p>The bumper is then pressed causing the robot to go back 600mm </p>
         </div>
       </li>
       <li>
         <div class="phase-num">3</div>
         <div class="phase-body">
-          <h4>TURN_RIGHT</h4>
-          <p>Front sensor detects wall within 150mm AND left sensor detects wall. Robot stops, turns right 90°. If front and left and right are all blocked — triggers state 4.</p>
-        </div>
-      </li>
-      <li>
-        <div class="phase-num">4</div>
-        <div class="phase-body">
-          <h4>REVERSE</h4>
-          <p>Dead-end detected. Robot turns 180° using two sequential 90° turns (more reliable than a single 180° on the V5 IMU), re-enters the FOLLOW_LEFT state.</p>
+          <h4>Turning </h4>
+          <p>The robot turns left a random amount. </p>
         </div>
       </li>
     </ul>
-
-    <h2 class="reveal">The Code</h2>
-
-    <p class="reveal">
-      Here's the core decision loop. This runs inside a 20ms task, with the actual drive motors controlled by a separate PID task so turns and wall-following don't block each other.
-    </p>
-
+ <a href = "Screenshot 2026-04-22 191635.png"></a>
+   
     
-    <div class="callout blue reveal">
-      <div class="callout-label">💡 Tuning Tip</div>
-      <p>The KP value of 0.35 was found after about 40 test runs. Too high and the robot oscillates down corridors like a drunk. Too low and it drifts into walls before correcting. Start at 0.2, increase until you see oscillation, then back off 30%.</p>
-    </div>
-
-    <h2 class="reveal">What Went Wrong (And How We Fixed It)</h2>
-
-    <p class="reveal">
-      Nothing ever works first try. Here's the shortlist of problems we hit and the fixes that actually worked:
-    </p>
-
-    <ul class="reveal">
-      <li><strong>IMU drift on long runs</strong> — After 10+ turns the heading was off by 3–5°. Fixed by re-zeroing the IMU every time we detected a stable straight corridor using the wall sensors as a sanity check.</li>
-      <li><strong>Ghost readings at corners</strong> — Distance sensors would misread open diagonal space at corners as a clear path too early. Fixed with a 3-sample moving average and a 30ms debounce before acting on any open-space detection.</li>
-      <li><strong>Wheel slip on turns</strong> — Fast in-place turns caused the robot to overshoot its target heading. Slowed turn speed to 40% and the IMU accuracy went from ±5° to ±1°.</li>
-      <li><strong>Dead-end oscillation</strong> — Early builds would sometimes detect a dead-end, start reversing, then re-detect the same dead-end mid-turn. Fixed by adding a TURNING state that ignores sensor input until the manoeuvre completes.</li>
-    </ul>
-
-    <h2 class="reveal">Results</h2>
-
-    <p class="reveal">
-      After 30 runs across three different maze configurations, the robot achieved a <strong>100% completion rate</strong> with an average escape time of <strong>4.2 seconds</strong>. Zero wall collisions after the sensor debounce fix went in.
-    </p>
-
-    <div class="callout green reveal">
-      <div class="callout-label">✅ Outcome</div>
-      <p>The robot handles T-junctions, dead ends, L-turns, and long straight corridors reliably. The only maze type it can't solve is one with loops — the left-hand rule will circle forever. That's a Flood Fill problem for another day.</p>
-    </div>
-
-    <hr class="divider">
-
-    <h2 class="reveal">What's Next</h2>
-
-    <p class="reveal">
-      We're planning to extend this into a full maze mapper using encoder odometry — the robot will build a grid representation of the maze as it explores, then use Flood Fill to find the shortest path on a second pass. Faster, smarter, and applicable directly to multi-zone autonomous strategies in competition.
-    </p>
-
-    <p class="reveal">
-      We'll document that build here too. If you want to replicate this one, all the code is linked in the community forum thread. Drop questions there and we'll answer them.
-    </p>
-
+  
   </article>
 
-  <!-- POST FOOTER -->
-  <div class="post-footer">
-    <div class="share-row reveal">
-      <p>Found this useful? Share it with your team.</p>
-      <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)">Copy link</button>
-    </div>
+  
 
-    <p class="section-label reveal" style="text-align:left;margin-bottom:1rem;">More from the blog</p>
-    <div class="related-grid reveal">
-      <a href="#" class="related-card">
-        <div class="rtag">Autonomous</div>
-        <h4>PID Tuning for VEX V5 Drivetrains</h4>
-        <p>The exact process we use to tune P, I, and D terms for consistent autonomous movement.</p>
-      </a>
-      <a href="#" class="related-card">
-        <div class="rtag">Sensors</div>
-        <h4>Distance Sensor Deep Dive</h4>
-        <p>Everything you need to know about VEX V5 distance sensors — accuracy, range, and sampling rates.</p>
-      </a>
-    </div>
-  </div>
 
   <!-- FOOTER -->
   <footer>
