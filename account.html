@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account — VexGrind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07090f; --bg2: #0d1220; --bg3: #111827;
+      --accent: #AC2E44; --accent2: #e84560;
+      --blue: #1e6dff; --text: #f0f2ff; --muted: #7a82a0;
+      --border: rgba(255,255,255,0.07); --card: rgba(255,255,255,0.04); --radius: 14px;
+      --green: #4ade80;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; min-height: 100vh; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(7,9,15,0.75); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; background: linear-gradient(135deg, #fff 40%, var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-ghost { background: none; border: 1px solid var(--border); color: var(--muted); font-family: inherit; font-size: 0.88rem; font-weight: 500; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; text-decoration: none; transition: color 0.2s, border-color 0.2s; display: inline-flex; align-items: center; }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1.2rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 99; background: rgba(7,9,15,0.97); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; flex-direction: column; gap: 1.25rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+    .mobile-menu .mobile-actions { display: flex; gap: 0.75rem; padding-top: 0.5rem; }
+
+    /* PAGE WRAPPER */
+    .page-wrap { padding-top: 80px; max-width: 1100px; margin: 0 auto; padding-left: 3rem; padding-right: 3rem; padding-bottom: 6rem; }
+
+    /* PROFILE HERO CARD */
+    .profile-hero {
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border); margin-bottom: 2rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .profile-banner {
+      height: 160px;
+      background: linear-gradient(135deg, rgba(172,46,68,0.6) 0%, rgba(30,109,255,0.3) 50%, rgba(7,9,15,0.9) 100%);
+      position: relative;
+    }
+    .profile-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .profile-banner-btn {
+      position: absolute; top: 1rem; right: 1rem; z-index: 2;
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15);
+      color: var(--muted); font-family: inherit; font-size: 0.75rem;
+      padding: 0.35rem 0.75rem; border-radius: 6px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .profile-banner-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+    .profile-info-row { background: var(--bg2); padding: 0 2rem 1.5rem; display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; }
+    .profile-avatar-wrap { position: relative; margin-top: -40px; flex-shrink: 0; }
+    .profile-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+      border: 3px solid var(--bg2);
+      cursor: pointer; transition: transform 0.2s;
+      position: relative; z-index: 1;
+    }
+    .profile-avatar:hover { transform: scale(1.05); }
+    .profile-avatar-overlay {
+      position: absolute; inset: 0; border-radius: 50%; background: rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s; font-size: 1.2rem; cursor: pointer;
+      border: 3px solid var(--bg2); z-index: 2;
+    }
+    .profile-avatar-wrap:hover .profile-avatar-overlay { opacity: 1; }
+    .profile-main { flex: 1; padding-top: 0.75rem; min-width: 200px; }
+    .profile-username { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .profile-team-num { font-size: 0.82rem; color: var(--accent2); font-weight: 500; margin-bottom: 0.3rem; }
+    .profile-bio { color: var(--muted); font-size: 0.85rem; line-height: 1.55; max-width: 480px; }
+    .profile-actions { display: flex; gap: 0.75rem; padding-top: 1rem; align-items: center; }
+    .edit-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .edit-btn:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
+    .join-date { font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; animation: fadeUp 0.5s 0.1s ease both; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center; transition: border-color 0.3s, transform 0.2s; }
+    .stat-card:hover { border-color: rgba(172,46,68,0.3); transform: translateY(-2px); }
+    .stat-val { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; background: linear-gradient(135deg, #fff, var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.3rem; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* MAIN GRID */
+    .main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; animation: fadeUp 0.5s 0.15s ease both; }
+
+    /* TABS */
+    .tabs-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .tab-bar { display: flex; border-bottom: 1px solid var(--border); }
+    .tab-btn { flex: 1; background: none; border: none; color: var(--muted); font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 1rem; cursor: pointer; transition: all 0.2s; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); background: rgba(172,46,68,0.05); }
+    .tab-content { display: none; padding: 1.5rem; }
+    .tab-content.active { display: block; }
+
+    /* ACTIVITY ITEMS */
+    .activity-item { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .ai-post { background: rgba(172,46,68,0.12); }
+    .ai-comment { background: rgba(30,109,255,0.12); }
+    .ai-upvote { background: rgba(74,222,128,0.1); }
+    .activity-body { flex: 1; min-width: 0; }
+    .activity-title { font-size: 0.88rem; font-weight: 500; line-height: 1.4; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .activity-meta { font-size: 0.75rem; color: var(--muted); display: flex; gap: 0.5rem; align-items: center; }
+    .activity-score { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--accent2); flex-shrink: 0; }
+    .empty-tab { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .empty-tab-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .empty-tab p { font-size: 0.85rem; }
+
+    /* MINI CHART */
+    .activity-chart { margin-bottom: 1.25rem; }
+    .chart-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 4px; height: 60px; }
+    .chart-bar { flex: 1; border-radius: 3px 3px 0 0; background: rgba(172,46,68,0.3); transition: background 0.2s; cursor: default; position: relative; min-height: 4px; }
+    .chart-bar:hover { background: var(--accent2); }
+    .chart-bar[data-active="true"] { background: var(--accent2); }
+    .chart-days { display: flex; gap: 4px; margin-top: 4px; }
+    .chart-day { flex: 1; font-size: 0.58rem; color: var(--muted); text-align: center; }
+
+    /* SETTINGS FORM */
+    .settings-section { margin-bottom: 1.75rem; }
+    .settings-section h3 { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .form-row.full { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+    .form-input { background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.88rem; outline: none; transition: border-color 0.2s; width: 100%; }
+    .form-input:focus { border-color: rgba(172,46,68,0.5); }
+    .form-input::placeholder { color: var(--muted); }
+    .form-textarea { min-height: 80px; resize: vertical; }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+    .toggle-row:last-child { border-bottom: none; }
+    .toggle-label { font-size: 0.85rem; }
+    .toggle-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .toggle { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-slider { position: absolute; inset: 0; background: rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: background 0.3s; border: 1px solid var(--border); }
+    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: transform 0.3s; }
+    .toggle input:checked + .toggle-slider { background: var(--accent); border-color: var(--accent); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+    .save-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.65rem 1.75rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.15s; margin-top: 1rem; }
+    .save-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* SIDEBAR */
+    .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .sidebar-header { background: linear-gradient(135deg, var(--accent), var(--accent2)); padding: 0.8rem 1.1rem; font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .sidebar-body { padding: 1.1rem; }
+
+    /* TEAM CARD */
+    .team-card-inner { display: flex; flex-direction: column; gap: 0.6rem; }
+    .team-number { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #fff, var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .team-name-display { font-size: 0.88rem; font-weight: 500; }
+    .team-detail-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.8rem; }
+    .team-detail-row:last-child { border-bottom: none; }
+    .team-detail-key { color: var(--muted); }
+    .team-detail-val { font-weight: 500; color: var(--text); }
+    .team-edit-link { font-size: 0.75rem; color: var(--accent2); cursor: pointer; text-decoration: underline; margin-top: 0.5rem; display: inline-block; }
+
+    /* BADGES */
+    .badges-grid { display: flex; flex-direction: column; gap: 0.6rem; }
+    .badge-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); transition: border-color 0.2s; }
+    .badge-item.earned { border-color: rgba(172,46,68,0.25); background: rgba(172,46,68,0.05); }
+    .badge-item.locked { opacity: 0.45; filter: grayscale(0.5); }
+    .badge-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .badge-info { flex: 1; }
+    .badge-name { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.1rem; }
+    .badge-desc { font-size: 0.7rem; color: var(--muted); }
+    .badge-earned-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .badge-locked-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); opacity: 0.4; flex-shrink: 0; }
+
+    /* SAVED POSTS */
+    .saved-item { padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
+    .saved-item:last-child { border-bottom: none; }
+    .saved-item-title { font-size: 0.88rem; font-weight: 500; margin-bottom: 0.25rem; cursor: pointer; transition: color 0.2s; }
+    .saved-item-title:hover { color: var(--accent2); }
+    .saved-item-meta { font-size: 0.73rem; color: var(--muted); display: flex; gap: 0.5rem; }
+    .flair-tag { display: inline-block; font-size: 0.67rem; padding: 0.12rem 0.45rem; border-radius: 4px; font-weight: 500; }
+    .ft-strategy { background: rgba(251,191,36,0.12); color: #fbbf24; }
+    .ft-build    { background: rgba(30,109,255,0.12); color: #60a5fa; }
+    .ft-code     { background: rgba(74,222,128,0.1); color: #4ade80; }
+    .ft-discuss  { background: rgba(172,46,68,0.12); color: var(--accent2); }
+
+    /* EDIT MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: flex; align-items: center; justify-content: center; }
+    .modal-overlay.hidden { display: none; }
+    .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; width: 420px; max-width: 92vw; animation: scaleIn 0.2s ease; }
+    @keyframes scaleIn { from{opacity:0;transform:scale(0.93)} to{opacity:1;transform:scale(1)} }
+    .modal h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; }
+    .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+    .modal-cancel { flex: 1; background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 0.65rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .modal-cancel:hover { color: var(--text); }
+    .modal-confirm { flex: 2; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.65rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
+    .modal-confirm:hover { opacity: 0.9; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1.25rem; font-size: 0.85rem; color: var(--text); z-index: 300; transform: translateY(20px); opacity: 0; transition: all 0.3s ease; pointer-events: none; display: flex; align-items: center; gap: 8px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+    /* DANGER ZONE */
+    .danger-zone { border: 1px solid rgba(232,69,96,0.2); border-radius: var(--radius); padding: 1.1rem 1.25rem; background: rgba(232,69,96,0.04); }
+    .danger-title { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .danger-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.85rem; line-height: 1.55; }
+    .danger-btn { background: none; border: 1px solid rgba(232,69,96,0.4); color: var(--accent2); font-family: inherit; font-size: 0.82rem; padding: 0.5rem 1rem; border-radius: 7px; cursor: pointer; transition: all 0.2s; }
+    .danger-btn:hover { background: rgba(232,69,96,0.1); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } .stats-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .nav-actions { display: none; } .hamburger { display: flex; }
+      .page-wrap { padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 72px; }
+      .profile-info-row { padding: 0 1.25rem 1.25rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">VexGrind</a>
+  <ul class="nav-links">
+    <li><a href="#">Guides</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="community.html">Community</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="account.html" class="active">Account</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="signup.html" class="btn-ghost">Sign in</a>
+    <a href="signup.html" class="btn-primary">Join the Team</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Guides</a>
+  <a href="blog.html">Blog</a>
+  <a href="community.html">Community</a>
+  <a href="index.html#about">About</a>
+  <a href="account.html">Account</a>
+  <div class="mobile-actions">
+    <a href="signup.html" class="btn-ghost" style="flex:1;justify-content:center;">Sign in</a>
+    <a href="signup.html" class="btn-primary" style="flex:1;justify-content:center;">Join the Team</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- PROFILE HERO -->
+  <div class="profile-hero">
+    <div class="profile-banner" id="profileBanner">
+      <button class="profile-banner-btn" onclick="cycleBanner()">✦ Change banner</button>
+    </div>
+    <div class="profile-info-row">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profileAvatar" onclick="openEditModal()">NP</div>
+        <div class="profile-avatar-overlay" onclick="openEditModal()">✎</div>
+      </div>
+      <div class="profile-main">
+        <div class="profile-username" id="displayUsername">VEX_User</div>
+        <div class="profile-team-num" id="displayTeam">Team — · Set your team number</div>
+        <div class="profile-bio" id="displayBio">No bio yet. Click Edit Profile to add one.</div>
+      </div>
+      <div class="profile-actions" style="margin-left:auto;">
+        <button class="edit-btn" onclick="openEditModal()">✎ Edit Profile</button>
+        <div class="join-date">📅 Joined <span id="joinDateDisplay">Apr 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val" id="statPosts">0</div>
+      <div class="stat-label">Posts</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="statComments">0</div>
+      <div class="stat-label">Comments</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="statUpvotes">0</div>
+      <div class="stat-label">Upvotes received</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="statScore">0</div>
+      <div class="stat-label">Contribution score</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT: TABS -->
+    <div class="tabs-wrap">
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('posts',this)">📝 My Posts</button>
+        <button class="tab-btn" onclick="switchTab('comments',this)">💬 Comments</button>
+        <button class="tab-btn" onclick="switchTab('saved',this)">🔖 Saved</button>
+        <button class="tab-btn" onclick="switchTab('settings',this)">⚙️ Settings</button>
+      </div>
+
+      <!-- POSTS TAB -->
+      <div class="tab-content active" id="tab-posts">
+        <div class="activity-chart">
+          <div class="chart-label">Activity — last 7 days</div>
+          <div class="chart-bars" id="activityBars"></div>
+          <div class="chart-days" id="activityDays"></div>
+        </div>
+        <div id="myPostsList"></div>
+      </div>
+
+      <!-- COMMENTS TAB -->
+      <div class="tab-content" id="tab-comments">
+        <div id="myCommentsList"></div>
+      </div>
+
+      <!-- SAVED TAB -->
+      <div class="tab-content" id="tab-saved">
+        <div id="savedList">
+          <!-- seeded saved posts -->
+          <div class="saved-item">
+            <div class="saved-item-title">Best PID tuning approach for a 4-motor drivetrain?</div>
+            <div class="saved-item-meta">
+              <span class="flair-tag ft-discuss">💬 Discuss</span>
+              <span>42 upvotes · 1 comment</span>
+            </div>
+          </div>
+          <div class="saved-item">
+            <div class="saved-item-title">PROS vs VEXcode — honest comparison after a full season on both</div>
+            <div class="saved-item-meta">
+              <span class="flair-tag ft-code">💻 Code</span>
+              <span>61 upvotes · community.html</span>
+            </div>
+          </div>
+          <div class="saved-item">
+            <div class="saved-item-title">Alliance selection tip that actually worked at our regional</div>
+            <div class="saved-item-meta">
+              <span class="flair-tag ft-strategy">🎯 Strategy</span>
+              <span>55 upvotes · 1 comment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div class="tab-content" id="tab-settings">
+        <div class="settings-section">
+          <h3>Profile</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Display name</label>
+              <input class="form-input" id="settingUsername" type="text" placeholder="Your username" maxlength="30"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Team number</label>
+              <input class="form-input" id="settingTeam" type="text" placeholder="e.g. 9999A" maxlength="10"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Region</label>
+              <input class="form-input" id="settingRegion" type="text" placeholder="e.g. London, UK" maxlength="40"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">School / Organisation</label>
+              <input class="form-input" id="settingSchool" type="text" placeholder="e.g. Westminster School" maxlength="50"/>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label">Bio</label>
+              <textarea class="form-input form-textarea" id="settingBio" placeholder="Tell the community a bit about you and your team…" maxlength="200"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Season</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Current season</label>
+              <input class="form-input" id="settingSeason" type="text" value="Push Back (2025–26)" readonly style="opacity:0.6;cursor:default;"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Win / Loss record</label>
+              <input class="form-input" id="settingRecord" type="text" placeholder="e.g. 18W - 4L"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Preferences</h3>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Post as Anonymous by default</div><div class="toggle-sub">Your username won't show on new posts</div></div>
+            <label class="toggle"><input type="checkbox" id="toggleAnon"/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Email notifications for replies</div><div class="toggle-sub">Get notified when someone comments on your posts</div></div>
+            <label class="toggle"><input type="checkbox" id="toggleNotifs" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Show team number on profile</div><div class="toggle-sub">Display your team number publicly</div></div>
+            <label class="toggle"><input type="checkbox" id="toggleTeamPublic" checked/><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+
+        <button class="save-btn" onclick="saveSettings()">Save changes</button>
+
+        <div style="margin-top:2rem;">
+          <div class="settings-section">
+            <h3>Danger zone</h3>
+            <div class="danger-zone">
+              <div class="danger-title">⚠ Reset account data</div>
+              <div class="danger-desc">This will clear all your posts, comments, and settings from this device. This cannot be undone.</div>
+              <button class="danger-btn" onclick="confirmReset()">Reset account data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- TEAM CARD -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">Team Card</div>
+        <div class="sidebar-body">
+          <div class="team-card-inner">
+            <div class="team-number" id="tcNumber">—</div>
+            <div class="team-name-display" id="tcName">Set your team details in Settings</div>
+            <div class="team-detail-row"><span class="team-detail-key">Season</span><span class="team-detail-val">Push Back 2025–26</span></div>
+            <div class="team-detail-row"><span class="team-detail-key">Record</span><span class="team-detail-val" id="tcRecord">—</span></div>
+            <div class="team-detail-row"><span class="team-detail-key">Region</span><span class="team-detail-val" id="tcRegion">—</span></div>
+            <div class="team-detail-row"><span class="team-detail-key">School</span><span class="team-detail-val" id="tcSchool">—</span></div>
+            <span class="team-edit-link" onclick="switchTab('settings', document.querySelector('[onclick*=settings]'))">✎ Edit team details</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGES -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">Badges</div>
+        <div class="sidebar-body">
+          <div class="badges-grid" id="badgesGrid"></div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal-overlay hidden" id="editModal">
+  <div class="modal">
+    <h2>Edit Profile</h2>
+    <div class="form-group" style="margin-bottom:0.75rem;">
+      <label class="form-label">Display name</label>
+      <input class="form-input" id="modalUsername" type="text" placeholder="Your username" maxlength="30"/>
+    </div>
+    <div class="form-group" style="margin-bottom:0.75rem;">
+      <label class="form-label">Team number</label>
+      <input class="form-input" id="modalTeam" type="text" placeholder="e.g. 9999A" maxlength="10"/>
+    </div>
+    <div class="form-group" style="margin-bottom:0.75rem;">
+      <label class="form-label">Bio</label>
+      <textarea class="form-input form-textarea" id="modalBio" placeholder="Tell the community about you…" maxlength="200" style="min-height:70px;"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeEditModal()">Cancel</button>
+      <button class="modal-confirm" onclick="saveEditModal()">Save profile</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-dot"></div>
+  <span id="toastMsg">Saved!</span>
+</div>
+
+<script>
+// ── STATE ──
+let profile = JSON.parse(localStorage.getItem('vg_profile') || '{}');
+let communityPosts = JSON.parse(localStorage.getItem('vg_posts') || '[]');
+const username = localStorage.getItem('vg_username') || '';
+
+const BANNER_GRADIENTS = [
+  'linear-gradient(135deg, rgba(172,46,68,0.6) 0%, rgba(30,109,255,0.3) 50%, rgba(7,9,15,0.9) 100%)',
+  'linear-gradient(135deg, rgba(30,109,255,0.6) 0%, rgba(74,222,128,0.2) 60%, rgba(7,9,15,0.9) 100%)',
+  'linear-gradient(135deg, rgba(124,58,237,0.5) 0%, rgba(172,46,68,0.4) 60%, rgba(7,9,15,0.9) 100%)',
+  'linear-gradient(135deg, rgba(251,191,36,0.3) 0%, rgba(249,115,22,0.4) 50%, rgba(7,9,15,0.9) 100%)',
+  'linear-gradient(135deg, rgba(74,222,128,0.3) 0%, rgba(34,211,238,0.3) 60%, rgba(7,9,15,0.9) 100%)',
+];
+let bannerIdx = profile.bannerIdx || 0;
+
+const BADGES_DEF = [
+  { id:'first_post', icon:'📝', name:'First Post', desc:'Published your first community post', req: p=>p.posts>=1 },
+  { id:'commenter', icon:'💬', name:'Commentator', desc:'Left 5 comments in the community', req: p=>p.comments>=5 },
+  { id:'popular', icon:'🔥', name:'Hot Take', desc:'Received 10+ upvotes on a post', req: p=>p.upvotes>=10 },
+  { id:'team_set', icon:'⚙️', name:'Team Set Up', desc:'Added your team number to your profile', req: p=>!!p.team },
+  { id:'veteran', icon:'🏆', name:'Veteran', desc:'Made 10 or more posts', req: p=>p.posts>=10 },
+  { id:'contributor', icon:'🌟', name:'Top Contributor', desc:'Reached a contribution score of 100+', req: p=>p.score>=100 },
+];
+
+// ── INIT ──
+function init() {
+  // Sync username from community page
+  if (username && !profile.username) profile.username = username;
+  renderProfile();
+  renderStats();
+  renderBadges();
+  renderActivity();
+  renderComments();
+  populateSettings();
+  renderBanner();
+}
+
+function getAvatarColor(name) {
+  const cols = [
+    'linear-gradient(135deg,#AC2E44,#1e6dff)',
+    'linear-gradient(135deg,#1e6dff,#0d8a6a)',
+    'linear-gradient(135deg,#7c3aed,#AC2E44)',
+    'linear-gradient(135deg,#0d8a6a,#1e6dff)',
+    'linear-gradient(135deg,#e84560,#7c3aed)',
+    'linear-gradient(135deg,#fbbf24,#f97316)',
+  ];
+  let h=0; for(let i=0;i<name.length;i++) h=name.charCodeAt(i)+((h<<5)-h);
+  return cols[Math.abs(h)%cols.length];
+}
+
+function renderProfile() {
+  const uname = profile.username || username || 'VEX_User';
+  const initials = uname.replace(/[^a-zA-Z0-9]/g,'').slice(0,2).toUpperCase() || 'VG';
+  document.getElementById('displayUsername').textContent = uname;
+  document.getElementById('displayTeam').textContent = profile.team ? `Team ${profile.team}${profile.school?' · '+profile.school:''}` : 'Team — · Set your team number in Settings';
+  document.getElementById('displayBio').textContent = profile.bio || 'No bio yet. Click Edit Profile to add one.';
+  const av = document.getElementById('profileAvatar');
+  av.textContent = initials;
+  av.style.background = getAvatarColor(uname);
+  document.getElementById('joinDateDisplay').textContent = profile.joinDate || 'Apr 2026';
+
+  // Team card
+  document.getElementById('tcNumber').textContent = profile.team || '—';
+  document.getElementById('tcName').textContent = profile.school || (profile.team ? `Team ${profile.team}` : 'Set your team details in Settings');
+  document.getElementById('tcRecord').textContent = profile.record || '—';
+  document.getElementById('tcRegion').textContent = profile.region || '—';
+  document.getElementById('tcSchool').textContent = profile.school || '—';
+}
+
+function getStats() {
+  const uname = profile.username || username || '';
+  let posts = 0, comments = 0, upvotes = 0;
+  communityPosts.forEach(p => {
+    if (p.author === uname) { posts++; upvotes += p.votes; }
+    p.comments.forEach(c => { if (c.author === uname) { comments++; upvotes += c.votes; } });
+  });
+  const score = posts*10 + comments*3 + upvotes*2;
+  return { posts, comments, upvotes, score };
+}
+
+function renderStats() {
+  const s = getStats();
+  document.getElementById('statPosts').textContent = s.posts;
+  document.getElementById('statComments').textContent = s.comments;
+  document.getElementById('statUpvotes').textContent = s.upvotes;
+  document.getElementById('statScore').textContent = s.score;
+}
+
+function renderBadges() {
+  const s = getStats();
+  const grid = document.getElementById('badgesGrid');
+  grid.innerHTML = BADGES_DEF.map(b => {
+    const earned = b.req({...s, team: profile.team});
+    return `<div class="badge-item ${earned?'earned':'locked'}">
+      <div class="badge-icon">${b.icon}</div>
+      <div class="badge-info">
+        <div class="badge-name">${b.name}</div>
+        <div class="badge-desc">${b.desc}</div>
+      </div>
+      <div class="${earned?'badge-earned-dot':'badge-locked-dot'}"></div>
+    </div>`;
+  }).join('');
+}
+
+function renderActivity() {
+  // Chart — last 7 days
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const today = new Date().getDay();
+  const ordered = [];
+  for (let i=6;i>=0;i--) ordered.push(days[(today-i+7)%7]);
+  const uname = profile.username || username || '';
+  const counts = new Array(7).fill(0);
+  communityPosts.forEach(p=>{
+    if(p.author===uname){
+      const d = new Date(p.time).getDay();
+      const idx = (today-d+7)%7;
+      if(idx<7) counts[6-idx]++;
+    }
+  });
+  const max = Math.max(...counts,1);
+  document.getElementById('activityBars').innerHTML = counts.map((c,i)=>`
+    <div class="chart-bar" style="height:${Math.max(8,Math.round((c/max)*56))}px" data-active="${i===6}" title="${c} post${c!==1?'s':''}"></div>
+  `).join('');
+  document.getElementById('activityDays').innerHTML = ordered.map(d=>`<div class="chart-day">${d}</div>`).join('');
+
+  // Posts list
+  const myPosts = communityPosts.filter(p=>p.author===(profile.username||username||''));
+  const list = document.getElementById('myPostsList');
+  if (myPosts.length===0) {
+    list.innerHTML=`<div class="empty-tab"><div class="empty-tab-icon">📝</div><p>You haven't posted yet.<br>Head to the <a href="community.html" style="color:var(--accent2)">Community</a> to make your first post!</p></div>`;
+    return;
+  }
+  list.innerHTML = myPosts.sort((a,b)=>b.time-a.time).map(p=>`
+    <div class="activity-item">
+      <div class="activity-icon ai-post">📝</div>
+      <div class="activity-body">
+        <div class="activity-title">${escHtml(p.title)}</div>
+        <div class="activity-meta"><span>${timeAgo(p.time)}</span><span>·</span><span>${p.comments.length} comment${p.comments.length!==1?'s':''}</span></div>
+      </div>
+      <div class="activity-score">+${p.votes}</div>
+    </div>`).join('');
+}
+
+function renderComments() {
+  const uname = profile.username || username || '';
+  const myComments = [];
+  communityPosts.forEach(p=>{
+    p.comments.forEach(c=>{
+      if(c.author===uname) myComments.push({...c, postTitle:p.title});
+    });
+  });
+  const list = document.getElementById('myCommentsList');
+  if (myComments.length===0) {
+    list.innerHTML=`<div class="empty-tab"><div class="empty-tab-icon">💬</div><p>No comments yet. Join a discussion in the <a href="community.html" style="color:var(--accent2)">Community!</a></p></div>`;
+    return;
+  }
+  list.innerHTML = myComments.sort((a,b)=>b.time-a.time).map(c=>`
+    <div class="activity-item">
+      <div class="activity-icon ai-comment">💬</div>
+      <div class="activity-body">
+        <div class="activity-title" style="color:var(--muted);font-size:0.75rem;margin-bottom:3px;">on: ${escHtml(c.postTitle)}</div>
+        <div class="activity-title">${escHtml(c.text.slice(0,100))}${c.text.length>100?'…':''}</div>
+        <div class="activity-meta"><span>${timeAgo(c.time)}</span></div>
+      </div>
+      <div class="activity-score">+${c.votes}</div>
+    </div>`).join('');
+}
+
+// ── TAB SWITCHING ──
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else document.querySelector(`[onclick*="${name}"]`).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// ── SETTINGS ──
+function populateSettings() {
+  document.getElementById('settingUsername').value = profile.username || username || '';
+  document.getElementById('settingTeam').value = profile.team || '';
+  document.getElementById('settingRegion').value = profile.region || '';
+  document.getElementById('settingSchool').value = profile.school || '';
+  document.getElementById('settingBio').value = profile.bio || '';
+  document.getElementById('settingRecord').value = profile.record || '';
+}
+
+function saveSettings() {
+  profile.username = document.getElementById('settingUsername').value.trim() || profile.username;
+  profile.team = document.getElementById('settingTeam').value.trim();
+  profile.region = document.getElementById('settingRegion').value.trim();
+  profile.school = document.getElementById('settingSchool').value.trim();
+  profile.bio = document.getElementById('settingBio').value.trim();
+  profile.record = document.getElementById('settingRecord').value.trim();
+  if (!profile.joinDate) profile.joinDate = new Date().toLocaleDateString('en-GB',{month:'short',year:'numeric'});
+  saveProfile();
+  renderProfile();
+  renderStats();
+  renderBadges();
+  showToast('✅ Settings saved!');
+}
+
+function saveProfile() {
+  localStorage.setItem('vg_profile', JSON.stringify(profile));
+  if (profile.username) localStorage.setItem('vg_username', profile.username);
+}
+
+// ── EDIT MODAL ──
+function openEditModal() {
+  document.getElementById('modalUsername').value = profile.username || username || '';
+  document.getElementById('modalTeam').value = profile.team || '';
+  document.getElementById('modalBio').value = profile.bio || '';
+  document.getElementById('editModal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('modalUsername').focus(),100);
+}
+
+function closeEditModal() { document.getElementById('editModal').classList.add('hidden'); }
+
+function saveEditModal() {
+  profile.username = document.getElementById('modalUsername').value.trim() || profile.username;
+  profile.team = document.getElementById('modalTeam').value.trim();
+  profile.bio = document.getElementById('modalBio').value.trim();
+  if (!profile.joinDate) profile.joinDate = new Date().toLocaleDateString('en-GB',{month:'short',year:'numeric'});
+  saveProfile();
+  renderProfile();
+  renderStats();
+  renderBadges();
+  populateSettings();
+  closeEditModal();
+  showToast('✅ Profile updated!');
+}
+
+document.getElementById('editModal').addEventListener('click', e=>{ if(e.target===document.getElementById('editModal')) closeEditModal(); });
+
+// ── BANNER ──
+function renderBanner() {
+  document.getElementById('profileBanner').style.background = BANNER_GRADIENTS[bannerIdx];
+}
+function cycleBanner() {
+  bannerIdx = (bannerIdx+1)%BANNER_GRADIENTS.length;
+  profile.bannerIdx = bannerIdx;
+  saveProfile();
+  renderBanner();
+  showToast('✦ Banner updated!');
+}
+
+// ── DANGER ZONE ──
+function confirmReset() {
+  if (!confirm('Are you sure? This will delete all your posts, comments, and settings from this device.')) return;
+  localStorage.removeItem('vg_profile');
+  localStorage.removeItem('vg_username');
+  localStorage.removeItem('vg_posts');
+  profile = {};
+  communityPosts = [];
+  renderProfile();
+  renderStats();
+  renderBadges();
+  renderActivity();
+  renderComments();
+  populateSettings();
+  showToast('🗑️ Account data reset');
+}
+
+// ── UTILS ──
+function timeAgo(ts) {
+  const s=Math.floor((Date.now()-ts)/1000);
+  if(s<60) return 'just now';
+  if(s<3600) return Math.floor(s/60)+'m ago';
+  if(s<86400) return Math.floor(s/3600)+'h ago';
+  return Math.floor(s/86400)+'d ago';
+}
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ── NAV HAMBURGER ──
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  const open=mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open',open);
+});
+mobileMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{
+  mobileMenu.classList.remove('open'); hamburger.classList.remove('open');
+}));
+window.addEventListener('resize',()=>{ if(window.innerWidth>768){mobileMenu.classList.remove('open');hamburger.classList.remove('open');}});
+
+init();
+</script>
+</body>
+</html>
