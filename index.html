@@ -185,7 +185,13 @@
       background-size: 60px 60px;
     }
 
-    .hero-left { position: relative; z-index: 1; }
+    /* Particle Canvas */
+    #particles {
+      position: absolute; inset: 0; z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-left { position: relative; z-index: 2; }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -308,6 +314,57 @@
       background: radial-gradient(circle at 35% 35%, rgba(172,46,68,0.5), rgba(30,109,255,0.2) 60%, transparent);
       filter: blur(40px);
       animation: pulse 3s ease-in-out infinite;
+    }
+
+    /* ── COUNTDOWN TIMER ── */
+    .countdown-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 3rem;
+      text-align: center;
+    }
+
+    .countdown-label {
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--accent2); margin-bottom: 1rem;
+    }
+
+    .countdown-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800; margin-bottom: 2rem;
+    }
+
+    .countdown-timer {
+      display: flex; justify-content: center; gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      min-width: 120px;
+    }
+
+    .countdown-num {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      line-height: 1;
+    }
+
+    .countdown-unit {
+      font-size: 0.75rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-top: 0.5rem;
     }
 
     /* ── STRIP ── */
@@ -553,6 +610,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
+    <canvas id="particles"></canvas>
 
     <div class="hero-left">
       <div class="hero-badge"><span></span> Built for VEX V5 competitors</div>
@@ -602,7 +660,49 @@
     </div>
   </section>
 
+  <!-- COUNTDOWN TIMER -->
+  <div class="countdown-section reveal">
+    <div class="countdown-label">● Next Competition</div>
+    <h2 class="countdown-title">VEX V5 State Championship</h2>
+    <div class="countdown-timer" id="countdown">
+      <div class="countdown-item">
+        <div class="countdown-num" id="days">00</div>
+        <div class="countdown-unit">Days</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="hours">00</div>
+        <div class="countdown-unit">Hours</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="minutes">00</div>
+        <div class="countdown-unit">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="seconds">00</div>
+        <div class="countdown-unit">Seconds</div>
+      </div>
+    </div>
+  </div>
 
+  <!-- SOCIAL PROOF STRIP -->
+  <div class="strip reveal">
+    <div class="strip-quote">
+      <blockquote>"Game changing"</blockquote>
+      <div class="strip-author">
+        <div class="strip-avatar">JR</div>
+        <div class="strip-author-info">
+          <p>Jamie R.</p>
+          <span>Captain, Team 99999A</span>
+        </div>
+      </div>
+    </div>
+    <div class="strip-logos">
+      <div class="logo-pill">⚙️ Team 1234A</div>
+      <div class="logo-pill">🤖 Team 5678B</div>
+      <div class="logo-pill">🏆 Team 9876X</div>
+      <div class="logo-pill">✦ Team 4321Z</div>
+    </div>
+  </div>
 
   <!-- FEATURES -->
   <div class="features">
@@ -713,6 +813,86 @@
     heroInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') window.location.href = 'signup.html';
     });
+  </script>
+
+  <!-- Particle Canvas -->
+  <script>
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = 60;
+    const connectionDistance = 150;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = document.querySelector('.hero').offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2 + 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectionDistance) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(255,255,255,${0.15 * (1 - dist / connectionDistance)})`;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
+  <!-- Countdown Timer -->
+  <script>
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 14);
+    targetDate.setHours(9, 0, 0, 0);
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+      if (diff <= 0) return;
+      document.getElementById('days').textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+      document.getElementById('hours').textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>

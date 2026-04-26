@@ -30,11 +30,12 @@
       overflow-x: hidden;
     }
 
+    /* ── NAV (Unified with Parts Library) ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(7,9,15,0.6);
+      background: rgba(7,9,15,0.75);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
     }
@@ -55,47 +56,124 @@
     .nav-logo {
       font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
       background: linear-gradient(135deg, #fff 40%, var(--accent2));
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent; color: transparent; text-decoration: none;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
     }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
-    .nav-actions { display: flex; gap: 1rem; align-items: center; }
-    .btn-ghost { background: none; border: none; color: var(--muted); font-family: inherit; font-size: 0.9rem; cursor: pointer; transition: color 0.2s; }
-    .btn-ghost:hover { color: var(--text); }
-    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+    .btn-ghost {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
 
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+      background: rgba(7,9,15,0.97);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      flex-direction: column; gap: 1.25rem;
+      animation: slideDown 0.25s ease;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--text); text-decoration: none; font-size: 1rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu .mobile-actions {
+      display: flex; gap: 0.75rem; padding-top: 0.5rem;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── BLOG HERO (Now matches Parts Library style) ── */
     .blog-hero {
-      min-height: 60vh; display: flex; align-items: center;
-      padding: 9rem 3rem 4rem; position: relative; overflow: hidden;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding: 9rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
       background: linear-gradient(135deg, var(--bg2), var(--bg));
     }
+
     .blog-hero::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 50% 70% at 80% 30%, rgba(172,46,68,0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(30,109,255,0.12) 0%, transparent 60%);
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(172,46,68,0.18), transparent 60%),
+                  radial-gradient(circle at 80% 30%, rgba(30,109,255,0.15), transparent 60%);
       pointer-events: none;
     }
-    .blog-hero-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; }
-    .blog-hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(172,46,68,0.15); border: 1px solid rgba(172,46,68,0.3);
-      border-radius: 100px; padding: 0.35rem 1rem;
-      font-size: 0.78rem; color: var(--accent2); margin-bottom: 1rem;
-    }
-    .blog-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
-    .blog-hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent2), #ff8c60); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .blog-hero p { color: var(--muted); font-size: 1.1rem; max-width: 520px; margin: 1.25rem 0 2.5rem; }
 
-    .search-bar {
-      display: flex; background: var(--card); border: 1px solid var(--border);
-      border-radius: 9999px; padding: 8px; max-width: 620px;
-      box-shadow: 0 10px 30px rgba(172,46,68,0.1);
+    .blog-hero-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(172,46,68,0.15);
+      border: 1px solid rgba(172,46,68,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.78rem; color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .blog-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
     }
     .search-bar input { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-size: 1.1rem; padding: 0 1.25rem; }
     .search-bar input::placeholder { color: var(--muted); }
@@ -106,152 +184,159 @@
     }
     .search-bar button:hover { background: var(--accent2); transform: scale(1.05); }
 
-    .library-container { max-width: 1200px; margin: 0 auto; padding: 0 3rem 3rem; }
+    .hero-sub {
+      color: var(--muted); font-size: 1.1rem; max-width: 520px;
+      margin: 1.25rem 0 2.5rem;
+    }
 
-    .filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 2rem; padding-top: 2rem; }
+    /* ── FILTERS (Pill style like Parts Library) ── */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+      padding-top: 1rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+
     .filter-btn {
-      background: var(--card); border: 1px solid var(--border); color: var(--muted);
-      padding: 0.6rem 1.4rem; border-radius: 9999px; font-size: 0.9rem; font-weight: 500;
-      cursor: pointer; font-family: inherit; transition: all 0.2s;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .filter-btn.active, .filter-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    .no-results { grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--muted); font-size: 1.2rem; }
-
-    .featured-post {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-      overflow: hidden; margin-bottom: 2rem;
-      transition: border-color 0.3s, transform 0.3s;
-      cursor: pointer; text-decoration: none; color: inherit;
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
-    .featured-post:hover { border-color: rgba(172,46,68,0.4); transform: translateY(-3px); }
-    .featured-visual {
-      position: relative;
-      background: linear-gradient(135deg, rgba(172,46,68,0.25) 0%, rgba(30,109,255,0.15) 60%, rgba(7,9,15,0.9) 100%);
-      min-height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden;
+
+    /* ── BLOG GRID ── */
+    .library-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem 6rem;
     }
-    .featured-visual::before {
-      content: ''; position: absolute; inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
     }
-    .featured-visual-icon { font-size: 5rem; position: relative; z-index: 1; filter: drop-shadow(0 0 40px rgba(172,46,68,0.6)); animation: float 4s ease-in-out infinite; }
-    .featured-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
-    .featured-content h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.75rem; }
-    .featured-content p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
-    .featured-cta { display: inline-flex; align-items: center; gap: 6px; color: var(--accent2); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: gap 0.2s; }
-    .featured-cta:hover { gap: 10px; }
-
-    .post-tag { display: inline-block; padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
-    .tag-auto { background: rgba(172,46,68,0.15); color: var(--accent2); border: 1px solid rgba(172,46,68,0.25); }
-    .tag-build { background: rgba(30,109,255,0.15); color: #60a5fa; border: 1px solid rgba(30,109,255,0.25); }
-    .tag-code { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
-    .tag-strategy { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
-    .tag-notebook { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
-    .tag-community { background: rgba(249,115,22,0.12); color: #f97316; border: 1px solid rgba(249,115,22,0.2); }
-
-    .post-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.78rem; color: var(--muted); }
-    .post-meta-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
-    .av1 { background: linear-gradient(135deg, var(--accent), #ff8c60); }
-    .av2 { background: linear-gradient(135deg, var(--blue), #60a5fa); }
-    .av3 { background: linear-gradient(135deg, #4ade80, #22d3ee); }
-    .av4 { background: linear-gradient(135deg, #a78bfa, #e879f9); }
-    .av5 { background: linear-gradient(135deg, #fbbf24, #f97316); }
-    .post-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
-
-    #postsAnchor { display: block; height: 0; position: relative; top: -110px; }
-
-    .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 
     .post-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-      overflow: hidden; cursor: pointer; transition: border-color 0.3s, transform 0.3s;
-      text-decoration: none; color: inherit; display: block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .post-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(172,46,68,0.25);
     }
     .post-card:hover { border-color: rgba(172,46,68,0.35); transform: translateY(-4px); }
 
     .post-thumb {
-      height: 160px; display: flex; align-items: center; justify-content: center;
-      font-size: 3rem; position: relative; overflow: hidden;
+      height: 220px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      font-size: 4.5rem;
     }
-    .thumb-auto { background: linear-gradient(135deg, rgba(172,46,68,0.3), rgba(7,9,15,0.8)); }
-    .thumb-build { background: linear-gradient(135deg, rgba(30,109,255,0.3), rgba(7,9,15,0.8)); }
-    .thumb-code { background: linear-gradient(135deg, rgba(74,222,128,0.2), rgba(7,9,15,0.8)); }
-    .thumb-strategy { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(7,9,15,0.8)); }
-    .thumb-notebook { background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(7,9,15,0.8)); }
-    .thumb-community { background: linear-gradient(135deg, rgba(249,115,22,0.2), rgba(7,9,15,0.8)); }
+
     .post-thumb::before {
-      content: ''; position: absolute; inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 30px 30px;
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(172,46,68,0.25), rgba(30,109,255,0.15));
+      opacity: 0.6;
     }
-    .post-thumb-emoji { position: relative; z-index: 1; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
 
-    .post-body { padding: 1.4rem; }
-    .post-body h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin: 0.6rem 0 0.5rem; line-height: 1.3; }
-    .post-body p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1.1rem; }
-    .post-footer { display: flex; align-items: center; justify-content: space-between; }
-    .read-more {
-      font-size: 0.78rem; color: var(--accent2);
-      display: inline-flex; align-items: center; gap: 4px;
-      transition: gap 0.2s, color 0.2s; text-decoration: none; font-weight: 500;
-      padding: 0.3rem 0.7rem; border-radius: 6px;
-      background: rgba(232,69,96,0.08); border: 1px solid rgba(232,69,96,0.18);
+    .post-thumb span {
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
     }
-    .read-more:hover { gap: 8px; background: rgba(232,69,96,0.16); border-color: rgba(232,69,96,0.35); color: #ff6b84; }
-    .post-card:hover .read-more { gap: 8px; }
 
-    .blog-main-layout {
-      max-width: 1200px; margin: 0 auto;
-      padding: 0 3rem 6rem;
-      display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem;
+    .card-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
-    .sidebar { position: sticky; top: 100px; height: fit-content; }
-    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.25rem; }
-    .sidebar-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; }
-    .sidebar-card p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1rem; }
-    .sidebar-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.82rem; outline: none; margin-bottom: 0.65rem; transition: border-color 0.2s; }
-    .sidebar-input:focus { border-color: rgba(172,46,68,0.5); }
-    .sidebar-input::placeholder { color: var(--muted); }
-    .sidebar-btn { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.6rem; border-radius: 8px; font-family: inherit; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
-    .sidebar-btn:hover { opacity: 0.9; }
-    .trending-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-    .trending-item { display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer; transition: opacity 0.2s; }
-    .trending-item:hover { opacity: 0.75; }
-    .trending-num { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: rgba(172,46,68,0.4); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
-    .trending-item p { font-size: 0.82rem; line-height: 1.4; font-weight: 500; }
-    .trending-item span { font-size: 0.73rem; color: var(--muted); }
 
-    .pagination {
+    .card-content .post-tag {
+      display: inline-block;
+      padding: 0.25rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .card-content h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .card-content p {
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+      font-size: 0.95rem;
+    }
+
+    .post-meta {
+      margin-top: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .post-meta-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      gap: 0.5rem; padding: 0 3rem 4rem;
+      font-size: 0.7rem; font-weight: 700;
+      flex-shrink: 0;
     }
-    .page-btn {
-      min-width: 38px; height: 38px; padding: 0 12px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 8px; font-family: inherit; font-size: 0.85rem; color: var(--muted);
-      cursor: pointer; transition: all 0.2s;
-    }
-    .page-btn:hover:not(:disabled) { color: var(--text); border-color: rgba(255,255,255,0.15); }
-    .page-btn.active { background: rgba(172,46,68,0.15); border-color: rgba(172,46,68,0.4); color: var(--accent2); font-weight: 600; }
-    .page-btn:disabled { opacity: 0.3; cursor: default; }
 
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    @media (max-width: 900px) { .blog-main-layout { grid-template-columns: 1fr; } .sidebar { position: static; } .posts-grid { grid-template-columns: repeat(2, 1fr); } }
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-actions { display: none; }
+      .hamburger { display: flex; }
+
       .blog-hero { padding: 7rem 1.5rem 3rem; }
-      .library-container { padding: 0 1.5rem 3rem; }
-      .blog-main-layout { padding: 0 1.5rem 4rem; }
-      .pagination { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .featured-post { grid-template-columns: 1fr; } .featured-visual { min-height: 180px; }
-      .posts-grid { grid-template-columns: 1fr; }
+      .library-container, .filters { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -267,86 +352,53 @@
       <li><a href="account.html">Account</a></li>
     </ul>
     <div class="nav-actions">
-      <button class="btn-ghost">Sign in</button>
-      <button class="btn-primary">Join the team</button>
+      <a href="signup.html" class="btn-ghost">Sign in</a>
+      <a href="signup.html" class="btn-primary">Join the Team</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
-    </svg>
-  </button>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="guides.html">Guides</a>
+    <a href="#">Robot Builds</a>
+    <a href="blog.html">Blog</a>
+    <a href="community.html">Community</a>
+    <a href="about.html">About</a>
+    <div class="mobile-actions">
+      <a href="signup.html" class="btn-ghost" style="flex:1; justify-content:center;">Sign in</a>
+      <a href="signup.html" class="btn-primary" style="flex:1; justify-content:center;">Join the Team</a>
+    </div>
+  </div>
 
+  <!-- BLOG HERO -->
   <section class="blog-hero">
-    <div class="blog-hero-inner">
-      <div class="blog-hero-badge"><span>●</span> Fresh from the pit</div>
-      <h1>The VexGrind <em>Blog</em></h1>
-      <p>Deep dives, build breakdowns, and strategy guides written by teams that compete. No fluff — just what actually wins matches.</p>
-      <div class="search-bar">
-        <input type="text" id="globalSearch" placeholder="Search posts… (autonomous, build, strategy, etc.)" />
-        <button onclick="filterPosts()">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z" />
-          </svg>
-          Search
-        </button>
-      </div>
+    <div class="blog-hero-content">
+      <div class="hero-badge"><span>●</span> FRESH FROM THE PIT</div>
+      <h1>The VexGrind Blog</h1>
+      <p class="hero-sub">Deep dives, build breakdowns, and strategy guides written by teams that actually compete. No fluff — only what wins matches.</p>
     </div>
   </section>
 
+  <!-- FILTERS -->
+  <div class="filters">
+    <button class="filter-btn active" data-category="all">All Posts</button>
+    <button class="filter-btn" data-category="autonomous">🧠 Autonomous</button>
+    <button class="filter-btn" data-category="build">🔧 Build Guides</button>
+    <button class="filter-btn" data-category="code">💻 Code</button>
+    <button class="filter-btn" data-category="strategy">🎯 Strategy</button>
+    <button class="filter-btn" data-category="notebook">📋 Notebook</button>
+    <button class="filter-btn" data-category="community">🤝 Community</button>
+  </div>
+
+  <!-- BLOG GRID -->
   <div class="library-container">
-    <div class="filters" id="filters">
-      <button class="filter-btn active" data-category="all">All Posts</button>
-      <button class="filter-btn" data-category="community">Community</button>
-      <button class="filter-btn" data-category="build">Build</button>
-      <button class="filter-btn" data-category="code">Code</button>
-      <button class="filter-btn" data-category="strategy">Strategy</button>
-      <button class="filter-btn" data-category="notebook">Notebook</button>
-      <button class="filter-btn" data-category="auto">Autonomous</button>
+    <div class="posts-grid" id="postsGrid">
+      <!-- Cards populated by JavaScript below -->
     </div>
-
-    <span id="postsAnchor"></span>
-
-    <!-- Featured post — update this whenever you want a new one highlighted -->
-    <div id="featuredWrapper">
-      <a href="blog_autonomousmazeescaper.html" class="featured-post reveal">
-        <div class="featured-visual">
-          <div class="featured-visual-icon">🤖</div>
-        </div>
-        <div class="featured-content">
-          <span class="post-tag tag-auto">Autonomous</span>
-          <h2>Autonomous Maze Escaper</h2>
-          <p>Naitik and Aryan coded the robot to escape mazes ... autonomously.</p>
-          <div class="post-meta" style="margin-bottom:1.25rem;">
-            <div class="post-meta-avatar av1">AS</div>
-            <span>Aryan.S & Naitik.P · VexGrind</span>
-            <div class="post-meta-sep"></div>
-            <span>Apr 22, 2026</span>
-            <div class="post-meta-sep"></div>
-            <span>5 min read</span>
-          </div>
-          <span class="featured-cta">Read full article <span>→</span></span>
-        </div>
-      </a>
-    </div>
-
-    <div class="posts-grid" id="postsGrid"></div>
   </div>
-
-  <div class="blog-main-layout" style="padding-top: 0;">
-    <div></div>
-    <aside class="sidebar">
-      <div class="sidebar-card reveal">
-        <h3>📬 Get the digest</h3>
-        <p>New build guides, code drops, and strategy breakdowns — straight to your inbox every week.</p>
-        <input class="sidebar-input" type="email" id="digestEmail" placeholder="your@email.com" />
-        <button class="sidebar-btn" onclick="handleSubscribe()">Subscribe for free</button>
-      </div>
-    </aside>
-  </div>
-
-  <div class="pagination" id="pagination"></div>
 
   <footer style="border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 0.82rem;">
     <a href="index.html" class="nav-logo" style="font-size:1.1rem;">VexGrind</a>
@@ -359,215 +411,136 @@
   </footer>
 
   <script>
-    // ── ALL BLOG POSTS ──
-    // To add a new post: add an object to this array. Pagination updates automatically (6 per page).
-    // Also update the #featuredWrapper HTML above to point to your newest post.
-    const postsData = [
+    // Sample Blog Posts Data
+    const blogPosts = [
       {
-        id: 1, category: "community", link: "blog_vexnamereveal.html",
-        emoji: "🤝", thumb: "thumb-community", tagClass: "tag-community", tagLabel: "Community",
+        id: 1,
+        category: "community",
         title: "VEX NAME REVEAL!!",
-        excerpt: "The official VEX Robotics game names for the 2026-2027 season were recently revealed in a retro-style announcement. Click here to find out more!",
-        avatarClass: "av2", avatarInitials: "NP", date: "Mar 4", readTime: "8min"
+        emoji: "🤝",
+        excerpt: "The official VEX Robotics game names for the 2026-2027 season were revealed in a retro-style announcement.",
+        author: "NP",
+        date: "Mar 4",
+        readTime: "8 min"
       },
       {
-        id: 2, category: "build", link: "blog_obstaclecourses.html",
-        emoji: "🎮", thumb: "thumb-build", tagClass: "tag-build", tagLabel: "Build Guide",
-        title: "Experimenting with obstacle courses",
-        excerpt: "A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.",
-        avatarClass: "av2", avatarInitials: "SG", date: "Apr 2", readTime: "5min"
+        id: 2,
+        category: "build",
+        title: "Experimenting with Obstacle Courses",
+        emoji: "🎮",
+        excerpt: "We built an obstacle course using household objects to test our driving skills for future challenges.",
+        author: "SG",
+        date: "Apr 2",
+        readTime: "5 min"
       },
       {
-        id: 3, category: "code", link: "blog_conventionalunconventional.html",
-        emoji: "🧠", thumb: "thumb-code", tagClass: "tag-code", tagLabel: "Code",
+        id: 3,
+        category: "code",
         title: "Conventional and Unconventional Robots",
-        excerpt: "Conventional robots often fit the stereotypes that a 'robot' carries. One popular example of unconventional robots is the branch of 'soft robots' — utilising compliant materials, contrary to their conventional counterparts.",
-        avatarClass: "av3", avatarInitials: "LR", date: "Mar 28", readTime: "7min"
+        emoji: "🧠",
+        excerpt: "Exploring soft robots and other unconventional designs that challenge traditional robotics stereotypes.",
+        author: "LR",
+        date: "Mar 28",
+        readTime: "7 min"
       },
       {
-        id: 4, category: "auto", link: "blog_autonomousmazeescaper.html",
-        emoji: "🤖", thumb: "thumb-auto", tagClass: "tag-auto", tagLabel: "Autonomous",
-        title: "Autonomous Maze Escaper",
-        excerpt: "Full breakdown of our autonomous maze-solving robot — the sensor stack, the wall-following algorithm, the dead-end recovery logic, and everything we learned building it from scratch.",
-        avatarClass: "av1", avatarInitials: "AS", date: "Apr 22", readTime: "5min"
+        id: 4,
+        category: "strategy",
+        title: "Alliance Selection Psychology: How to Get Picked Every Time",
+        emoji: "🎯",
+        excerpt: "Rankings don't always predict picks. Here's what top teams actually look for during alliance selection.",
+        author: "JP",
+        date: "Mar 22",
+        readTime: "6 min"
       },
+      {
+        id: 5,
+        category: "notebook",
+        title: "We Scored 35/40 on Our Engineering Notebook. Here's Our Template",
+        emoji: "📋",
+        excerpt: "The exact format, section ordering, and design decision logs that helped us nearly ace our notebook.",
+        author: "AW",
+        date: "Mar 17",
+        readTime: "10 min"
+      },
+      {
+        id: 6,
+        category: "autonomous",
+        title: "Odometry in 48 Hours: A Beginner's Survival Guide",
+        emoji: "🧠",
+        excerpt: "How we implemented working odometry with just 2 days until our qualifier — full code and diagrams included.",
+        author: "MK",
+        date: "Mar 10",
+        readTime: "15 min"
+      }
     ];
 
-    const POSTS_PER_PAGE = 6;
-    let currentPage = 1;
-    let filteredPosts = [...postsData];
-
-    // ── Reveal animation observer ──
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 70);
-        }
-      });
-    }, { threshold: 0.08 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // ── Render the current page slice ──
-    function renderPage() {
+    function renderPosts(filteredPosts) {
       const grid = document.getElementById('postsGrid');
-      const featuredWrapper = document.getElementById('featuredWrapper');
-      const searchTerm = document.getElementById('globalSearch').value.trim();
-      const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
-
-      const isFiltering = activeFilter !== 'all' || searchTerm !== '';
-      featuredWrapper.style.display = isFiltering ? 'none' : 'block';
-
       grid.innerHTML = '';
 
-      if (filteredPosts.length === 0) {
-        grid.innerHTML = `<div class="no-results">No posts found. Try a different search term.</div>`;
-        buildPagination();
-        return;
-      }
-
-      const start = (currentPage - 1) * POSTS_PER_PAGE;
-      const slice = filteredPosts.slice(start, start + POSTS_PER_PAGE);
-
-      slice.forEach(post => {
-        grid.innerHTML += `
-          <a href="${post.link}" class="post-card reveal">
-            <div class="post-thumb ${post.thumb}">
-              <span class="post-thumb-emoji">${post.emoji}</span>
+      filteredPosts.forEach(post => {
+        const cardHTML = `
+          <a href="#" class="post-card" data-category="${post.category}">
+            <div class="post-thumb">
+              <span>${post.emoji}</span>
             </div>
-            <div class="post-body">
-              <span class="post-tag ${post.tagClass}">${post.tagLabel}</span>
+            <div class="card-content">
+              <span class="post-tag" style="background: rgba(172,46,68,0.15); color: var(--accent2);">
+                ${post.category.charAt(0).toUpperCase() + post.category.slice(1)}
+              </span>
               <h3>${post.title}</h3>
               <p>${post.excerpt}</p>
-              <div class="post-footer">
-                <div class="post-meta">
-                  <div class="post-meta-avatar ${post.avatarClass}">${post.avatarInitials}</div>
-                  <span style="font-size:0.78rem;color:var(--muted)">${post.date} · ${post.readTime}</span>
+              <div class="post-meta">
+                <div class="post-meta-avatar" style="background: linear-gradient(135deg, var(--accent), #ff8c60);">
+                  ${post.author}
                 </div>
-                <span class="read-more">Read <span>→</span></span>
+                <span>${post.date} · ${post.readTime}</span>
               </div>
             </div>
           </a>
         `;
-      });
-
-      grid.querySelectorAll('.post-card.reveal').forEach(el => observer.observe(el));
-      buildPagination();
-    }
-
-    // ── Build pagination buttons ──
-    function buildPagination() {
-      const container = document.getElementById('pagination');
-      const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-      container.innerHTML = '';
-
-      if (totalPages <= 1) return;
-
-      function makeBtn(label, targetPage, disabled = false) {
-        const btn = document.createElement('button');
-        btn.className = 'page-btn' + (targetPage === currentPage ? ' active' : '');
-        btn.textContent = label;
-        btn.disabled = disabled;
-        if (!disabled) btn.addEventListener('click', () => goToPage(targetPage));
-        return btn;
-      }
-
-      container.appendChild(makeBtn('←', currentPage - 1, currentPage === 1));
-
-      const pageSet = new Set([1, totalPages]);
-      for (let p = Math.max(1, currentPage - 1); p <= Math.min(totalPages, currentPage + 1); p++) pageSet.add(p);
-      const pages = [...pageSet].sort((a, b) => a - b);
-
-      let prev = 0;
-      pages.forEach(p => {
-        if (prev && p - prev > 1) {
-          const dots = document.createElement('button');
-          dots.className = 'page-btn';
-          dots.textContent = '…';
-          dots.disabled = true;
-          container.appendChild(dots);
-        }
-        container.appendChild(makeBtn(p, p));
-        prev = p;
-      });
-
-      container.appendChild(makeBtn('→', currentPage + 1, currentPage === totalPages));
-    }
-
-    // ── Go to page and scroll up ──
-    function goToPage(page) {
-      currentPage = page;
-      renderPage();
-      document.getElementById('postsAnchor').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // ── Filter + search ──
-    function filterPosts() {
-      const term = document.getElementById('globalSearch').value.toLowerCase().trim();
-      const cat = document.querySelector('.filter-btn.active').dataset.category;
-
-      filteredPosts = postsData.filter(p => {
-        const catOk = cat === 'all' || p.category === cat;
-        const termOk = !term || p.title.toLowerCase().includes(term) || p.excerpt.toLowerCase().includes(term) || p.tagLabel.toLowerCase().includes(term);
-        return catOk && termOk;
-      });
-
-      currentPage = 1;
-      renderPage();
-    }
-
-    // ── Subscribe button (shows confirmation; wire to a real email service when ready) ──
-    function handleSubscribe() {
-      const input = document.getElementById('digestEmail');
-      const email = input.value.trim();
-      const card = input.closest('.sidebar-card');
-
-      if (!email || !email.includes('@')) {
-        input.style.borderColor = 'rgba(232,69,96,0.6)';
-        input.focus();
-        return;
-      }
-
-      // Replace card content with a thank-you message
-      card.innerHTML = `
-        <div style="text-align:center; padding: 0.5rem 0;">
-          <div style="font-size:2rem; margin-bottom:0.75rem;">✅</div>
-          <h3 style="font-family:'Syne',sans-serif; margin-bottom:0.5rem;">You're in!</h3>
-          <p style="color:var(--muted); font-size:0.82rem; line-height:1.6;">
-            <strong style="color:var(--text)">${email}</strong> is now subscribed.<br>
-            You'll get notified whenever a new post drops.
-          </p>
-        </div>
-      `;
-    }
-
-    // ── Filter button wiring ──
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        filterPosts();
-      });
-    });
-
-    // ── Live search ──
-    document.getElementById('globalSearch').addEventListener('input', filterPosts);
-
-    // ── Fullscreen ──
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    if (fullscreenBtn) {
-      fullscreenBtn.addEventListener('click', async () => {
-        const isFS = document.fullscreenElement || document.webkitFullscreenElement;
-        if (isFS) {
-          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-        } else {
-          (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen).call(document.documentElement);
-        }
+        grid.innerHTML += cardHTML;
       });
     }
 
-    // ── Init ──
-    renderPage();
+    // Filter functionality
+    function initFilters() {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const category = btn.dataset.category;
+          let filtered = blogPosts;
+
+          if (category !== 'all') {
+            filtered = blogPosts.filter(p => p.category === category);
+          }
+
+          renderPosts(filtered);
+        });
+      });
+    }
+
+    // Hamburger menu
+    function initMobileMenu() {
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+      });
+    }
+
+    // Initialize
+    window.onload = function() {
+      renderPosts(blogPosts);
+      initFilters();
+      initMobileMenu();
+    };
   </script>
 </body>
 </html>

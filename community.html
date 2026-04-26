@@ -84,6 +84,14 @@
     .user-name { font-weight: 500; color: var(--text); }
     .user-change { color: var(--accent2); font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-left: 4px; }
 
+    /* USER STATS */
+    .user-stats { display: inline-flex; gap: 0.75rem; margin-left: 1rem; align-items: center; }
+    .stat-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 0.35rem 0.75rem; font-size: 0.75rem; color: var(--muted); }
+    .stat-badge.karma { border-color: rgba(172,46,68,0.3); }
+    .stat-badge.karma .stat-icon { color: var(--accent2); }
+    .stat-badge.posts .stat-icon { color: var(--blue); }
+    .stat-badge span:not(.stat-icon) { font-weight: 600; color: var(--text); }
+
     /* LAYOUT */
     .community-layout { max-width: 1200px; margin: 0 auto; padding: 2rem 3rem 6rem; display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
 
@@ -147,10 +155,11 @@
     .flair-news     { background: rgba(249,115,22,0.1); color: #f97316; border: 1px solid rgba(249,115,22,0.18); }
     .post-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.4rem; cursor: pointer; }
     .post-title:hover { color: var(--accent2); }
-    .post-preview { color: var(--muted); font-size: 0.82rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.75rem; }
+    .post-preview { color: var(--muted); font-size: 0.82rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.75rem; }
     .post-actions { display: flex; align-items: center; gap: 1rem; }
     .action-btn { background: none; border: none; color: var(--muted); font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 0.3rem 0.5rem; border-radius: 6px; transition: color 0.2s, background 0.2s; font-family: inherit; }
     .action-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .action-btn.bookmarked { color: var(--accent2); }
     .action-btn svg { width: 14px; height: 14px; }
 
     /* EXPANDED POST (comments) */
@@ -252,7 +261,8 @@
 <nav>
   <a href="index.html" class="nav-logo">VexGrind</a>
   <ul class="nav-links">
-    <li><a href="guides.html">Guides</a></li>
+    <li><a href="guides.html" class="active">Guides</a></li>
+    <li><a href="#">Robot Builds</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="community.html" class="active">Community</a></li>
     <li><a href="about.html">About</a></li>
@@ -300,6 +310,10 @@
     <div class="user-avatar" id="navAvatar" style="background: linear-gradient(135deg, #AC2E44, #1e6dff);">?</div>
     <span class="user-name" id="navUsername">Anonymous</span>
     <span class="user-change" onclick="openUsernameModal()">change</span>
+  </div>
+  <div class="user-stats" id="userStats">
+    <span class="stat-badge karma"><span class="stat-icon">⚡</span><span id="karmaVal">0</span> karma</span>
+    <span class="stat-badge posts"><span class="stat-icon">📝</span><span id="postCountVal">0</span> posts</span>
   </div>
 </div>
 
@@ -414,7 +428,31 @@ function updateUserUI() {
   document.getElementById('navAvatar').style.background = color;
   document.getElementById('composerAvatar').textContent = initials;
   document.getElementById('composerAvatar').style.background = color;
+  updateUserStats();
 }
+
+function updateUserStats() {
+  if (!username || username === 'Anonymous') {
+    document.getElementById('karmaVal').textContent = '0';
+    document.getElementById('postCountVal').textContent = '0';
+    return;
+  }
+  // Calculate karma from user's posts and comments
+  let karma = 0;
+  let postCount = 0;
+  posts.forEach(p => {
+    if (p.author === username) {
+      postCount++;
+      karma += p.votes;
+      p.comments.forEach(c => {
+        if (c.author === username) karma += c.votes;
+      });
+    }
+  });
+  document.getElementById('karmaVal').textContent = karma;
+  document.getElementById('postCountVal').textContent = postCount;
+}
+  document.getElementById('composerAvatar').style.background = color;
 
 function getAvatarColor(name) {
   const colors = [
@@ -524,6 +562,10 @@ function renderPost(p) {
           <button class="action-btn" onclick="sharePost('${p.id}')">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="4" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="12" r="1.5"/><path d="M5.5 7.2L10.5 4.8M5.5 8.8L10.5 11.2"/></svg>
             Share
+          </button>
+          <button class="action-btn ${isBookmarked(p.id)?'bookmarked':''}" onclick="toggleBookmark('${p.id}')">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12l-4-2-4 2V2z"/></svg>
+            ${isBookmarked(p.id)?'Saved':'Save'}
           </button>
           ${canDelete(p.author)?`<button class="action-btn" onclick="deletePost('${p.id}')" style="color:var(--accent2)">✕ Delete</button>`:''}
         </div>
@@ -743,6 +785,25 @@ document.getElementById('usernameModal').addEventListener('click', e=>{ if(e.tar
 function sharePost(id) {
   navigator.clipboard.writeText(window.location.href+'#post-'+id).catch(()=>{});
   showToast('🔗 Link copied!');
+}
+
+// ── BOOKMARKS ──
+let bookmarks = JSON.parse(localStorage.getItem('vg_bookmarks') || '[]');
+
+function isBookmarked(id) {
+  return bookmarks.includes(id);
+}
+
+function toggleBookmark(id) {
+  if (bookmarks.includes(id)) {
+    bookmarks = bookmarks.filter(b => b !== id);
+    showToast('📌 Removed from saved');
+  } else {
+    bookmarks.push(id);
+    showToast('📌 Post saved!');
+  }
+  localStorage.setItem('vg_bookmarks', JSON.stringify(bookmarks));
+  renderPosts();
 }
 
 // ── TOAST ──
