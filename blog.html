@@ -30,12 +30,12 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* ── NAV (Unified with Parts Library) ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(7,9,15,0.6);
+      background: rgba(7,9,15,0.75);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
     }
@@ -47,7 +47,6 @@
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      color: transparent;
       text-decoration: none;
     }
 
@@ -58,221 +57,164 @@
     }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
-    .nav-actions { display: flex; gap: 1rem; align-items: center; }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+
     .btn-ghost {
-      background: none; border: none; color: var(--muted);
-      font-family: inherit; font-size: 0.9rem; cursor: pointer;
-      transition: color 0.2s;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
     }
-    .btn-ghost:hover { color: var(--text); }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
 
     .btn-primary {
       background: var(--accent);
-      color: #fff; border: none;
-      padding: 0.55rem 1.3rem;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
       border-radius: 8px;
-      font-family: inherit; font-size: 0.9rem; font-weight: 500;
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+      transition: all 0.2s;
     }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
 
-    /* ── BLOG HERO ── */
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+      background: rgba(7,9,15,0.97);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      flex-direction: column; gap: 1.25rem;
+      animation: slideDown 0.25s ease;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--text); text-decoration: none; font-size: 1rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu .mobile-actions {
+      display: flex; gap: 0.75rem; padding-top: 0.5rem;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── BLOG HERO (Now matches Parts Library style) ── */
     .blog-hero {
-      padding: 9rem 3rem 5rem;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding: 9rem 3rem 4rem;
       position: relative;
       overflow: hidden;
+      background: linear-gradient(135deg, var(--bg2), var(--bg));
     }
 
-    .blog-hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 50% 70% at 80% 30%, rgba(172,46,68,0.12) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(30,109,255,0.08) 0%, transparent 60%);
-    }
-
-    .blog-hero-bg::after {
+    .blog-hero::before {
       content: '';
       position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
+      background: radial-gradient(circle at 30% 70%, rgba(172,46,68,0.18), transparent 60%),
+                  radial-gradient(circle at 80% 30%, rgba(30,109,255,0.15), transparent 60%);
+      pointer-events: none;
     }
 
-    .blog-hero-inner {
-      position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto;
+    .blog-hero-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
     }
 
-    .blog-hero-badge {
+    .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(172,46,68,0.15);
       border: 1px solid rgba(172,46,68,0.3);
       border-radius: 100px;
       padding: 0.35rem 1rem;
       font-size: 0.78rem; color: var(--accent2);
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.6s ease both;
+      margin-bottom: 1rem;
     }
-    .blog-hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: block; }
 
     .blog-hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      animation: fadeUp 0.6s 0.1s ease both;
     }
 
-    .blog-hero h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--accent2), #ff8c60);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero-sub {
+      color: var(--muted); font-size: 1.1rem; max-width: 520px;
+      margin: 1.25rem 0 2.5rem;
     }
 
-    .blog-hero p {
-      color: var(--muted); font-size: 1rem; max-width: 520px; line-height: 1.7;
-      animation: fadeUp 0.6s 0.2s ease both;
-    }
-
-    /* ── FILTER TABS ── */
-    .filter-row {
-      max-width: 1100px; margin: 0 auto 3.5rem;
-      padding: 0 3rem;
-      display: flex; align-items: center; gap: 0.6rem;
+    /* ── FILTERS (Pill style like Parts Library) ── */
+    .filters {
+      display: flex;
       flex-wrap: wrap;
-      animation: fadeUp 0.6s 0.3s ease both;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+      padding-top: 1rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 3rem;
+      padding-right: 3rem;
     }
 
-    .filter-tab {
+    .filter-btn {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.45rem 1rem;
-      font-family: inherit; font-size: 0.82rem; color: var(--muted);
-      cursor: pointer; transition: all 0.2s;
+      color: var(--muted);
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .filter-tab:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
-    .filter-tab.active {
-      background: rgba(172,46,68,0.15);
-      border-color: rgba(172,46,68,0.4);
-      color: var(--accent2);
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
 
     /* ── BLOG GRID ── */
-    .blog-grid-wrap {
-      max-width: 1100px; margin: 0 auto;
+    .library-container {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 0 3rem 6rem;
     }
 
-    /* Featured post */
-    .featured-post {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 2rem;
-      transition: border-color 0.3s, transform 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-    }
-    .featured-post:hover {
-      border-color: rgba(172,46,68,0.4);
-      transform: translateY(-3px);
-    }
-
-    .featured-visual {
-      position: relative;
-      background: linear-gradient(135deg, rgba(172,46,68,0.25) 0%, rgba(30,109,255,0.15) 60%, rgba(7,9,15,0.9) 100%);
-      min-height: 320px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-
-    .featured-visual::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-
-    .featured-visual-icon {
-      font-size: 5rem;
-      position: relative; z-index: 1;
-      filter: drop-shadow(0 0 40px rgba(172,46,68,0.6));
-      animation: float 4s ease-in-out infinite;
-    }
-
-    .featured-content {
-      padding: 2.5rem;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-
-    .post-tag {
-      display: inline-block;
-      padding: 0.3rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em;
-      margin-bottom: 1rem;
-    }
-    .tag-auto { background: rgba(172,46,68,0.15); color: var(--accent2); border: 1px solid rgba(172,46,68,0.25); }
-    .tag-build { background: rgba(30,109,255,0.15); color: #60a5fa; border: 1px solid rgba(30,109,255,0.25); }
-    .tag-code { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
-    .tag-strategy { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
-    .tag-notebook { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
-    .tag-community { background: rgba(249,115,22,0.12); color: #f97316; border: 1px solid rgba(249,115,22,0.2); }
-
-    .featured-content h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.6rem; font-weight: 800;
-      line-height: 1.2; margin-bottom: 0.75rem;
-    }
-
-    .featured-content p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
-
-    .post-meta {
-      display: flex; align-items: center; gap: 1rem;
-      font-size: 0.78rem; color: var(--muted);
-    }
-
-    .post-meta-avatar {
-      width: 28px; height: 28px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.65rem; font-weight: 700;
-      flex-shrink: 0;
-    }
-    .av1 { background: linear-gradient(135deg, var(--accent), #ff8c60); }
-    .av2 { background: linear-gradient(135deg, var(--blue), #60a5fa); }
-    .av3 { background: linear-gradient(135deg, #4ade80, #22d3ee); }
-    .av4 { background: linear-gradient(135deg, #a78bfa, #e879f9); }
-    .av5 { background: linear-gradient(135deg, #fbbf24, #f97316); }
-
-    .post-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
-
-    .featured-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: var(--accent2); font-size: 0.85rem; font-weight: 500;
-      text-decoration: none;
-      transition: gap 0.2s;
-    }
-    .featured-cta:hover { gap: 10px; }
-
-    /* Regular grid */
     .posts-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
     }
 
     .post-card {
@@ -280,214 +222,103 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      cursor: pointer;
-      transition: border-color 0.3s, transform 0.3s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
       text-decoration: none;
       color: inherit;
-      display: block;
     }
+
     .post-card:hover {
-      border-color: rgba(172,46,68,0.35);
-      transform: translateY(-4px);
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(172,46,68,0.25);
     }
 
     .post-thumb {
-      height: 160px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem;
+      height: 220px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
       overflow: hidden;
+      font-size: 4.5rem;
     }
-    .thumb-auto { background: linear-gradient(135deg, rgba(172,46,68,0.3), rgba(7,9,15,0.8)); }
-    .thumb-build { background: linear-gradient(135deg, rgba(30,109,255,0.3), rgba(7,9,15,0.8)); }
-    .thumb-code { background: linear-gradient(135deg, rgba(74,222,128,0.2), rgba(7,9,15,0.8)); }
-    .thumb-strategy { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(7,9,15,0.8)); }
-    .thumb-notebook { background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(7,9,15,0.8)); }
-    .thumb-community { background: linear-gradient(135deg, rgba(249,115,22,0.2), rgba(7,9,15,0.8)); }
 
     .post-thumb::before {
       content: '';
       position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 30px 30px;
+      background: linear-gradient(135deg, rgba(172,46,68,0.25), rgba(30,109,255,0.15));
+      opacity: 0.6;
     }
 
-    .post-thumb-emoji { position: relative; z-index: 1; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
-
-    .post-body { padding: 1.4rem; }
-    .post-body h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem; font-weight: 700; margin: 0.6rem 0 0.5rem;
-      line-height: 1.3;
-    }
-    .post-body p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1.1rem; }
-
-    .post-footer {
-      display: flex; align-items: center; justify-content: space-between;
+    .post-thumb span {
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
     }
 
-    /* ── READ MORE BUTTON ── */
-    .read-more {
-      font-size: 0.78rem; color: var(--accent2);
-      display: inline-flex; align-items: center; gap: 4px;
-      transition: gap 0.2s, color 0.2s;
-      text-decoration: none;
-      font-weight: 500;
-      padding: 0.3rem 0.7rem;
-      border-radius: 6px;
-      background: rgba(232,69,96,0.08);
-      border: 1px solid rgba(232,69,96,0.18);
-    }
-    .read-more:hover {
-      gap: 8px;
-      background: rgba(232,69,96,0.16);
-      border-color: rgba(232,69,96,0.35);
-      color: #ff6b84;
-    }
-    .post-card:hover .read-more { gap: 8px; }
-
-    /* ── SIDEBAR NEWSLETTER ── */
-    .blog-main-layout {
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 3rem 6rem;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 2.5rem;
-    }
-
-    .sidebar { position: sticky; top: 100px; height: fit-content; }
-
-    .sidebar-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    .card-content {
       padding: 1.5rem;
-      margin-bottom: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
-    .sidebar-card h3 {
+    .card-content .post-tag {
+      display: inline-block;
+      padding: 0.25rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .card-content h3 {
       font-family: 'Syne', sans-serif;
-      font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem;
+      font-size: 1.35rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
     }
-    .sidebar-card p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1rem; }
 
-    .sidebar-input {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.6rem 0.9rem;
-      color: var(--text);
-      font-family: inherit; font-size: 0.82rem;
-      outline: none;
-      margin-bottom: 0.65rem;
-      transition: border-color 0.2s;
+    .card-content p {
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+      font-size: 0.95rem;
     }
-    .sidebar-input:focus { border-color: rgba(172,46,68,0.5); }
-    .sidebar-input::placeholder { color: var(--muted); }
 
-    .sidebar-btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none;
-      padding: 0.6rem;
-      border-radius: 8px;
-      font-family: inherit; font-size: 0.82rem; font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
+    .post-meta {
+      margin-top: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
     }
-    .sidebar-btn:hover { opacity: 0.9; }
 
-    .trending-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-    .trending-item {
-      display: flex; gap: 0.75rem; align-items: flex-start;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .trending-item:hover { opacity: 0.75; }
-    .trending-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem; font-weight: 800;
-      color: rgba(172,46,68,0.4);
-      flex-shrink: 0; line-height: 1.3;
-      min-width: 24px;
-    }
-    .trending-item p { font-size: 0.82rem; line-height: 1.4; font-weight: 500; }
-    .trending-item span { font-size: 0.73rem; color: var(--muted); }
-
-    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-
-    /* ── PAGINATION ── */
-    .pagination {
+    .post-meta-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      gap: 0.5rem; padding: 0 3rem 4rem;
-    }
-
-    .page-btn {
-      width: 38px; height: 38px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: inherit; font-size: 0.85rem; color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .page-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
-    .page-btn.active {
-      background: rgba(172,46,68,0.15);
-      border-color: rgba(172,46,68,0.4);
-      color: var(--accent2);
-    }
-
-    /* ── REVEAL ── */
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
-    }
-
-    /* ── DIVIDER ── */
-    .section-divider {
-      max-width: 1100px; margin: 0 auto 2rem;
-      padding: 0 3rem;
-      display: flex; align-items: center; gap: 1rem;
-    }
-    .section-divider span {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--muted); white-space: nowrap;
-    }
-    .section-divider::before, .section-divider::after {
-      content: ''; flex: 1; height: 1px; background: var(--border);
+      font-size: 0.7rem; font-weight: 700;
+      flex-shrink: 0;
     }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .blog-main-layout { grid-template-columns: 1fr; }
-      .sidebar { position: static; }
-      .posts-grid { grid-template-columns: repeat(2, 1fr); }
-    }
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .blog-hero { padding: 7rem 1.5rem 4rem; }
-      .blog-grid-wrap, .blog-main-layout, .pagination, .section-divider, .filter-row { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .featured-post { grid-template-columns: 1fr; }
-      .featured-visual { min-height: 180px; }
-      .posts-grid { grid-template-columns: 1fr; }
+      .nav-actions { display: none; }
+      .hamburger { display: flex; }
+
+      .blog-hero { padding: 7rem 1.5rem 3rem; }
+      .library-container, .filters { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -504,310 +335,52 @@
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-actions">
-      <button class="btn-ghost">Sign in</button>
-      <button class="btn-primary">Join the team</button>
+      <a href="signup.html" class="btn-ghost">Sign in</a>
+      <a href="signup.html" class="btn-primary">Join the Team</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="guides.html">Guides</a>
+    <a href="#">Robot Builds</a>
+    <a href="blog.html">Blog</a>
+    <a href="community.html">Community</a>
+    <a href="about.html">About</a>
+    <div class="mobile-actions">
+      <a href="signup.html" class="btn-ghost" style="flex:1; justify-content:center;">Sign in</a>
+      <a href="signup.html" class="btn-primary" style="flex:1; justify-content:center;">Join the Team</a>
+    </div>
+  </div>
 
   <!-- BLOG HERO -->
   <section class="blog-hero">
-    <div class="blog-hero-bg"></div>
-    <div class="blog-hero-inner">
-      <div class="blog-hero-badge"><span></span> Fresh from the pit</div>
-      <h1>The VexGrind <em>Blog</em></h1>
-      <p>Deep dives, build breakdowns, and strategy guides written by teams that compete. No fluff — just what actually wins matches.</p>
+    <div class="blog-hero-content">
+      <div class="hero-badge"><span>●</span> FRESH FROM THE PIT</div>
+      <h1>The VexGrind Blog</h1>
+      <p class="hero-sub">Deep dives, build breakdowns, and strategy guides written by teams that actually compete. No fluff — only what wins matches.</p>
     </div>
   </section>
 
-  <!-- FILTER TABS -->
-  <div class="filter-row reveal">
-    <button class="filter-tab active" onclick="setFilter(this,'all')">All posts</button>
-    <button class="filter-tab" onclick="setFilter(this,'autonomous')">🧠 Autonomous</button>
-    <button class="filter-tab" onclick="setFilter(this,'build')">🔧 Build Guides</button>
-    <button class="filter-tab" onclick="setFilter(this,'code')">💻 Code</button>
-    <button class="filter-tab" onclick="setFilter(this,'strategy')">🎯 Strategy</button>
-    <button class="filter-tab" onclick="setFilter(this,'notebook')">📋 Notebook</button>
-    <button class="filter-tab" onclick="setFilter(this,'community')">🤝 Community</button>
+  <!-- FILTERS -->
+  <div class="filters">
+    <button class="filter-btn active" data-category="all">All Posts</button>
+    <button class="filter-btn" data-category="autonomous">🧠 Autonomous</button>
+    <button class="filter-btn" data-category="build">🔧 Build Guides</button>
+    <button class="filter-btn" data-category="code">💻 Code</button>
+    <button class="filter-btn" data-category="strategy">🎯 Strategy</button>
+    <button class="filter-btn" data-category="notebook">📋 Notebook</button>
+    <button class="filter-btn" data-category="community">🤝 Community</button>
   </div>
 
-  <!-- FEATURED POST -->
-      <div class="blog-grid-wrap">
-    <a href="blog_obstaclecourses.html" class="featured-post reveal">
-      <div class="featured-visual">
-        <div class="featured-visual-icon">🎮</div>
-      </div>
-      <div class="featured-content">
-        <span class="post-tag tag-auto">🎮Driver Skills</span>
-        <h2>Experimenting with Obstacle Courses</h2>
-        <p>A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through 
-          for our starting two in the challenges in the future.</p>
-        <div class="post-meta" style="margin-bottom:1.25rem;">
-          <div class="post-meta-avatar av1">MK</div>
-          <span>Sarvesh.G & Naitik.P · VexGrind</span>
-          <div class="post-meta-sep"></div>
-          <span>Apr 14, 2026</span>
-          <div class="post-meta-sep"></div>
-          <span>5 min read</span>
-        </div>
-        <span class="featured-cta">Read full article <span>→</span></span>
-      </div>
-    </a>  
-
-  </div>
-
-  <!-- SECTION HEADER -->
-  <div class="section-divider reveal">
-    <span>Latest posts</span>
-  </div>
-
-  <!-- MAIN LAYOUT: GRID + SIDEBAR -->
-  <div class="blog-main-layout">
-    <div>
-      <div class="posts-grid">
-
-        <!-- Card 1 — Obstacle Courses (LINKED) -->
-        <a href="blog_vexnamereveal.html" class="post-card reveal">
-        <div class="post-card reveal">
-          <div class="post-thumb thumb-community">
-            <span class="post-thumb-emoji">🤝</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-community">Community</span>
-            <h3>VEX NAME REVEAL!!</h3>
-            <p>The official VEX Robotics game names for the 2026-2027 season were recently revealed in a retro-style announcement a few days ago. Click here to find out more!</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av2">NP</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Mar4 · 8min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </div>
-
-        <a href="blog_obstaclecourses.html" class="post-card reveal">
-          <div class="post-thumb thumb-build">
-            <span class="post-thumb-emoji">🎮</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-build">Build Guide</span>
-            <h3>Experimenting with obstacle courses</h3>
-            <p>A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av2">SG</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Apr2 · 5min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Card 2 -->
-        <a class="post-card reveal" href="blog_conventionalunconventional.html" 
-              style="text-decoration:none; color:inherit;">
-          <div class="post-thumb thumb-code">
-            <span class="post-thumb-emoji">🧠</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-code">Code</span>
-            <h3>Conventional and Unconventional Robots</h3>
-            <p>>Conventional: these robots often fit the stereotypes that a "robot" carries.
-           One (popular) example of unconventional robots is the branch of "soft robots". They utilise compliant materials, contrary to their conventional 
-           counterparts, and employ links that have a similar structure: soft, malleable and high-tech!</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av3">LR</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Mar28 · 7min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Card 3 -->
-        <div class="post-card reveal">
-          <div class="post-thumb thumb-strategy">
-            <span class="post-thumb-emoji">🎯</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-strategy">Strategy</span>
-            <h3>Alliance Selection Psychology: How to Get Picked Every Time</h3>
-            <p>Rankings don't always predict picks. Here's the meta-game of alliance selection — what top teams look for and how to market yourself.</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av4">JP</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Mar22 · 6min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="post-card reveal">
-          <div class="post-thumb thumb-notebook">
-            <span class="post-thumb-emoji">📋</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-notebook">Notebook</span>
-            <h3>We Scored 35/40 on Our Engineering Notebook. Here's Our Template</h3>
-            <p>Breaking down the design decision format, team meeting logs, and section ordering that helped us nearly ace our notebook at Worlds.</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av5">AW</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Mar17 · 10min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="post-card reveal">
-          <div class="post-thumb thumb-auto">
-            <span class="post-thumb-emoji">🧠</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-auto">Autonomous</span>
-            <h3>Odometry in 48 Hours: A Beginner's Survival Guide</h3>
-            <p>When our qualifier was 2 days away and we had zero odometry code, we pulled this off. Annotated code, diagrams, and all the gotchas included.</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av1">MK</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Mar10 · 15min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 7 -->
-        <div class="post-card reveal">
-          <div class="post-thumb thumb-build">
-            <span class="post-thumb-emoji">⚙️</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-build">Build Guide</span>
-            <h3>Catapult vs Flywheel in High Stakes: A Data-Driven Breakdown</h3>
-            <p>We built both and tested them back-to-back over 200 shots. Here are the shot consistency numbers, build complexity scores, and our final verdict.</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av3">SR</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Feb26 · 11min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 8 -->
-        <div class="post-card reveal">
-          <div class="post-thumb thumb-code">
-            <span class="post-thumb-emoji">🖥️</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-code">Code</span>
-            <h3>Vision Sensor Targeting: A Working Auto-Aim Implementation</h3>
-            <p>Full code walkthrough of our vision-sensor-based goal tracking system. Covers PID control loop, latency compensation, and field calibration.</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av4">JP</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Feb18 · 13min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 9 -->
-        <div class="post-card reveal">
-          <div class="post-thumb thumb-strategy">
-            <span class="post-thumb-emoji">🏆</span>
-          </div>
-          <div class="post-body">
-            <span class="post-tag tag-strategy">Strategy</span>
-            <h3>Match Scouting 101: The Sheet We Use at Every Tournament</h3>
-            <p>Our printable scouting sheet + digital spreadsheet for tracking opponent tendencies, auto consistency, and driver control strength across a full event.</p>
-            <div class="post-footer">
-              <div class="post-meta">
-                <div class="post-meta-avatar av5">AW</div>
-                <span style="font-size:0.78rem; color:var(--muted)">Feb11 · 5min</span>
-              </div>
-              <span class="read-more">Read <span>→</span></span>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <!-- BLOG GRID -->
+  <div class="library-container">
+    <div class="posts-grid" id="postsGrid">
+      <!-- Cards populated by JavaScript below -->
     </div>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-card reveal">
-        <h3>📬 Get the digest</h3>
-        <p>New build guides, code drops, and strategy breakdowns — straight to your inbox every week.</p>
-        <input class="sidebar-input" type="email" placeholder="your@email.com" />
-        <button class="sidebar-btn">Subscribe for free</button>
-      </div>
-
-      <div class="sidebar-card reveal">
-        <h3 style="margin-bottom:1rem;">🔥 Trending this week</h3>
-        <ul class="trending-list">
-          <li class="trending-item">
-            <span class="trending-num">01</span>
-            <div>
-              <p>Odometry in 48 Hours: A Beginner's Survival Guide</p>
-              <span>1.2k reads</span>
-            </div>
-          </li>
-          <li class="trending-item">
-            <span class="trending-num">02</span>
-            <div>
-              <p>PROS 4 vs VEXcode: Which Should Your Team Use?</p>
-              <span>940 reads</span>
-            </div>
-          </li>
-          <li class="trending-item">
-            <span class="trending-num">03</span>
-            <div>
-              <p>Alliance Selection Psychology</p>
-              <span>780 reads</span>
-            </div>
-          </li>
-          <li class="trending-item">
-            <span class="trending-num">04</span>
-            <div>
-              <p>Engineering Notebook Template — 35/40</p>
-              <span>650 reads</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="sidebar-card reveal">
-        <h3 style="margin-bottom:1rem;">Browse by topic</h3>
-        <div class="tag-cloud">
-          <span class="post-tag tag-auto" style="cursor:pointer;">🧠 Autonomous</span>
-          <span class="post-tag tag-build" style="cursor:pointer;">🔧 Build</span>
-          <span class="post-tag tag-code" style="cursor:pointer;">💻 Code</span>
-          <span class="post-tag tag-strategy" style="cursor:pointer;">🎯 Strategy</span>
-          <span class="post-tag tag-notebook" style="cursor:pointer;">📋 Notebook</span>
-          <span class="post-tag tag-community" style="cursor:pointer;">🤝 Community</span>
-        </div>
-      </div>
-    </aside>
-  </div>
-
-  <!-- PAGINATION -->
-  <div class="pagination reveal">
-    <button class="page-btn">←</button>
-    <button class="page-btn active">1</button>
-    <button class="page-btn">2</button>
-    <button class="page-btn">3</button>
-    <button class="page-btn" style="width:auto; padding:0 0.75rem; font-size:0.75rem; letter-spacing:0.04em;">…</button>
-    <button class="page-btn">8</button>
-    <button class="page-btn">→</button>
   </div>
 
   <!-- FOOTER -->
@@ -822,28 +395,136 @@
   </footer>
 
   <script>
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 70);
-        }
-      });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => observer.observe(el));
+    // Sample Blog Posts Data
+    const blogPosts = [
+      {
+        id: 1,
+        category: "community",
+        title: "VEX NAME REVEAL!!",
+        emoji: "🤝",
+        excerpt: "The official VEX Robotics game names for the 2026-2027 season were revealed in a retro-style announcement.",
+        author: "NP",
+        date: "Mar 4",
+        readTime: "8 min"
+      },
+      {
+        id: 2,
+        category: "build",
+        title: "Experimenting with Obstacle Courses",
+        emoji: "🎮",
+        excerpt: "We built an obstacle course using household objects to test our driving skills for future challenges.",
+        author: "SG",
+        date: "Apr 2",
+        readTime: "5 min"
+      },
+      {
+        id: 3,
+        category: "code",
+        title: "Conventional and Unconventional Robots",
+        emoji: "🧠",
+        excerpt: "Exploring soft robots and other unconventional designs that challenge traditional robotics stereotypes.",
+        author: "LR",
+        date: "Mar 28",
+        readTime: "7 min"
+      },
+      {
+        id: 4,
+        category: "strategy",
+        title: "Alliance Selection Psychology: How to Get Picked Every Time",
+        emoji: "🎯",
+        excerpt: "Rankings don't always predict picks. Here's what top teams actually look for during alliance selection.",
+        author: "JP",
+        date: "Mar 22",
+        readTime: "6 min"
+      },
+      {
+        id: 5,
+        category: "notebook",
+        title: "We Scored 35/40 on Our Engineering Notebook. Here's Our Template",
+        emoji: "📋",
+        excerpt: "The exact format, section ordering, and design decision logs that helped us nearly ace our notebook.",
+        author: "AW",
+        date: "Mar 17",
+        readTime: "10 min"
+      },
+      {
+        id: 6,
+        category: "autonomous",
+        title: "Odometry in 48 Hours: A Beginner's Survival Guide",
+        emoji: "🧠",
+        excerpt: "How we implemented working odometry with just 2 days until our qualifier — full code and diagrams included.",
+        author: "MK",
+        date: "Mar 10",
+        readTime: "15 min"
+      }
+    ];
 
-    function setFilter(btn, cat) {
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
+    function renderPosts(filteredPosts) {
+      const grid = document.getElementById('postsGrid');
+      grid.innerHTML = '';
+
+      filteredPosts.forEach(post => {
+        const cardHTML = `
+          <a href="#" class="post-card" data-category="${post.category}">
+            <div class="post-thumb">
+              <span>${post.emoji}</span>
+            </div>
+            <div class="card-content">
+              <span class="post-tag" style="background: rgba(172,46,68,0.15); color: var(--accent2);">
+                ${post.category.charAt(0).toUpperCase() + post.category.slice(1)}
+              </span>
+              <h3>${post.title}</h3>
+              <p>${post.excerpt}</p>
+              <div class="post-meta">
+                <div class="post-meta-avatar" style="background: linear-gradient(135deg, var(--accent), #ff8c60);">
+                  ${post.author}
+                </div>
+                <span>${post.date} · ${post.readTime}</span>
+              </div>
+            </div>
+          </a>
+        `;
+        grid.innerHTML += cardHTML;
+      });
     }
 
-    document.querySelectorAll('.page-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        if (this.textContent === '←' || this.textContent === '→' || this.textContent === '…') return;
-        document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
+    // Filter functionality
+    function initFilters() {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const category = btn.dataset.category;
+          let filtered = blogPosts;
+
+          if (category !== 'all') {
+            filtered = blogPosts.filter(p => p.category === category);
+          }
+
+          renderPosts(filtered);
+        });
       });
-    });
+    }
+
+    // Hamburger menu
+    function initMobileMenu() {
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+      });
+    }
+
+    // Initialize
+    window.onload = function() {
+      renderPosts(blogPosts);
+      initFilters();
+      initMobileMenu();
+    };
   </script>
 </body>
 </html>
