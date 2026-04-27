@@ -41,6 +41,30 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .fullscreen-btn {
+      position: fixed;
+      top: 1rem;
+      right: 3rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      z-index: 110;
+    }
+    .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+    .fullscreen-btn svg { width: 18px; height: 18px; }
+
+    @media (max-width: 768px) {
+      .fullscreen-btn { right: 5rem; }
+    }
+
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800; font-size: 1.25rem;
@@ -241,10 +265,10 @@
       top: -50px; left: 0; right: 60px;
       background: rgba(30,109,255,0.08);
       border-color: rgba(30,109,255,0.2);
-      background: linear-gradient(155deg,#ffffff ,var(--accent2), #9e1b32);
+      background:var(--card);
        border-style: solid;
       border-color: #ffffff;
-      border-width: 3px;
+      border-width: 0.5px;
       opacity: 0.5;
       color:purple ;
       
@@ -254,10 +278,10 @@
       bottom: -50px; right: 0; left: 60px;
       background: rgba(172,46,68,0.08);
       border-color: rgba(172,46,68,0.2);
-       background: linear-gradient(155deg, #ffffff,var(--accent2) ,#191970);
+       background: var(--card);
       border-style: solid;
       border-color: #ffffff;
-      border-width: 3px;
+      border-width: 0.5px;
       opacity: 0.5;
       color:purple ;
 }
@@ -525,9 +549,164 @@
 
     /* ── SCROLL REVEAL ── */
     .reveal {
-      opacity: 0; transform: translateY(30px);
+      opacity: 0;
+      transform: translateY(30px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
+
+    .contributors {
+      padding: 6rem 2rem;
+      max-width: 1040px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .contributors::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 20% 20%, rgba(172,46,68,0.16), transparent 24%),
+                  radial-gradient(circle at 85% 35%, rgba(30,109,255,0.14), transparent 20%);
+      filter: blur(40px);
+      opacity: 0.8;
+    }
+
+    .contributors > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 3vw, 3.4rem);
+      line-height: 1.05;
+      margin-bottom: 2rem;
+      max-width: 700px;
+    }
+
+    .sidebar-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      overflow: hidden;
+      max-width: 520px;
+      margin: 0 auto;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.20);
+      backdrop-filter: blur(18px);
+      position: relative;
+    }
+
+    .sidebar-card-header {
+      background: linear-gradient(135deg, rgba(172,46,68,0.95), rgba(30,109,255,0.95));
+      padding: 1rem 1.2rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-card-body {
+      padding: 1.3rem 1.2rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .top-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .top-user:hover {
+      transform: translateX(4px);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .top-user:last-child {
+      border-bottom: none;
+    }
+
+    .composer-avatar {
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      flex-shrink: 0;
+    }
+
+    .top-user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .top-user-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .top-user-posts {
+      font-size: 0.77rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .top-user-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+      min-width: 72px;
+    }
+
+    .top-user-rank {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+    }
+
+    .top-user-pts {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #4ade80;
+      background: rgba(74,222,128,0.12);
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      min-width: 64px;
+      text-align: center;
+    }
+
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ── ANIMATIONS ── */
@@ -574,10 +753,10 @@
     <a href="index.html" class="nav-logo">VexGrind</a>
     <ul class="nav-links">
       <li><a href="guides.html">Guides</a></li>
-      <li><a href="#">Robot Builds</a></li>
       <li><a href="blog.html">Blog</a></li>
-      <li><a href="#">Community</a></li>
+      <li><a href="community.html">Community</a></li>
       <li><a href="about.html" class="active">About</a></li>
+      <li><a href="account.html">Account</a></li>
     </ul>
     <div class="nav-actions">
       <a href="signup.html" class="btn-ghost">Sign in</a>
@@ -587,14 +766,19 @@
       <span></span><span></span><span></span>
     </button>
   </nav>
+  <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
+    </svg>
+  </button>
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#">Guides</a>
-    <a href="#">Robot Builds</a>
     <a href="blog.html">Blog</a>
-    <a href="#">Community</a>
+    <a href="community.html">Community</a>
     <a href="about.html">About</a>
+    <a href="account.html">Account</a>
     <div class="mobile-actions">
       <a href="signup.html" class="btn-ghost" style="flex:1; justify-content:center;">Sign in</a>
       <a href="signup.html" class="btn-primary" style="flex:1; justify-content:center;">Join the Team</a>
@@ -614,8 +798,8 @@
     <div class="mission-text reveal">
       <h2>We level the<br><em>playing field.</em></h2>
       <p>VEX Robotics is one of the most competitive STEM programs on the planet. But for too long, the best strategies, code, and build knowledge were locked away in private Discord servers and top-team notebooks that never got shared.</p>
-      <p>VexGrind changes that. We believe every team — whether you're in a well-funded school or building robots in a garage — deserves access to world-class resources.</p>
-      <p>We publish everything: PID tuning guides, auton routines, CAD files, scouting sheets. No paywalls. No gatekeeping. Just the tools to compete at your best.</p>
+      <p>VexGrind changes that. We believe every team can work together to build this community and create the greatest robots Vex has ever seen</p>
+      <p>We publish everything: auton routines, CAD files. No paywalls. No gatekeeping. Just the information to help you succeed</p>
     </div>
 
     <div class="mission-visual reveal">
@@ -627,7 +811,7 @@
       <div class="mission-card mc2">
         <h4>Teams reached this season</h4>
         <div class="big-num">2.4k</div>
-        <p>Across 40+ countries and every VEX program level — from middle school to college.</p>
+        <p>Across the globe countries and every VEX program level — from 13 to 18 years of age.</p>
       </div>
     </div>
   </section>
@@ -648,17 +832,16 @@
 
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <div class="tl-year">Early 2026 — Initial steps</div>
-          <h3>We opened the studio</h3>
-          <p>After brainstorming on a VEX forum, one of our members, Lakshman, got to work on an intitial template. It was obvious that he wasn't the only one wanting this. VexGrind became a shared doc 
-            between our four members soon after.</p>
+          <div class="tl-year">Easter 2026 — Initial steps</div>
+          <h3>We finished the clawbot</h3>
+          <p>After multiple sessions and a sleepover full of FC gaming, we were able to create a fully functioning robot with the ability pick and drop objects. Of course, there was a learning curve, we weren't able to keep the wheels straight and we couldn't even get the robot to move in the direction we wanted (We were totally not worrying about the AI takeover), but we prevailed.</p>
         </div>
 
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <div class="tl-year">Mid 2026 — Oppening doors</div>
-          <h3>VexGrind is launched</h3>
-          <p>We launched VexGrind 1.0, a small website that was still in development. Gained barely any traction</p>
+          <div class="tl-year">April 2026 — Game Announcement</div>
+          <h3>The 2026/27 game name is revealed, Override. But the wait wasn't over, we had to still wait for the details</h3>
+          <p>On the 24th April it was going to be revealed...</p>
         </div>
 
         <div class="tl-item reveal">
@@ -730,7 +913,7 @@
           <h3>Lakshman Raja Kumaar</h3>
           <div class="team-role">Coder</div>
           <p>The VEX playground might be new, but for him, the challenge is the same! Our multi-skills guy with everything to offer, he adds robotics to his arsenal and 
-            takes it away.</p>
+            does it with pride.</p>
           <div class="team-tag">🏆 Team 2847A</div>
         </div>
 
@@ -745,9 +928,9 @@
         <div class="team-card reveal">
           <div class="team-avatar av3">NP</div>
           <h3>Naitik Pal</h3>
-          <div class="team-role">Code Library Maintainer</div>
+          <div class="team-role">Drvier</div>
           <p>Spend their life smashing shuttlecocks and dodging bouncers, though they've recently added F1 to the mix—usually while debugging code or crashing virtual Ferraris in Monoposto.</p>
-          <div class="team-tag">💻 PROS Contributor</div>
+          <div class="team-tag">RCB! RCB!</div>
         </div>
 
         <div class="team-card reveal">
@@ -767,7 +950,7 @@
         </div>
 
         <div class="team-card reveal">
-          <div class="team-avatar av6">🐟</div>
+          <img src="Fish.png" alt="Fishy" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50%; margin-bottom: 0.5rem;">
           <h3>Fishy</h3>
           <div class="team-role">DA GOAT</div>
           <p>fish</p>
@@ -777,6 +960,10 @@
     </div>
   </section>
 
+  
+        
+        
+<br>
   <!-- CTA -->
   <div class="cta-section">
     <h2 class="reveal">Ready to join us?</h2>
@@ -836,6 +1023,21 @@
         hamburger.classList.remove('open');
       }
     });
+
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    if (fullscreenBtn) {
+      const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      const toggleFullscreen = async () => {
+        if (isFullscreen()) {
+          const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+          if (exitFn) await exitFn.call(document);
+        } else {
+          const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
+          if (requestFn) await requestFn.call(document.documentElement);
+        }
+      };
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
   </script>
 </body>
 </html>

@@ -40,6 +40,30 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .fullscreen-btn {
+      position: fixed;
+      top: 1rem;
+      right: 3rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      z-index: 110;
+    }
+    .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+    .fullscreen-btn svg { width: 18px; height: 18px; }
+
+    @media (max-width: 768px) {
+      .fullscreen-btn { right: 5rem; }
+    }
+
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800; font-size: 1.25rem;
@@ -447,7 +471,33 @@
       padding: 2rem 3rem;
       display: flex; align-items: center; justify-content: space-between;
       color: var(--muted); font-size: 0.82rem;
+      flex-wrap: wrap; gap: 1rem;
     }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .social-links { display: flex; gap: 0.75rem; }
+    .social-links a { font-size: 1.1rem; transition: transform 0.2s; }
+    .social-links a:hover { transform: translateY(-2px); }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 90; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle { position: fixed; top: 1rem; right: 8rem; width: 38px; height: 38px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; z-index: 110; }
+    .theme-toggle:hover { border-color: var(--accent); }
+    :root { --bg: #07090f; --bg2: #0d1220; }
+    :root.light { --bg: #f5f7fa; --bg2: #ffffff; --text: #1a1a2e; --muted: #64748b; --card: rgba(255,255,255,0.8); }
+    :root.light nav, :root.light .mobile-menu { background: rgba(255,255,255,0.9); }
+
+    /* ── COOKIE BANNER ── */
+    .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg2); border-top: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; z-index: 200; transform: translateY(100%); transition: transform 0.3s ease; }
+    .cookie-banner.show { transform: translateY(0); }
+    .cookie-banner p { font-size: 0.85rem; color: var(--muted); }
+    .cookie-banner button { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-family: inherit; }
+    .cookie-banner button:hover { background: var(--accent2); }
 
     @keyframes modalPop {
       from { opacity: 0; transform: scale(0.95); }
@@ -477,10 +527,10 @@
     <a href="index.html" class="nav-logo">VexGrind</a>
     <ul class="nav-links">
       <li><a href="guides.html" style="color: var(--text);">Guides</a></li>
-      <li><a href="#">Robot Builds</a></li>
       <li><a href="blog.html">Blog</a></li>
-      <li><a href="#">Community</a></li>
+      <li><a href="community.html">Community</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="account.html">Account</a></li>
     </ul>
     <div class="nav-actions">
       <a href="signup.html" class="btn-ghost">Sign in</a>
@@ -490,6 +540,11 @@
       <span></span><span></span><span></span>
     </button>
   </nav>
+  <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
+    </svg>
+  </button>
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
@@ -507,7 +562,6 @@
   <!-- PARTS HERO -->
   <section class="parts-hero">
     <div class="parts-hero-content">
-      <div class="hero-badge"><span>●</span> THE VEX V5 INVENTORY</div>
       <h1>VEX V5 Parts Library</h1>
       <p class="hero-sub">Every motor, sensor, beam, and gear you’ll ever need — with real images, full specs, usage tips, and direct purchase links.</p>
 
@@ -558,13 +612,31 @@
   <!-- FOOTER -->
   <footer>
     <a href="index.html" class="nav-logo">VexGrind</a>
-    <p>© 2026 VexGrind • All parts data sourced from official VEX Robotics catalog</p>
-    <div style="display:flex; gap:1.5rem;">
-      <a href="https://www.vexrobotics.com/" target="_blank">VEX Shop</a>
-      <a href="#">Parts Guide PDF</a>
-      <a href="#">Contact Support</a>
+    <div class="footer-links">
+      <a href="guides.html">Guides</a>
+      <a href="blog.html">Blog</a>
+      <a href="community.html">Community</a>
+      <a href="about.html">About</a>
     </div>
+    <div class="social-links">
+      <a href="#" title="Discord">💬</a>
+      <a href="#" title="YouTube">📺</a>
+      <a href="#" title="GitHub">⚡</a>
+    </div>
+    <p>© 2026 VexGrind • All parts data sourced from official VEX Robotics catalog</p>
   </footer>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle theme">◐</button>
+
+  <!-- COOKIE BANNER -->
+  <div class="cookie-banner" id="cookieBanner">
+    <p>🍪 We use cookies to improve your experience. By continuing to use VexGrind, you agree to our use of cookies.</p>
+    <button onclick="acceptCookies()">Accept</button>
+  </div>
 
   <script>
     // ── FULL VEX V5 PARTS DATABASE ──
@@ -845,6 +917,61 @@
 
       console.log('%c✅ VexGrind V5 Parts Library loaded successfully', 'color:#e84560; font-weight:800;');
     };
+
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    if (fullscreenBtn) {
+      const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      const toggleFullscreen = async () => {
+        if (isFullscreen()) {
+          const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+          if (exitFn) await exitFn.call(document);
+        } else {
+          const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
+          if (requestFn) await requestFn.call(document.documentElement);
+        }
+      };
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
+
+    // ── BACK TO TOP ──
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ── THEME TOGGLE ──
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('vg_theme');
+    if (savedTheme === 'light') document.documentElement.classList.add('light');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light');
+      localStorage.setItem('vg_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // ── COOKIE BANNER ──
+    const cookieBanner = document.getElementById('cookieBanner');
+    if (!localStorage.getItem('vg_cookies')) {
+      setTimeout(() => cookieBanner.classList.add('show'), 3000);
+    }
+    window.acceptCookies = function() {
+      localStorage.setItem('vg_cookies', 'accepted');
+      cookieBanner.classList.remove('show');
+    };
+
+    // ── KEYBOARD SHORTCUTS ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 't' && !e.target.matches('input, textarea')) {
+        document.getElementById('themeToggle').click();
+      }
+      if (e.key === 'h' && !e.target.matches('input, textarea')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      if (e.key === '?' && !e.target.matches('input, textarea')) {
+        alert('Keyboard shortcuts:\n• t - Toggle theme\n• h - Go to home\n• ? - Show this help');
+      }
+    });
   </script>
 </body>
 </html>

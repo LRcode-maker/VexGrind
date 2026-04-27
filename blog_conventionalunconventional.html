@@ -52,6 +52,30 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .fullscreen-btn {
+      position: fixed;
+      top: 1rem;
+      right: 3rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      z-index: 110;
+    }
+    .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+    .fullscreen-btn svg { width: 18px; height: 18px; }
+
+    @media (max-width: 768px) {
+      .fullscreen-btn { right: 5rem; }
+    }
+
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800; font-size: 1.25rem;
@@ -614,16 +638,21 @@
   <a href="index.html" class="nav-logo">VexGrind</a>
   <ul class="nav-links">
     <li><a href="guides.html">Guides</a></li>
-    <li><a href="#">Robot Builds</a></li>
     <li><a href="blog.html" class="active">Blog</a></li>
-    <li><a href="#">Community</a></li>
+    <li><a href=community.html>Community</a></li>
     <li><a href="about.html">About</a></li>
+    <li><a href="account.html">Account</a></li>
   </ul>
   <div class="nav-actions">
     <button class="btn-ghost">Sign in</button>
     <button class="btn-primary">Join the team →</button>
   </div>
 </nav>
+<button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
+  </svg>
+</button>
 
 <section class="article-hero">
   <div class="hero-bg"></div>
@@ -948,6 +977,20 @@
       });
     }
   });
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    if (fullscreenBtn) {
+      const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      const toggleFullscreen = async () => {
+        if (isFullscreen()) {
+          const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+          if (exitFn) await exitFn.call(document);
+        } else {
+          const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
+          if (requestFn) await requestFn.call(document.documentElement);
+        }
+      };
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
 </script>
 
 </body>

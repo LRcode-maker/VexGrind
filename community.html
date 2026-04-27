@@ -19,6 +19,31 @@
 
     /* NAV */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(7,9,15,0.75); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); }
+
+    .fullscreen-btn {
+      position: fixed;
+      top: 1rem;
+      right: 3rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      z-index: 110;
+    }
+    .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+    .fullscreen-btn svg { width: 18px; height: 18px; }
+
+    @media (max-width: 768px) {
+      .fullscreen-btn { right: 5rem; }
+    }
+
     .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; background: linear-gradient(135deg, #fff 40%, var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
@@ -58,6 +83,14 @@
     .user-avatar { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
     .user-name { font-weight: 500; color: var(--text); }
     .user-change { color: var(--accent2); font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-left: 4px; }
+
+    /* USER STATS */
+    .user-stats { display: inline-flex; gap: 0.75rem; margin-left: 1rem; align-items: center; }
+    .stat-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 0.35rem 0.75rem; font-size: 0.75rem; color: var(--muted); }
+    .stat-badge.karma { border-color: rgba(172,46,68,0.3); }
+    .stat-badge.karma .stat-icon { color: var(--accent2); }
+    .stat-badge.posts .stat-icon { color: var(--blue); }
+    .stat-badge span:not(.stat-icon) { font-weight: 600; color: var(--text); }
 
     /* LAYOUT */
     .community-layout { max-width: 1200px; margin: 0 auto; padding: 2rem 3rem 6rem; display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
@@ -126,6 +159,7 @@
     .post-actions { display: flex; align-items: center; gap: 1rem; }
     .action-btn { background: none; border: none; color: var(--muted); font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 0.3rem 0.5rem; border-radius: 6px; transition: color 0.2s, background 0.2s; font-family: inherit; }
     .action-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .action-btn.bookmarked { color: var(--accent2); }
     .action-btn svg { width: 14px; height: 14px; }
 
     /* EXPANDED POST (comments) */
@@ -207,6 +241,25 @@
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
 
+    /* ── BACK TO TOP ── */
+    .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 90; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle { position: fixed; top: 1rem; right: 8rem; width: 38px; height: 38px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; z-index: 110; }
+    .theme-toggle:hover { border-color: var(--accent); }
+    :root { --bg: #07090f; --bg2: #0d1220; }
+    :root.light { --bg: #f5f7fa; --bg2: #ffffff; --text: #1a1a2e; --muted: #64748b; --card: rgba(255,255,255,0.8); }
+    :root.light nav, :root.light .mobile-menu { background: rgba(255,255,255,0.9); }
+
+    /* ── COOKIE BANNER ── */
+    .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg2); border-top: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; z-index: 200; transform: translateY(100%); transition: transform 0.3s ease; }
+    .cookie-banner.show { transform: translateY(0); }
+    .cookie-banner p { font-size: 0.85rem; color: var(--muted); }
+    .cookie-banner button { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-family: inherit; }
+    .cookie-banner button:hover { background: var(--accent2); }
+
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -228,10 +281,10 @@
   <a href="index.html" class="nav-logo">VexGrind</a>
   <ul class="nav-links">
     <li><a href="guides.html" class="active">Guides</a></li>
-    <li><a href="#">Robot Builds</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="community.html" class="active">Community</a></li>
-    <li><a href="index.html#about">About</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="account.html">Account</a></li>
   </ul>
   <div class="nav-actions">
     <a href="signup.html" class="btn-ghost">Sign in</a>
@@ -241,13 +294,18 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
+<button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
+  </svg>
+</button>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#">Guides</a>
-  <a href="#">Robot Builds</a>
   <a href="blog.html">Blog</a>
   <a href="community.html">Community</a>
-  <a href="index.html#about">About</a>
+  <a href="about.html">About</a>
+  <a href="account.html">Account</a>
   <div class="mobile-actions">
     <a href="signup.html" class="btn-ghost" style="flex:1;justify-content:center;">Sign in</a>
     <a href="signup.html" class="btn-primary" style="flex:1;justify-content:center;">Join the Team</a>
@@ -271,6 +329,10 @@
     <span class="user-name" id="navUsername">Anonymous</span>
     <span class="user-change" onclick="openUsernameModal()">change</span>
   </div>
+  <div class="user-stats" id="userStats">
+    <span class="stat-badge karma"><span class="stat-icon">⚡</span><span id="karmaVal">0</span> karma</span>
+    <span class="stat-badge posts"><span class="stat-icon">📝</span><span id="postCountVal">0</span> posts</span>
+  </div>
 </div>
 
 <!-- MAIN LAYOUT -->
@@ -292,7 +354,7 @@
           <button class="tag-btn" data-tag="build" onclick="selectTag(this)">🔧 Build</button>
           <button class="tag-btn" data-tag="code" onclick="selectTag(this)">💻 Code</button>
           <button class="tag-btn" data-tag="strategy" onclick="selectTag(this)">🎯 Strategy</button>
-          <button class="tag-btn" data-tag="auton" onclick="selectTag(this)">🧠 Auton</button>
+          <button class="tag-btn" data-tag="auton" onclick="selectTag(this)">🧠 Autonomous</button>
           <button class="tag-btn" data-tag="news" onclick="selectTag(this)">🚨 News</button>
         </div>
         <button class="post-btn" id="postBtn" onclick="submitPost()" disabled>Post</button>
@@ -325,38 +387,6 @@
         <div class="sidebar-stat-row"><span class="sidebar-stat-label">Online now</span><span class="sidebar-stat-val">🟢 Live</span></div>
       </div>
     </div>
-
-    <div class="sidebar-card">
-      <div class="sidebar-card-header">Community Rules</div>
-      <div class="sidebar-card-body">
-        <div class="rule-item"><span class="rule-num">1</span><span>Be respectful — we're all here to learn and compete.</span></div>
-        <div class="rule-item"><span class="rule-num">2</span><span>Stay on topic — VEX V5, robotics, and related STEM.</span></div>
-        <div class="rule-item"><span class="rule-num">3</span><span>No spam or self-promotion without context.</span></div>
-        <div class="rule-item"><span class="rule-num">4</span><span>Share your sources when posting strategies or code.</span></div>
-        <div class="rule-item"><span class="rule-num">5</span><span>Help beginners — you were one once.</span></div>
-      </div>
-    </div>
-
-    <div class="sidebar-card">
-      <div class="sidebar-card-header">Top Contributors</div>
-      <div class="sidebar-card-body" id="topContributors">
-        <div class="top-user">
-          <div class="composer-avatar" style="background:linear-gradient(135deg,#AC2E44,#1e6dff);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">NP</div>
-          <div class="top-user-info"><div class="top-user-name">Naitik_Pal</div><div class="top-user-posts">12 posts</div></div>
-          <div class="top-user-pts">+847</div>
-        </div>
-        <div class="top-user">
-          <div class="composer-avatar" style="background:linear-gradient(135deg,#1e6dff,#0d8a6a);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">SG</div>
-          <div class="top-user-info"><div class="top-user-name">SarveshG</div><div class="top-user-posts">9 posts</div></div>
-          <div class="top-user-pts">+612</div>
-        </div>
-        <div class="top-user">
-          <div class="composer-avatar" style="background:linear-gradient(135deg,#7c3aed,#AC2E44);width:30px;height:30px;font-size:0.7rem;flex-shrink:0;">LR</div>
-          <div class="top-user-info"><div class="top-user-name">Lakshman_R</div><div class="top-user-posts">7 posts</div></div>
-          <div class="top-user-pts">+491</div>
-        </div>
-      </div>
-    </div>
   </aside>
 </div>
 
@@ -377,6 +407,18 @@
 <div class="toast" id="toast">
   <div class="toast-dot"></div>
   <span id="toastMsg">Done!</span>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">◐</button>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>🍪 We use cookies to improve your experience. By continuing to use VexGrind, you agree to our use of cookies.</p>
+  <button onclick="acceptCookies()">Accept</button>
 </div>
 
 <script>
@@ -416,7 +458,31 @@ function updateUserUI() {
   document.getElementById('navAvatar').style.background = color;
   document.getElementById('composerAvatar').textContent = initials;
   document.getElementById('composerAvatar').style.background = color;
+  updateUserStats();
 }
+
+function updateUserStats() {
+  if (!username || username === 'Anonymous') {
+    document.getElementById('karmaVal').textContent = '0';
+    document.getElementById('postCountVal').textContent = '0';
+    return;
+  }
+  // Calculate karma from user's posts and comments
+  let karma = 0;
+  let postCount = 0;
+  posts.forEach(p => {
+    if (p.author === username) {
+      postCount++;
+      karma += p.votes;
+      p.comments.forEach(c => {
+        if (c.author === username) karma += c.votes;
+      });
+    }
+  });
+  document.getElementById('karmaVal').textContent = karma;
+  document.getElementById('postCountVal').textContent = postCount;
+}
+  document.getElementById('composerAvatar').style.background = color;
 
 function getAvatarColor(name) {
   const colors = [
@@ -526,6 +592,10 @@ function renderPost(p) {
           <button class="action-btn" onclick="sharePost('${p.id}')">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="4" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="12" r="1.5"/><path d="M5.5 7.2L10.5 4.8M5.5 8.8L10.5 11.2"/></svg>
             Share
+          </button>
+          <button class="action-btn ${isBookmarked(p.id)?'bookmarked':''}" onclick="toggleBookmark('${p.id}')">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12l-4-2-4 2V2z"/></svg>
+            ${isBookmarked(p.id)?'Saved':'Save'}
           </button>
           ${canDelete(p.author)?`<button class="action-btn" onclick="deletePost('${p.id}')" style="color:var(--accent2)">✕ Delete</button>`:''}
         </div>
@@ -747,6 +817,25 @@ function sharePost(id) {
   showToast('🔗 Link copied!');
 }
 
+// ── BOOKMARKS ──
+let bookmarks = JSON.parse(localStorage.getItem('vg_bookmarks') || '[]');
+
+function isBookmarked(id) {
+  return bookmarks.includes(id);
+}
+
+function toggleBookmark(id) {
+  if (bookmarks.includes(id)) {
+    bookmarks = bookmarks.filter(b => b !== id);
+    showToast('📌 Removed from saved');
+  } else {
+    bookmarks.push(id);
+    showToast('📌 Post saved!');
+  }
+  localStorage.setItem('vg_bookmarks', JSON.stringify(bookmarks));
+  renderPosts();
+}
+
 // ── TOAST ──
 let toastTimer;
 function showToast(msg) {
@@ -789,6 +878,60 @@ setInterval(()=>{
 }, 60000);
 
 init();
-</script>
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    if (fullscreenBtn) {
+      const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      const toggleFullscreen = async () => {
+        if (isFullscreen()) {
+          const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+          if (exitFn) await exitFn.call(document);
+        } else {
+          const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
+          if (requestFn) await requestFn.call(document.documentElement);
+        }
+      };
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
+
+    // ── BACK TO TOP ──
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ── THEME TOGGLE ──
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('vg_theme');
+    if (savedTheme === 'light') document.documentElement.classList.add('light');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light');
+      localStorage.setItem('vg_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // ── COOKIE BANNER ──
+    const cookieBanner = document.getElementById('cookieBanner');
+    if (!localStorage.getItem('vg_cookies')) {
+      setTimeout(() => cookieBanner.classList.add('show'), 3000);
+    }
+    window.acceptCookies = function() {
+      localStorage.setItem('vg_cookies', 'accepted');
+      cookieBanner.classList.remove('show');
+    };
+
+    // ── KEYBOARD SHORTCUTS ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 't' && !e.target.matches('input, textarea')) {
+        document.getElementById('themeToggle').click();
+      }
+      if (e.key === 'h' && !e.target.matches('input, textarea')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      if (e.key === '?' && !e.target.matches('input, textarea')) {
+        alert('Keyboard shortcuts:\n• t - Toggle theme\n• h - Go to home\n• ? - Show this help');
+      }
+    });
+  </script>
 </body>
 </html>

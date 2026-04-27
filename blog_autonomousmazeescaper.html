@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Experimenting with Obstacle Courses — VexGrind</title>
+  <title>Autonomous Maze Escaper — VexGrind Blog</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,30 +54,6 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .fullscreen-btn {
-      position: fixed;
-      top: 1rem;
-      right: 3rem;
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      z-index: 110;
-    }
-    .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
-    .fullscreen-btn svg { width: 18px; height: 18px; }
-
-    @media (max-width: 768px) {
-      .fullscreen-btn { right: 5rem; }
-    }
-
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800; font-size: 1.25rem;
@@ -92,15 +68,28 @@
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
     .nav-actions { display: flex; gap: 1rem; align-items: center; }
-    .btn-ghost { background: none; border: none; color: var(--muted); font-family: inherit; font-size: 0.9rem; cursor: pointer; transition: color 0.2s; }
-    .btn-ghost:hover { color: var(--text); }
-    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+    .btn-ghost {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer;
+      text-decoration: none; transition: color 0.2s, border-color 0.2s;
+      display: inline-flex; align-items: center;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .btn-primary {
+      background: var(--accent); color: #fff; border: none;
+      padding: 0.5rem 1.2rem; border-radius: 8px;
+      font-family: inherit; font-size: 0.88rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center;
+      transition: background 0.2s, transform 0.15s;
+    }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
 
-    /* ── ARTICLE HERO ── */
+    /* ── HERO ── */
     .article-hero {
       position: relative;
-      min-height: 70vh;
+      min-height: 72vh;
       display: flex;
       align-items: flex-end;
       padding: 10rem 3rem 5rem;
@@ -110,9 +99,9 @@
     .hero-bg {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 70% 80% at 60% 30%, rgba(172,46,68,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 80% at 65% 30%, rgba(172,46,68,0.25) 0%, transparent 65%),
         radial-gradient(ellipse 40% 60% at 10% 80%, rgba(30,109,255,0.1) 0%, transparent 60%),
-        linear-gradient(to bottom, rgba(7,9,15,0) 0%, rgba(7,9,15,0.95) 100%);
+        linear-gradient(to bottom, rgba(7,9,15,0) 0%, rgba(7,9,15,0.97) 100%);
       z-index: 1;
     }
 
@@ -126,27 +115,27 @@
 
     .hero-orb {
       position: absolute;
-      top: 20%; left: 55%;
-      width: 400px; height: 400px;
+      top: 15%; left: 58%;
+      width: 420px; height: 420px;
       border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, rgba(172,46,68,0.4), rgba(30,109,255,0.15) 50%, transparent 75%);
-      filter: blur(60px);
-      animation: pulse 5s ease-in-out infinite;
+      background: radial-gradient(circle at 40% 40%, rgba(172,46,68,0.45), rgba(30,109,255,0.1) 55%, transparent 75%);
+      filter: blur(65px);
+      animation: pulse 6s ease-in-out infinite;
     }
 
     .hero-icon-wrap {
       position: absolute;
-      top: 50%; left: 60%;
+      top: 48%; left: 63%;
       transform: translate(-50%, -60%);
       font-size: 9rem;
-      filter: drop-shadow(0 0 60px rgba(172,46,68,0.5));
+      filter: drop-shadow(0 0 60px rgba(172,46,68,0.55));
       animation: float 5s ease-in-out infinite;
       z-index: 1;
     }
 
     .hero-content {
       position: relative; z-index: 2;
-      max-width: 720px;
+      max-width: 680px;
     }
 
     .breadcrumb {
@@ -174,7 +163,7 @@
 
     .article-hero h1 {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-size: clamp(2.4rem, 5vw, 4rem);
       font-weight: 400;
       line-height: 1.1;
       letter-spacing: -0.01em;
@@ -198,20 +187,18 @@
       background: linear-gradient(135deg, var(--accent), #ff8c60);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif;
-      font-size: 0.85rem; font-weight: 700;
+      font-size: 0.75rem; font-weight: 700;
       flex-shrink: 0;
     }
 
     .byline-name { font-weight: 500; }
     .byline-meta { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
-
     .byline-divider { width: 1px; height: 30px; background: var(--border); }
-
     .byline-stat { text-align: center; }
     .byline-stat-val { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
     .byline-stat-label { color: var(--muted); font-size: 0.72rem; }
 
-    /* ── ARTICLE LAYOUT ── */
+    /* ── LAYOUT ── */
     .article-layout {
       max-width: 1180px;
       margin: 0 auto;
@@ -222,7 +209,7 @@
       align-items: start;
     }
 
-    /* ── TOC SIDEBAR ── */
+    /* ── SIDEBAR ── */
     .toc-sidebar {
       position: sticky;
       top: 100px;
@@ -235,8 +222,6 @@
     }
 
     .toc-list { list-style: none; border-left: 1px solid var(--border); }
-    .toc-item { position: relative; }
-
     .toc-link {
       display: block;
       padding: 0.45rem 1rem;
@@ -247,10 +232,7 @@
       margin-left: -1px;
     }
     .toc-link:hover { color: var(--text); }
-    .toc-link.active {
-      color: var(--accent2);
-      border-left-color: var(--accent2);
-    }
+    .toc-link.active { color: var(--accent2); border-left-color: var(--accent2); }
 
     .toc-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
 
@@ -295,11 +277,15 @@
     .reading-pct { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--accent2); }
 
     /* ── ARTICLE BODY ── */
-    .article-body {
-      min-width: 0;
-    }
+    .article-body { min-width: 0; }
 
-    /* Lead */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--muted); text-decoration: none; font-size: 0.85rem;
+      transition: color 0.2s; margin-bottom: 2rem;
+    }
+    .back-btn:hover { color: var(--text); }
+
     .article-lead {
       font-family: 'DM Serif Display', serif;
       font-size: 1.35rem;
@@ -310,7 +296,6 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* Sections */
     .article-section { margin-bottom: 3.5rem; }
 
     .section-anchor {
@@ -353,7 +338,33 @@
       margin-bottom: 1.1rem;
     }
 
-    /* Pull quote */
+    /* ── INLINE STATS ── */
+    .inline-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+
+    .inline-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .inline-stat:hover { border-color: rgba(172,46,68,0.35); }
+    .inline-stat .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--accent2));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .inline-stat .lbl { color: var(--muted); font-size: 0.78rem; margin-top: 0.2rem; }
+
+    /* ── PULL QUOTE ── */
     .pull-quote {
       margin: 2.5rem 0;
       padding: 1.75rem 2rem;
@@ -367,7 +378,7 @@
       font-style: italic;
     }
 
-    /* Info box */
+    /* ── INFO BOX ── */
     .info-box {
       margin: 2rem 0;
       padding: 1.4rem 1.5rem;
@@ -384,7 +395,24 @@
     }
     .info-box p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; margin-bottom: 0; }
 
-    /* Visual card */
+    /* ── RESULT BOX ── */
+    .result-box {
+      margin: 2rem 0;
+      padding: 1.4rem 1.5rem;
+      background: rgba(74,222,128,0.07);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: var(--radius);
+    }
+    .result-box-head {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      color: #4ade80;
+      margin-bottom: 0.6rem;
+    }
+    .result-box p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; margin-bottom: 0; }
+
+    /* ── VISUAL CARD ── */
     .visual-card {
       margin: 2.5rem 0;
       border-radius: var(--radius);
@@ -410,18 +438,14 @@
       background-size: 40px 40px;
     }
 
-    .vis-track {
-      background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(7,9,15,0.9));
-    }
-    .vis-results {
-      background: linear-gradient(135deg, rgba(30,109,255,0.2), rgba(7,9,15,0.9));
-    }
+    .vis-phases { background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(7,9,15,0.9)); }
+    .vis-maze   { background: linear-gradient(135deg, rgba(30,109,255,0.2), rgba(7,9,15,0.9)); }
 
     .vis-item {
       text-align: center; position: relative; z-index: 1;
       flex: 1;
     }
-    .vis-icon { font-size: 4rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4)); }
+    .vis-icon { font-size: 3.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4)); }
     .vis-title {
       font-family: 'Syne', sans-serif;
       font-size: 0.85rem; font-weight: 700;
@@ -432,8 +456,7 @@
     .vis-divider {
       width: 1px; height: 120px;
       background: linear-gradient(to bottom, transparent, var(--border), transparent);
-      flex-shrink: 0;
-      position: relative; z-index: 1;
+      flex-shrink: 0; position: relative; z-index: 1;
     }
 
     .visual-caption {
@@ -444,39 +467,70 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Results table */
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 2rem 0;
-      font-size: 0.88rem;
+    /* ── STYLED LIST ── */
+    .styled-list {
+      list-style: none;
+      margin: 1.25rem 0 1.5rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
     }
-    .compare-table th {
+    .styled-list li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      color: var(--text2); font-size: 0.95rem; line-height: 1.7;
+      padding: 0.75rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+    .styled-list li:hover { border-color: rgba(172,46,68,0.3); }
+    .styled-list li .li-label {
       font-family: 'Syne', sans-serif;
-      font-size: 0.78rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.07em;
-      padding: 0.8rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-weight: 700; color: var(--accent2);
+      white-space: nowrap; flex-shrink: 0;
     }
-    .compare-table th:first-child { color: var(--muted); }
-    .compare-table th:nth-child(2) { color: #60a5fa; }
-    .compare-table th:nth-child(3) { color: #60a5fa; }
-    .compare-table th:nth-child(4) { color: var(--accent2); }
 
-    .compare-table td {
-      padding: 0.8rem 1rem;
-      border-bottom: 1px solid var(--border);
-      color: var(--text2);
-      vertical-align: top;
+    /* ── PHASE STEPS ── */
+    .phase-steps {
+      margin: 2rem 0;
+      display: flex; flex-direction: column; gap: 0;
+      list-style: none;
     }
-    .compare-table tr:last-child td { border-bottom: none; }
-    .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .compare-table td:first-child { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
-    .compare-table td.winner { color: var(--green); font-weight: 700; }
-    .compare-table td.fastest { color: var(--accent2); font-weight: 700; }
+    .phase-steps li {
+      display: flex; gap: 1.25rem;
+      position: relative; padding-bottom: 2rem;
+    }
+    .phase-steps li:last-child { padding-bottom: 0; }
 
-    /* Key takeaway */
+    .phase-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(172,46,68,0.2);
+      border: 1px solid rgba(172,46,68,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--accent2);
+      position: relative; z-index: 1;
+      margin-top: 0.1rem;
+    }
+
+    .phase-steps li:not(:last-child) .phase-num::after {
+      content: '';
+      position: absolute;
+      top: 34px; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: calc(100% + 1.5rem);
+      background: rgba(172,46,68,0.2);
+    }
+
+    .phase-body h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .phase-body p { font-size: 0.88rem; color: var(--text2); margin-bottom: 0 !important; }
+
+    /* ── TAKEAWAY ── */
     .takeaway {
       margin: 3rem 0;
       padding: 2rem;
@@ -488,29 +542,36 @@
       font-family: 'Syne', sans-serif;
       font-size: 0.75rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--accent2);
-      margin-bottom: 0.75rem;
+      color: var(--accent2); margin-bottom: 0.75rem;
     }
     .takeaway p { color: var(--text2); font-size: 0.93rem; line-height: 1.75; margin-bottom: 0; }
 
-    /* Fastest lap badge */
-    .fastest-lap-badge {
-      display: inline-flex; align-items: center; gap: 0.75rem;
-      background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(255,140,96,0.1));
-      border: 1px solid rgba(172,46,68,0.4);
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #0a0d18;
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1rem 1.5rem;
-      margin: 1.5rem 0;
+      padding: 1.5rem;
+      margin: 1.75rem 0;
+      overflow-x: auto;
+      position: relative;
     }
-    .fastest-lap-badge .flag { font-size: 2rem; }
-    .fastest-lap-badge .lap-info { }
-    .fastest-lap-badge .lap-label {
-      font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em;
-      color: var(--accent2); font-weight: 700; margin-bottom: 0.2rem;
+    .code-block::before {
+      content: attr(data-lang);
+      position: absolute; top: 0.75rem; right: 1rem;
+      font-size: 0.7rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
     }
-    .fastest-lap-badge .lap-val {
-      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text);
+    .code-block pre {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.75; color: #c9d1d9;
     }
+    .code-block .kw  { color: #ff7b72; }
+    .code-block .fn  { color: #d2a8ff; }
+    .code-block .str { color: #a5d6ff; }
+    .code-block .num { color: #79c0ff; }
+    .code-block .cm  { color: #5c6370; font-style: italic; }
 
     /* ── DIVIDER ── */
     .art-divider {
@@ -534,7 +595,7 @@
       background: linear-gradient(135deg, var(--accent), #ff8c60);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif;
-      font-size: 1.2rem; font-weight: 700;
+      font-size: 0.8rem; font-weight: 700;
       flex-shrink: 0;
     }
     .author-box-name {
@@ -544,7 +605,7 @@
     .author-box-role { color: var(--accent2); font-size: 0.78rem; margin-bottom: 0.6rem; }
     .author-box p { color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
 
-    /* ── MORE POSTS ── */
+    /* ── MORE ── */
     .more-section {
       max-width: 1180px;
       margin: 0 auto;
@@ -568,7 +629,6 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      cursor: pointer;
       text-decoration: none;
       transition: border-color 0.3s, transform 0.3s;
       display: block;
@@ -590,9 +650,9 @@
       background-size: 30px 30px;
     }
     .more-thumb span { position: relative; z-index: 1; }
-    .tb-build { background: linear-gradient(135deg, rgba(30,109,255,0.3), rgba(7,9,15,0.8)); }
+    .tb-strat { background: linear-gradient(135deg, rgba(172,46,68,0.3), rgba(7,9,15,0.8)); }
     .tb-code  { background: linear-gradient(135deg, rgba(74,222,128,0.2), rgba(7,9,15,0.8)); }
-    .tb-strat { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(7,9,15,0.8)); }
+    .tb-build { background: linear-gradient(135deg, rgba(30,109,255,0.3), rgba(7,9,15,0.8)); }
 
     .more-body { padding: 1.1rem; }
     .more-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
@@ -605,17 +665,16 @@
       display: flex; align-items: center; justify-content: space-between;
       color: var(--muted); font-size: 0.82rem;
     }
-
-    /* ── BACK BTN ── */
-    .back-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      color: var(--muted); text-decoration: none; font-size: 0.85rem;
-      transition: color 0.2s;
-      margin-bottom: 2rem;
-    }
-    .back-btn:hover { color: var(--text); }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
 
     /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -629,26 +688,21 @@
       50%       { opacity: 0.9; transform: scale(1.08); }
     }
 
-    /* ── REVEAL ── */
-    .reveal {
-      opacity: 0; transform: translateY(22px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .article-layout { grid-template-columns: 1fr; gap: 2rem; }
       .toc-sidebar { display: none; }
       .more-grid { grid-template-columns: 1fr 1fr; }
+      .inline-stats { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
+      .nav-links, .nav-actions { display: none; }
       .article-hero { padding: 8rem 1.5rem 4rem; min-height: auto; }
       .hero-icon-wrap { display: none; }
       .article-layout, .more-section { padding-left: 1.5rem; padding-right: 1.5rem; }
       .more-grid { grid-template-columns: 1fr; }
+      .inline-stats { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
       .vis-divider { display: none; }
     }
@@ -656,7 +710,6 @@
 </head>
 <body>
 
-<!-- READING PROGRESS -->
 <div id="progress-bar"></div>
 
 <!-- NAV -->
@@ -670,22 +723,17 @@
     <li><a href="account.html">Account</a></li>
   </ul>
   <div class="nav-actions">
-    <button class="btn-ghost">Sign in</button>
-    <button class="btn-primary">Join the team →</button>
+    <a href="signup.html" class="btn-ghost">Sign in</a>
+    <a href="signup.html" class="btn-primary">Join the Team →</a>
   </div>
 </nav>
-<button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
-  </svg>
-</button>
 
-<!-- ARTICLE HERO -->
+<!-- HERO -->
 <section class="article-hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-orb"></div>
-  <div class="hero-icon-wrap">🏁</div>
+  <div class="hero-icon-wrap">🤖</div>
 
   <div class="hero-content">
     <div class="breadcrumb">
@@ -693,49 +741,48 @@
       <span>/</span>
       <a href="blog.html">Blog</a>
       <span>/</span>
-      <span style="color:var(--text)">Experimenting with Obstacle Courses</span>
+      <span style="color:var(--text)">Maze Escaper</span>
     </div>
-    <div class="article-tag">🎮 Driver Skills</div>
-    <h1>Experimenting with <em>Obstacle Courses</em></h1>
+    <div class="article-tag">🧭 Autonomous</div>
+    <h1>We Built a VEX V5 Robot That <em>Escapes Any Maze.</em></h1>
     <div class="article-byline">
-      <div class="byline-avatar">SG</div>
+      <div class="byline-avatar">NP&AS</div>
       <div>
-        <div class="byline-name">Sarvesh G. & Naitik P.</div>
-        <div class="byline-meta">VexGrind · Apr 9, 2026</div>
+        <div class="byline-name">Aryan & Naitik</div>
+        <div class="byline-meta">Build Log · VexGrind · April 2026</div>
       </div>
       <div class="byline-divider"></div>
       <div class="byline-stat">
-        <div class="byline-stat-val">5 min</div>
+        <div class="byline-stat-val">4 min</div>
         <div class="byline-stat-label">read</div>
       </div>
       <div class="byline-divider"></div>
       <div class="byline-stat">
-        <div class="byline-stat-val">4</div>
-        <div class="byline-stat-label">drivers</div>
+        <div class="byline-stat-val">15s</div>
+        <div class="byline-stat-label">escape time</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MAIN ARTICLE LAYOUT -->
+<!-- ARTICLE LAYOUT -->
 <div class="article-layout">
 
-  <!-- SIDEBAR TOC -->
+  <!-- SIDEBAR -->
   <aside class="toc-sidebar">
     <div class="toc-label">In this article</div>
     <ul class="toc-list">
-      <li class="toc-item"><a class="toc-link" href="#overview">Overview</a></li>
-      <li class="toc-item"><a class="toc-link" href="#track">Track Map</a></li>
-      <li class="toc-item"><a class="toc-link" href="#times">Racing Times</a></li>
-      <li class="toc-item"><a class="toc-link" href="#howit">How It Worked</a></li>
-      <li class="toc-item"><a class="toc-link" href="#reactions">Reactions</a></li>
+      <li><a class="toc-link" href="#sensor">Sensor Calibration</a></li>
+      <li><a class="toc-link" href="#exercise">The First Exercise</a></li>
+      <li><a class="toc-link" href="#problem">The Problem</a></li>
+      <li><a class="toc-link" href="#code">The Code Process</a></li>
     </ul>
 
     <div class="toc-divider"></div>
 
     <div class="share-label">Share this post</div>
     <div class="share-btns">
-      <button class="share-btn">🔗 Copy link</button>
+      <button class="share-btn" id="copyLink">🔗 Copy link</button>
       <button class="share-btn">𝕏 Post on X</button>
       <button class="share-btn">💬 Share to Discord</button>
     </div>
@@ -749,193 +796,214 @@
     </div>
   </aside>
 
-  <!-- ARTICLE BODY -->
+  <!-- ARTICLE -->
   <article class="article-body" id="article-body">
 
     <a href="blog.html" class="back-btn">← Back to Blog</a>
 
     <p class="article-lead">
-      A first race...
+      Full breakdown of our autonomous maze-solving VEX V5 robot — the sensor stack, the wall-following algorithm, the dead-end recovery logic, and everything we learned building it from scratch.
     </p>
 
-    <!-- OVERVIEW -->
-    <div class="article-section" id="overview">
+    <!-- STATS -->
+    <div class="inline-stats reveal">
+      <div class="inline-stat">
+        <div class="num">15s</div>
+        <div class="lbl">Average escape time</div>
+      </div>
+      <div class="inline-stat">
+        <div class="num">2</div>
+        <div class="lbl">Bumper sensors used</div>
+      </div>
+      <div class="inline-stat">
+        <div class="num">∞</div>
+        <div class="lbl">Loops in a box</div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: SENSOR CALIBRATION -->
+    <div class="article-section" id="sensor">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">01</span> Overview</h2>
+      <h2><span class="section-num">01</span> Sensor Calibration</h2>
+
       <p>
-        A few days ago, we made an obstacle course using household objects to test our driving skills and who would go through for our starting two in the challenges in the future.
+        Before any maze logic could be written, we needed to understand exactly how the bumper sensor was measuring distance. We set up a simple test: used a tape measure and a short script that would back the robot up 600 mm from the moment the bumper triggered.
       </p>
 
-      <div class="fastest-lap-badge">
-        <span class="flag">🏆</span>
-        <div class="lap-info">
-          <div class="lap-label">Fastest Lap — VEX V5 Grand Prix</div>
-          <div class="lap-val">Naitik Pal &nbsp;·&nbsp; 1:51</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TRACK MAP -->
-    <div class="article-section" id="track">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">02</span> Track Map</h2>
-
-      <div class="visual-card">
-        <div class="visual-inner vis-track" style="flex-direction: column; gap: 1rem; text-align: center;">
-          <div style="position: relative; z-index: 1;">
-            <div style="font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; letter-spacing: 0.08em; color: var(--text); margin-bottom: 1.25rem;">VEX V5 GRAND PRIX</div>
-            <img src="Track.png" style="width: 480px; height: 300px;">
-            <div style="margin-top: 1.25rem;">
-              <div style="font-family: 'Syne', sans-serif; font-style: italic; font-size: 1.05rem; font-weight: 800; letter-spacing: 0.05em; color: var(--accent2);">FASTEST LAP</div>
-              <div style="font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); letter-spacing: 0.05em; margin-top: 0.2rem;">NAITIK PAL 1:51</div>
-            </div>
-          </div>
-        </div>
-        <div class="visual-caption">The VEX V5 Grand Prix — a winding household obstacle course built to test precision driving.</div>
-      </div>
-    </div>
-
-    <!-- RACING TIMES -->
-    <div class="article-section" id="times">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">03</span> Racing Times</h2>
-      <p>Each driver completed two runs. The results are recorded below — lowest average time wins.</p>
-
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Driver</th>
-            <th>Run 1 (s)</th>
-            <th>Run 2 (s)</th>
-            <th>Average (s)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Aryan</td>
-            <td>260</td>
-            <td>221</td>
-            <td>241</td>
-          </tr>
-          <tr>
-            <td>Lakshman</td>
-            <td>212</td>
-            <td>210</td>
-            <td>211</td>
-          </tr>
-          <tr>
-            <td>Naitik</td>
-            <td>167</td>
-            <td class="fastest">111</td>
-            <td class="winner">139 🏆</td>
-          </tr>
-          <tr>
-            <td>Sarvesh</td>
-            <td>124</td>
-            <td>165</td>
-            <td>146</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="info-box">
-        <div class="info-box-head">📊 The Numbers</div>
-        <p>Naitik posted the fastest individual lap of the day — 111 seconds on Run 2 — well clear of the field. Sarvesh was closest with a 124-second opening run, but his second run cost him the top spot.</p>
-      </div>
-    </div>
-
-    <!-- HOW IT WORKED -->
-    <div class="article-section" id="howit">
-      <span class="section-anchor"></span>
-      <h2><span class="section-num">04</span> How It Worked</h2>
       <p>
-        Each one of us had two runs to try and set the fastest lap times and eventually have the lowest average time. In each run, every time an object was hit a 2-second penalty was placed upon the driver and this proved to impact the results massively There were two clear frontrunners after the first round, Naitik and Sarvesh. Lakshman and Aryan, especially Aryan, struggled to keep up and fell far behind.
-      </p>
-
-      <div class="visual-card">
-        <div class="visual-inner vis-results">
-          <div class="vis-item">
-            <div class="vis-icon">🥇</div>
-            <div class="vis-title">Naitik</div>
-            <div class="vis-desc">Frontrunner from round one — clutch final run sealed the deal</div>
-          </div>
-          <div class="vis-divider"></div>
-          <div class="vis-item">
-            <div class="vis-icon">🥈</div>
-            <div class="vis-title">Sarvesh</div>
-            <div class="vis-desc">Second-fastest average — agonisingly close at the line</div>
-          </div>
-          <div class="vis-divider"></div>
-          <div class="vis-item">
-            <div class="vis-icon">😅</div>
-            <div class="vis-title">Lakshman & Aryan</div>
-            <div class="vis-desc">Fell far behind — especially Aryan, who struggled to keep up</div>
-          </div>
-        </div>
-        <div class="visual-caption">After round one it was a two-horse race between Naitik and Sarvesh.</div>
-      </div>
-
-      <p>
-        It was a gripping competition and came down to Naitik's final run… if he got a sub 122 second time, he would claim victory. It seemed impossible, but he prevailed and came out on top.
+        What we quickly discovered was that the sensor wasn't measuring from the robot's centre — it was measuring until it hit 600 mm from the <em>rear of the bumper itself</em>. A subtle but critical distinction that would have broken all our subsequent code if we'd missed it.
       </p>
 
       <div class="pull-quote">
-        "Agony, agony for Sarvesh. Ecstasy, ecstasy for Naitik."
+        "The bumper measured to 60 cm from the rear — not the centre. One small detail, massive downstream impact."
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-head">🔬 Measurement Insight</div>
+        <p>Always verify sensor reference points before writing motion logic. The bumper triggers from its physical contact surface, not from the robot's geometric centre — offset accordingly in your drive constants.</p>
+      </div>
+
+      <div class="visual-card reveal">
+        <div class="visual-inner vis-phases">
+          <div class="vis-item">
+            <div class="vis-icon">📏</div>
+            <div class="vis-title">Tape Measure Test</div>
+            <div class="vis-desc">Measured actual stop distance vs. commanded distance to find the offset</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">🎯</div>
+            <div class="vis-title">60 cm Reference</div>
+            <div class="vis-desc">Sensor reads from the rear surface of the bumper, not the robot centre</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">✅</div>
+            <div class="vis-title">Offset Applied</div>
+            <div class="vis-desc">Calibrated backing distance corrected for bumper position in all code</div>
+          </div>
+        </div>
+        <div class="visual-caption">Step-by-step sensor validation before writing any autonomous logic.</div>
       </div>
     </div>
 
-    <!-- REACTIONS -->
-    <div class="article-section" id="reactions">
+    <!-- SECTION 2: THE EXERCISE -->
+    <div class="article-section" id="exercise">
       <span class="section-anchor"></span>
-      <h2><span class="section-num">05</span> Reactions</h2>
+      <h2><span class="section-num">02</span> The First Exercise</h2>
+
+      <p>
+        With the sensor understood, we set ourselves a starter challenge: make the robot loop endlessly inside a box using only the bumper. No complex pathfinding — just drive forward, hit a wall, back up, turn, repeat.
+      </p>
+
+      <p>
+        This took minimal code to produce, and it worked — but we ran into an immediate real-world problem. Wheel traction wasn't perfectly consistent, which meant over many cycles the robot would gradually drift out of alignment. The box loop would slowly degrade into a spiral.
+      </p>
+
+      <p>
+        It was a great first exercise precisely because it surfaced a hardware constraint early — one that would shape every design decision going forward.
+      </p>
+
+      <ul class="styled-list reveal">
+        <li>
+          <span class="li-label">Win →</span>
+          <span>Proved bumper-only autonomy works in a closed environment with minimal code.</span>
+        </li>
+        <li>
+          <span class="li-label">Problem →</span>
+          <span>Traction inconsistency caused cumulative drift over many loops, breaking the pattern.</span>
+        </li>
+        <li>
+          <span class="li-label">Lesson →</span>
+          <span>Random turning angles actually helped — drift never accumulated in a single direction.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SECTION 3: THE PROBLEM -->
+    <div class="article-section" id="problem">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">03</span> The Problem</h2>
+
+      <p>
+        Next, we escalated the challenge: escape a hexagonal box where the only exits were at the corners, and the robot had to use <strong>random turning</strong> to find them. No wall-mapping, no memory — pure stochastic navigation.
+      </p>
+
+      <p>
+        The robot was clearly capable of escaping — it had the speed and the sensor precision. The question was how long it would take and whether the random turn strategy would be statistically reliable enough across different starting positions.
+      </p>
+
+      <div class="visual-card reveal">
+        <div class="visual-inner vis-maze">
+          <div class="vis-item">
+            <div class="vis-icon">⬡</div>
+            <div class="vis-title">Hexagon Arena</div>
+            <div class="vis-desc">Six walls, corner exits only — no straight-line escape possible</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">🎲</div>
+            <div class="vis-title">Random Turning</div>
+            <div class="vis-desc">Variable turn angle each time ensures no stuck loops at bad angles</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">🏃</div>
+            <div class="vis-title">15 sec ✓</div>
+            <div class="vis-desc">Average escape time across all starting orientations</div>
+          </div>
+        </div>
+        <div class="visual-caption">Hexagonal maze challenge — random turning as the only navigation strategy.</div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-head">🟢 Result</div>
+        <p>The robot escaped successfully. Average time: <strong>15 seconds</strong>. Random turning proved surprisingly robust — the stochastic approach avoided the getting-stuck failure modes of a fixed-angle strategy.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 4: THE CODE -->
+    <div class="article-section" id="code">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">04</span> The Robot Code Process</h2>
+
+      <p>
+        The logic is deceptively simple — three repeating phases that together produce reliable maze-escape behaviour without any map, memory, or complex decision tree.
+      </p>
+
+      <ul class="phase-steps reveal">
+        <li>
+          <div class="phase-num">1</div>
+          <div class="phase-body">
+            <h4>Drive Forward</h4>
+            <p>Normal operation. The robot moves forward at constant speed until the bumper sensor is triggered by a wall contact.</p>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num">2</div>
+          <div class="phase-body">
+            <h4>Wait Until Bumper Pressed → Back Up 600 mm</h4>
+            <p>When the bumper triggers, the robot immediately reverses 600 mm (corrected for our calibrated sensor offset) to clear the wall.</p>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num">3</div>
+          <div class="phase-body">
+            <h4>Random Turn</h4>
+            <p>The robot turns left by a randomly-generated angle. This stochastic step prevents it from repeatedly driving into the same wall at the same angle, ensuring eventual escape through any gap.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="code-block" data-lang="VEXcode">
+        <pre><span class="cm">// Repeat forever — bump, back, turn randomly</span>
+<span class="kw">while</span> (<span class="kw">true</span>) {
+  <span class="fn">Drivetrain</span>.<span class="fn">drive</span>(<span class="str">forward</span>);
+  <span class="fn">waitUntil</span>(<span class="fn">Bumper</span>.<span class="fn">pressing</span>());
+
+  <span class="fn">Drivetrain</span>.<span class="fn">driveFor</span>(<span class="str">reverse</span>, <span class="num">600</span>, mm);
+
+  <span class="kw">int</span> turnDeg = <span class="fn">random</span>(<span class="num">30</span>, <span class="num">150</span>);
+  <span class="fn">Drivetrain</span>.<span class="fn">turnFor</span>(<span class="str">left</span>, turnDeg, degrees);
+}</pre>
+      </div>
 
       <div class="takeaway">
-        <div class="takeaway-head">⚡ The Final Verdict</div>
+        <div class="takeaway-head">⚡ Key Takeaway</div>
         <p>
-          Naitik claimed the VEX V5 Grand Prix crown with a blistering 111-second second run. Agony, agony for Sarvesh. Ecstasy, ecstasy for Naitik. And as for Aryan — inexplicably celebrating despite finishing last — the less said the better. WHY?!!!!
+          Randomness is a legitimate navigation strategy. By removing determinism from the turn phase, the robot avoids all cyclic trap states — it will always eventually find an exit, no matter the arena shape. The simpler the logic, the more robust the behaviour in unpredictable environments.
         </p>
       </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 2rem 0;">
-
-  <!-- Naitik -->
-  <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center;">
-    <img src="Naitik.jpeg" alt="Naitik" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50%; margin-bottom: 0.5rem;">
-    <div style="font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--green); margin-bottom: 0.3rem;">
-      Naitik overjoyed after his victory
     </div>
-    <div style="font-size: 0.78rem; color: var(--muted);">Winner · Avg 139s</div>
-  </div>
-
-  <!-- Sarvesh -->
-  <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center;">
-    <img src="Sarvesh.jpeg" alt="Sarvesh" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50%; margin-bottom: 0.5rem;">
-    <div style="font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent2); margin-bottom: 0.3rem;">
-      Sarvesh heart-broken after his loss
-    </div>
-    <div style="font-size: 0.78rem; color: var(--muted);">Runner-up · Avg 146s</div>
-  </div>
-
-</div>
-
-<!-- Aryan -->
-<div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center; margin: 1.25rem 0;">
-  <img src="Aryan.jpeg" alt="Aryan" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50%; margin-bottom: 0.5rem;">
-  <div style="font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 0.3rem;">
-    Aryan is erm… celebrating? WHY?!!!!
-  </div>
-  <div style="font-size: 0.78rem; color: var(--muted);">Last place · Avg 241s</div>
-</div>
-
 
     <div class="art-divider"><span>✦</span></div>
 
-    <!-- AUTHOR BOX -->
     <div class="author-box reveal">
-      <div class="author-box-avatar">S</div>
+      <div class="author-box-avatar">NP&AS</div>
       <div>
-        <div class="author-box-name">Sarvesh G. & Naitik P.</div>
-        <div class="author-box-role">Writer · VexGrind</div>
+        <div class="author-box-name">Aryan & Naitik</div>
+        <div class="author-box-role">Build Log · VexGrind · Season 2025–26</div>
+        <p>Two-person team documenting the full process of building and programming autonomous VEX V5 robots — from sensor calibration to full competition strategy.</p>
       </div>
     </div>
 
@@ -946,11 +1014,11 @@
 <div class="more-section">
   <div class="more-label reveal">More from the blog</div>
   <div class="more-grid">
-    <a href="#" class="more-card reveal">
-      <div class="more-thumb tb-build"><span>🧠</span></div>
+    <a href="robot-types.html" class="more-card reveal">
+      <div class="more-thumb tb-strat"><span>🤖</span></div>
       <div class="more-body">
-        <div class="more-tag">Theory</div>
-        <h3>Conventional and Unconventional Robots</h3>
+        <div class="more-tag">Strategy</div>
+        <h3>Robot Types: Conventional & Unconventional</h3>
       </div>
     </a>
     <a href="#" class="more-card reveal">
@@ -961,10 +1029,10 @@
       </div>
     </a>
     <a href="#" class="more-card reveal">
-      <div class="more-thumb tb-strat"><span>🎯</span></div>
+      <div class="more-thumb tb-build"><span>🔧</span></div>
       <div class="more-body">
-        <div class="more-tag">Strategy</div>
-        <h3>Alliance Selection Psychology: How to Get Picked Every Time</h3>
+        <div class="more-tag">Build Guide</div>
+        <h3>The 6-Motor Drivetrain Setup We Used to Win States</h3>
       </div>
     </a>
   </div>
@@ -974,47 +1042,34 @@
 <footer>
   <a href="index.html" class="nav-logo" style="font-size:1.1rem;">VexGrind</a>
   <p>© 2026 VexGrind. All rights reserved.</p>
-  <div style="display:flex; gap:1.5rem;">
-    <a href="#" style="color:var(--muted);text-decoration:none;">Privacy</a>
-    <a href="#" style="color:var(--muted);text-decoration:none;">Terms</a>
-    <a href="#" style="color:var(--muted);text-decoration:none;">Contact</a>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
   </div>
 </footer>
 
 <script>
-  // ── READING PROGRESS ──
-  // Measures how far through the article body the user has scrolled.
-  // Uses the article element's top/bottom positions relative to the viewport.
+  // Progress bar
   function updateProgress() {
-    const body     = document.getElementById('article-body');
-    const bar      = document.getElementById('progress-bar');
+    const body = document.getElementById('article-body');
+    const bar  = document.getElementById('progress-bar');
     const sideFill = document.getElementById('sidebar-progress');
     const sidePct  = document.getElementById('sidebar-pct');
-
-    const rect        = body.getBoundingClientRect();
-    const articleH    = body.offsetHeight;
-    const viewH       = window.innerHeight;
-
-    // Distance from article top to top of viewport (clamped to article bounds)
+    const rect   = body.getBoundingClientRect();
+    const total  = body.offsetHeight - window.innerHeight;
     const scrolled = Math.max(0, -rect.top);
-    // Total scrollable distance = article height minus one viewport height
-    const total    = Math.max(1, articleH - viewH);
-    const pct      = Math.min(100, Math.round((scrolled / total) * 100));
-
+    const pct    = Math.min(100, Math.round((scrolled / total) * 100));
     bar.style.width = pct + '%';
     if (sideFill) sideFill.style.width = pct + '%';
     if (sidePct)  sidePct.textContent  = pct + '%';
   }
-
   window.addEventListener('scroll', updateProgress, { passive: true });
-  // Also run on resize in case layout shifts
-  window.addEventListener('resize', updateProgress, { passive: true });
   updateProgress();
 
-  // ── ACTIVE TOC LINK ──
+  // Active TOC
   const sections = document.querySelectorAll('.article-section');
   const tocLinks = document.querySelectorAll('.toc-link');
-
   const tocObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1025,10 +1080,9 @@
       }
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
-
   sections.forEach(s => tocObserver.observe(s));
 
-  // ── SCROLL REVEAL ──
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const revealObs = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -1039,32 +1093,12 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => revealObs.observe(el));
 
-  // ── COPY LINK BUTTON ──
-  document.querySelectorAll('.share-btn').forEach(btn => {
-    if (btn.textContent.includes('Copy')) {
-      btn.addEventListener('click', () => {
-        navigator.clipboard.writeText(window.location.href).catch(() => {});
-        btn.textContent = '✅ Copied!';
-        setTimeout(() => btn.textContent = '🔗 Copy link', 2000);
-      });
-    }
+  // Copy link
+  document.getElementById('copyLink').addEventListener('click', function() {
+    navigator.clipboard.writeText(window.location.href).catch(() => {});
+    this.textContent = '✅ Copied!';
+    setTimeout(() => this.textContent = '🔗 Copy link', 2000);
   });
-
-  const fullscreenBtn = document.getElementById('fullscreenBtn');
-  if (fullscreenBtn) {
-    const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-    const toggleFullscreen = async () => {
-      if (isFullscreen()) {
-        const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-        if (exitFn) await exitFn.call(document);
-      } else {
-        const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
-        if (requestFn) await requestFn.call(document.documentElement);
-      }
-    };
-    fullscreenBtn.addEventListener('click', toggleFullscreen);
-  }
 </script>
-
 </body>
 </html>

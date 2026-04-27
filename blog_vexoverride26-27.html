@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VEX Override 2026–27: Everything We Know — VexGrind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07090f;
+      --bg2: #0d1220;
+      --bg3: #111827;
+      --accent: #AC2E44;
+      --accent2: #e84560;
+      --blue: #1e6dff;
+      --text: #f0f2ff;
+      --text2: #c8cde8;
+      --muted: #7a82a0;
+      --border: rgba(255,255,255,0.07);
+      --card: rgba(255,255,255,0.04);
+      --radius: 14px;
+      --green: #4ade80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), #ff8c60);
+      z-index: 200;
+      transition: width 0.1s linear;
+    }
+
+    nav {
+      position: fixed; top: 3px; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(7,9,15,0.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fullscreen-btn {
+      position: fixed;
+      top: 1rem;
+      right: 3rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      z-index: 110;
+    }
+    .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+    .fullscreen-btn svg { width: 18px; height: 18px; }
+
+    @media (max-width: 768px) {
+      .fullscreen-btn { right: 5rem; }
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.25rem;
+      background: linear-gradient(135deg, #fff 40%, var(--accent2));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    .nav-actions { display: flex; gap: 1rem; align-items: center; }
+    .btn-ghost { background: none; border: none; color: var(--muted); font-family: inherit; font-size: 0.9rem; cursor: pointer; transition: color 0.2s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    /* ——— HERO ——— */
+    .article-hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 10rem 3rem 5rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 60% 30%, rgba(30,109,255,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(172,46,68,0.12) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(7,9,15,0) 0%, rgba(7,9,15,0.95) 100%);
+      z-index: 1;
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-orb {
+      position: absolute;
+      top: 20%; left: 55%;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(30,109,255,0.4), rgba(172,46,68,0.15) 50%, transparent 75%);
+      filter: blur(60px);
+      animation: pulse 5s ease-in-out infinite;
+    }
+
+    .hero-icon-wrap {
+      position: absolute;
+      top: 50%; left: 60%;
+      transform: translate(-50%, -60%);
+      font-size: 9rem;
+      filter: drop-shadow(0 0 60px rgba(30,109,255,0.5));
+      animation: float 5s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 720px;
+    }
+
+    .breadcrumb {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; color: var(--muted);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--text); }
+    .breadcrumb span { color: var(--border); }
+
+    .article-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(30,109,255,0.15);
+      border: 1px solid rgba(30,109,255,0.3);
+      border-radius: 6px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.72rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: #60a5fa;
+      margin-bottom: 1.2rem;
+      animation: fadeUp 0.5s 0.05s ease both;
+    }
+
+    .article-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+
+    .article-hero h1 em {
+      font-style: italic;
+      color: #60a5fa;
+    }
+
+    .article-byline {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 0.85rem;
+      animation: fadeUp 0.5s 0.15s ease both;
+    }
+
+    .byline-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), #60a5fa);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .byline-name { font-weight: 500; }
+    .byline-meta { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
+    .byline-divider { width: 1px; height: 30px; background: var(--border); }
+    .byline-stat { text-align: center; }
+    .byline-stat-val { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
+    .byline-stat-label { color: var(--muted); font-size: 0.72rem; }
+
+    /* ——— LAYOUT ——— */
+    .article-layout {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 4rem 3rem 8rem;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .toc-sidebar {
+      position: sticky;
+      top: 100px;
+    }
+
+    .toc-label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .toc-list { list-style: none; border-left: 1px solid var(--border); }
+    .toc-item { position: relative; }
+
+    .toc-link {
+      display: block;
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem; color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      border-left: 2px solid transparent;
+      margin-left: -1px;
+    }
+    .toc-link:hover { color: var(--text); }
+    .toc-link.active {
+      color: #60a5fa;
+      border-left-color: #60a5fa;
+    }
+
+    .toc-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+    .share-label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .share-btns { display: flex; flex-direction: column; gap: 0.5rem; }
+    .share-btn {
+      display: flex; align-items: center; gap: 0.65rem;
+      padding: 0.55rem 0.9rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit; font-size: 0.8rem; color: var(--muted);
+      cursor: pointer; transition: all 0.2s;
+      text-align: left;
+    }
+    .share-btn:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
+
+    .reading-box {
+      margin-top: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .reading-box-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
+    .reading-progress-track {
+      height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .reading-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), #60a5fa);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.2s;
+    }
+    .reading-pct { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: #60a5fa; }
+
+    /* ——— ARTICLE BODY ——— */
+    .article-body { min-width: 0; }
+
+    .article-lead {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+      line-height: 1.6;
+      color: var(--text2);
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-section { margin-bottom: 3.5rem; }
+
+    .section-anchor {
+      display: block;
+      position: relative;
+      top: -120px;
+      visibility: hidden;
+    }
+
+    .article-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem; font-weight: 800;
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+
+    .section-num {
+      font-size: 0.7rem;
+      color: #60a5fa;
+      background: rgba(30,109,255,0.12);
+      border: 1px solid rgba(30,109,255,0.25);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .article-section h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      margin: 2rem 0 0.75rem;
+      color: var(--text);
+    }
+
+    .article-section p {
+      color: var(--text2);
+      font-size: 1.01rem;
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+    }
+
+    .pull-quote {
+      margin: 2.5rem 0;
+      padding: 1.75rem 2rem;
+      border-left: 3px solid #60a5fa;
+      background: rgba(30,109,255,0.07);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      line-height: 1.55;
+      color: var(--text);
+      font-style: italic;
+    }
+
+    .info-box {
+      margin: 2rem 0;
+      padding: 1.4rem 1.5rem;
+      background: rgba(172,46,68,0.07);
+      border: 1px solid rgba(172,46,68,0.2);
+      border-radius: var(--radius);
+    }
+    .info-box-head {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 0.6rem;
+    }
+    .info-box p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; margin-bottom: 0; }
+
+    /* ——— VISUAL CARDS ——— */
+    .visual-card {
+      margin: 2.5rem 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .visual-inner {
+      min-height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 3rem;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual-inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .vis-blue { background: linear-gradient(135deg, rgba(30,109,255,0.2), rgba(7,9,15,0.9)); }
+    .vis-red  { background: linear-gradient(135deg, rgba(172,46,68,0.2), rgba(7,9,15,0.9)); }
+    .vis-gold { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(7,9,15,0.9)); }
+
+    .vis-item {
+      text-align: center; position: relative; z-index: 1;
+      flex: 1;
+    }
+    .vis-icon { font-size: 4rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4)); }
+    .vis-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .vis-desc { color: var(--muted); font-size: 0.78rem; line-height: 1.5; }
+
+    .vis-divider {
+      width: 1px; height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+      flex-shrink: 0;
+      position: relative; z-index: 1;
+    }
+
+    .visual-caption {
+      background: var(--bg2);
+      padding: 0.9rem 1.5rem;
+      font-size: 0.78rem; color: var(--muted);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ——— STYLED LIST ——— */
+    .styled-list {
+      list-style: none;
+      margin: 1.25rem 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .styled-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      color: var(--text2);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      padding: 0.75rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+    .styled-list li:hover { border-color: rgba(30,109,255,0.3); }
+
+    .styled-list li .li-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      color: #60a5fa;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ——— COMPARE CARD ——— */
+    .compare-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+
+    .comp-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .comp-item-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .comp-item-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem; font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .comp-item p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 0; }
+
+    /* ——— SCORE TABLE ——— */
+    .score-table {
+      width: 100%;
+      margin: 2rem 0;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .score-table th {
+      background: rgba(30,109,255,0.1);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #60a5fa;
+      text-align: left;
+    }
+    .score-table td {
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      color: var(--text2);
+      line-height: 1.55;
+    }
+    .score-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .score-table .pts {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      color: #60a5fa;
+    }
+
+    /* ——— TAKEAWAY ——— */
+    .takeaway {
+      margin: 3rem 0;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(30,109,255,0.12), rgba(172,46,68,0.08));
+      border: 1px solid rgba(30,109,255,0.2);
+      border-radius: var(--radius);
+    }
+    .takeaway-head {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: #60a5fa;
+      margin-bottom: 0.75rem;
+    }
+    .takeaway p { color: var(--text2); font-size: 0.93rem; line-height: 1.75; margin-bottom: 0; }
+
+    /* ——— TIMELINE ——— */
+    .timeline {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(30,109,255,0.5), rgba(30,109,255,0.05));
+    }
+    .tl-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 0 0 2rem 0;
+      position: relative;
+    }
+    .tl-dot {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(30,109,255,0.15);
+      border: 2px solid rgba(30,109,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      position: relative; z-index: 1;
+    }
+    .tl-body { padding-top: 0.5rem; }
+    .tl-date {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      color: #60a5fa;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.2rem;
+    }
+    .tl-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+    .tl-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+
+    /* ——— DIVIDER ——— */
+    .art-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 3rem 0;
+    }
+    .art-divider::before, .art-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .art-divider span { color: #60a5fa; font-size: 1rem; }
+
+    /* ——— AUTHOR BOX ——— */
+    .author-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      margin-top: 4rem;
+    }
+    .author-box-avatar {
+      width: 60px; height: 60px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--blue), #60a5fa);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .author-box-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem;
+    }
+    .author-box-role { color: #60a5fa; font-size: 0.78rem; margin-bottom: 0.6rem; }
+    .author-box p { color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
+
+    /* ——— MORE SECTION ——— */
+    .more-section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 3rem 6rem;
+    }
+
+    .more-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); margin-bottom: 1.5rem;
+    }
+
+    .more-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .more-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.3s, transform 0.3s;
+      display: block;
+    }
+    .more-card:hover { border-color: rgba(30,109,255,0.4); transform: translateY(-4px); }
+
+    .more-thumb {
+      height: 120px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .more-thumb::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .more-thumb span { position: relative; z-index: 1; }
+    .tb-build { background: linear-gradient(135deg, rgba(172,46,68,0.3), rgba(7,9,15,0.8)); }
+    .tb-code  { background: linear-gradient(135deg, rgba(74,222,128,0.2), rgba(7,9,15,0.8)); }
+    .tb-strat { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(7,9,15,0.8)); }
+
+    .more-body { padding: 1.1rem; }
+    .more-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
+    .more-body h3 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; line-height: 1.3; color: var(--text); }
+
+    /* ——— FOOTER ——— */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      color: var(--muted); font-size: 0.82rem;
+    }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--muted); text-decoration: none; font-size: 0.85rem;
+      transition: color 0.2s;
+      margin-bottom: 2rem;
+    }
+    .back-btn:hover { color: var(--text); }
+
+    /* ——— LIVE BADGE ——— */
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(74,222,128,0.12);
+      border: 1px solid rgba(74,222,128,0.3);
+      border-radius: 6px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.72rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      animation: blink 1.2s ease-in-out infinite;
+    }
+
+    /* ——— ANIMATIONS ——— */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50%       { transform: translateY(-18px) rotate(3deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50%       { opacity: 0.9; transform: scale(1.08); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ——— RESPONSIVE ——— */
+    @media (max-width: 900px) {
+      .article-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .toc-sidebar { display: none; }
+      .more-grid { grid-template-columns: 1fr 1fr; }
+      .compare-card { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .article-hero { padding: 8rem 1.5rem 4rem; min-height: auto; }
+      .hero-icon-wrap { display: none; }
+      .article-layout, .more-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .more-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .vis-divider { display: none; }
+      .score-table { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">VexGrind</a>
+  <ul class="nav-links">
+    <li><a href="guides.html">Guides</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="community.html">Community</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="account.html">Account</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-ghost">Sign in</button>
+    <button class="btn-primary">Join the team →</button>
+  </div>
+</nav>
+
+<button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
+  </svg>
+</button>
+
+<!-- HERO -->
+<section class="article-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-icon-wrap">🎮</div>
+
+  <div class="hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="blog.html">Blog</a>
+      <span>/</span>
+      <span style="color:var(--text)">VEX Override 2026–27</span>
+    </div>
+    <div class="live-badge"><span class="live-dot"></span> Brand New Season</div>
+    <div class="article-tag">🎮 Game Reveal</div>
+    <h1>VEX Override 2026–27: <em>First Look</em> at the New Game</h1>
+    <div class="article-byline">
+      <div class="byline-avatar">AL</div>
+      <div>
+        <div class="byline-name">Aryan & Lakshman</div>
+        <div class="byline-meta">Lakshman.R & Aryan.S · VexGrind · Apr 25, 2026</div>
+      </div>
+      <div class="byline-divider"></div>
+      <div class="byline-stat">
+        <div class="byline-stat-val">6 min</div>
+        <div class="byline-stat-label">read</div>
+      </div>
+      <div class="byline-divider"></div>
+      <div class="byline-stat">
+        <div class="byline-stat-val">2026–27</div>
+        <div class="byline-stat-label">season</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BODY -->
+<div class="article-layout">
+
+  <aside class="toc-sidebar">
+    <div class="toc-label">In this article</div>
+    <ul class="toc-list">
+      <li class="toc-item"><a class="toc-link" href="#intro">Introduction</a></li>
+      <li class="toc-item"><a class="toc-link" href="#reveal">The Reveal</a></li>
+      <li class="toc-item"><a class="toc-link" href="#format">Match Format</a></li>
+      <li class="toc-item"><a class="toc-link" href="#scoring">How Scoring Works</a></li>
+      <li class="toc-item"><a class="toc-link" href="#history">Season History</a></li>
+      <li class="toc-item"><a class="toc-link" href="#whatsnext">What's Next</a></li>
+    </ul>
+
+    <div class="toc-divider"></div>
+
+    <div class="share-label">Share this post</div>
+    <div class="share-btns">
+      <button class="share-btn">🔗 Copy link</button>
+      <button class="share-btn">𝕏 Post on X</button>
+      <button class="share-btn">💬 Share to Discord</button>
+    </div>
+
+    <div class="reading-box">
+      <div class="reading-box-label">Your progress</div>
+      <div class="reading-progress-track">
+        <div class="reading-progress-fill" id="sidebar-progress"></div>
+      </div>
+      <div class="reading-pct" id="sidebar-pct">0%</div>
+    </div>
+  </aside>
+
+  <article class="article-body" id="article-body">
+
+    <a href="blog.html" class="back-btn">← Back to Blog</a>
+
+    <p class="article-lead">
+      VEX just dropped the 2026–27 game name at Worlds in St. Louis — and it's called <strong>Override</strong>. The official game reveal video landed on April 24th, and the full game manual goes live April 27th. Here's everything we know so far, plus a breakdown of VEX V5 competition format to get you ready for next season.
+    </p>
+
+    <!-- INTRO -->
+    <div class="article-section" id="intro">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">01</span> Introduction</h2>
+      <p>
+        Every April at the VEX Robotics World Championship, the community holds its breath for the biggest moment of the weekend: the next season's game reveal. This year, at the 2026 Worlds held in St. Louis, Missouri, VEX announced the 2026–27 V5 Robotics Competition game — <strong>Override</strong>.
+      </p>
+      <p>
+        The official reveal video dropped on April 24th, immediately after the finals and closing ceremonies. The full game manual and documentation are scheduled for release on Monday, April 27th. So right now, we're in that electric 72-hour window where the community is buzzing, theories are flying, and everyone is watching the reveal on loop trying to pick out every detail.
+      </p>
+
+      <div class="info-box">
+        <div class="info-box-head">📅 Key Dates</div>
+        <p>Game reveal video: April 24, 2026 (post-finals at VEX Worlds St. Louis) · Full game manual release: April 27, 2026 · Pre-orders for Override game kits are already live on VEXrobotics.com.</p>
+      </div>
+    </div>
+
+    <!-- THE REVEAL -->
+    <div class="article-section" id="reveal">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">02</span> The Reveal</h2>
+      <p>
+        VEX announced the game name <strong>Override</strong> for the 2026–27 V5 Robotics Competition season. The reveal video — available on the VEX Robotics YouTube channel — was streamed live on VEX TV immediately following the World Championship closing ceremonies. The game is legal for VEX V5, VEX U, and VEX AI competition formats, meaning it'll be used across all three competitive tiers next season.
+      </p>
+
+      <div class="pull-quote">
+        "Override. One word, one season, one challenge — and the whole community has less than 72 hours to figure it out before the manual drops."
+      </div>
+
+      <p>
+        VEX also confirmed that the full game manual and all official documentation will be published on April 27th. Until then, the community is parsing every frame of the reveal for clues about field layout, game objects, and scoring mechanisms. Pre-orders for the Override Full Game & Field Element Kit (product #276-9250) are already available on VEXrobotics.com — and notably, teams that still have Push Back (2025–26) field element plates can reuse them, since each field requires 9 of those plates and only 1 is included with the new kit.
+      </p>
+
+      <div class="compare-card">
+        <div class="comp-item">
+          <div class="comp-item-icon">📦</div>
+          <div class="comp-item-title">Game Kit Pre-Order</div>
+          <p>Available now on VEXrobotics.com. Kits will ship after VEX Worlds wraps. Field element plates from Push Back (2025–26) are reusable.</p>
+        </div>
+        <div class="comp-item">
+          <div class="comp-item-icon">📋</div>
+          <div class="comp-item-title">Manual Drops Apr 27</div>
+          <p>Full game rules, field layout, scoring details and robot specs release Monday, April 27th — bookmark the official VEX Forum for instant updates.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATCH FORMAT -->
+    <div class="article-section" id="format">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">03</span> Standard VEX V5 Match Format</h2>
+      <p>
+        While we're waiting on Override's specific rules, the core VEX V5 competition structure stays consistent season to season. Here's the match format every team needs to understand going into 2026–27:
+      </p>
+
+      <div class="visual-card">
+        <div class="visual-inner vis-blue">
+          <div class="vis-item">
+            <div class="vis-icon">🤖</div>
+            <div class="vis-title">2 Alliances</div>
+            <div class="vis-desc">Red vs Blue — 2 teams per alliance, 4 robots on the field</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">⏱️</div>
+            <div class="vis-title">2-Part Match</div>
+            <div class="vis-desc">15-sec Autonomous Period + 1:45 Driver Controlled Period</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">🏆</div>
+            <div class="vis-title">12' × 12' Field</div>
+            <div class="vis-desc">The standard V5RC playing field, used for all head-to-head matches</div>
+          </div>
+        </div>
+        <div class="visual-caption">Standard VEX V5 competition structure — consistent across seasons, reliable for planning your build strategy early.</div>
+      </div>
+
+      <h3>Autonomous Period</h3>
+      <p>
+        The first 15 seconds of every match are fully autonomous — robots run pre-programmed routines with no driver input. This phase is critically important: the alliance that scores more points during autonomous receives a bonus added to their final score. Each alliance can also separately earn an Autonomous Win Point (AWP) by completing a set of assigned tasks before the buzzer. Both alliances can earn the AWP regardless of who wins the autonomous bonus.
+      </p>
+
+      <h3>Driver Controlled Period</h3>
+      <p>
+        After autonomous, drivers take the wheel for 1 minute and 45 seconds of head-to-head gameplay. This is where strategy, driver skill, and robot reliability become the deciding factors. Teams also compete in Robot Skills matches throughout the season — solo runs where one robot tries to score as many points as possible, combining a Driving Skills score and an Autonomous Coding Skills score.
+      </p>
+
+      <ul class="styled-list">
+        <li><span class="li-label">Qualification Matches →</span><span>Teams compete in multiple rounds to build Win Points (WP), Autonomous Win Points (AWP), and Strength of Schedule rankings.</span></li>
+        <li><span class="li-label">Alliance Selection →</span><span>Top-ranked teams pick their alliance partners for elimination rounds — one of the most strategic moments of any tournament.</span></li>
+        <li><span class="li-label">Elimination Rounds →</span><span>Best-of-3 matches between alliances, culminating in the finals. One alliance takes home the trophy.</span></li>
+        <li><span class="li-label">Robot Skills Challenge →</span><span>Separate scoring ladder running all season. High skills scores can earn World Championship invitations independent of match results.</span></li>
+      </ul>
+    </div>
+
+    <!-- SCORING -->
+    <div class="article-section" id="scoring">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">04</span> How VEX V5 Scoring Works (Every Season)</h2>
+      <p>
+        While Override's specific scoring hasn't been detailed yet (manual drops April 27th), VEX V5 games consistently use a set of scoring categories that teams should already be thinking about. Looking at past seasons gives us a strong foundation for anticipating how Override will reward certain robot capabilities.
+      </p>
+
+      <table class="score-table">
+        <thead>
+          <tr>
+            <th>Scoring Category</th>
+            <th>What It Means</th>
+            <th>Points (typical)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Game Object in Goal</td>
+            <td>Scoring the season's primary game object into the designated goal or zone</td>
+            <td class="pts">Varies by season</td>
+          </tr>
+          <tr>
+            <td>Zone / Area Control</td>
+            <td>Controlling designated regions of the field at the end of the match</td>
+            <td class="pts">Varies</td>
+          </tr>
+          <tr>
+            <td>Autonomous Bonus</td>
+            <td>Awarded to the alliance with more points at end of auto period</td>
+            <td class="pts">6–10 pts</td>
+          </tr>
+          <tr>
+            <td>Autonomous Win Point</td>
+            <td>Separate bonus win point for completing specific auto tasks</td>
+            <td class="pts">1 WP</td>
+          </tr>
+          <tr>
+            <td>Parking / Climbing</td>
+            <td>Robots in a designated zone or elevated at end of match</td>
+            <td class="pts">Varies</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="visual-card">
+        <div class="visual-inner vis-gold">
+          <div class="vis-item">
+            <div class="vis-icon">🎯</div>
+            <div class="vis-title">Score Game Objects</div>
+            <div class="vis-desc">The core objective every season — get the game pieces where they need to go</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">🧠</div>
+            <div class="vis-title">Win Autonomous</div>
+            <div class="vis-desc">Reliable autonomous routines swing matches before drivers even touch the controller</div>
+          </div>
+          <div class="vis-divider"></div>
+          <div class="vis-item">
+            <div class="vis-icon">📍</div>
+            <div class="vis-title">End-Game Bonus</div>
+            <div class="vis-desc">Parking, climbing, or zone control at the buzzer can flip the final score</div>
+          </div>
+        </div>
+        <div class="visual-caption">Three pillars of VEX V5 match scoring — expect Override to build on all three in some form.</div>
+      </div>
+
+      <h3>What the Name "Override" Hints At</h3>
+      <p>
+        VEX game names have historically been descriptive clues to their mechanics — Over Under had robots going under barriers and over them, High Stakes involved staking rings at height, Push Back featured robots literally pushing blocks back. The name <em>Override</em> suggests themes of overriding an opponent's control, flipping scoring states, or some mechanic where robots can reverse or negate what the other alliance has scored. It could point to a "capture the flag" style control element, or a mechanic where scoring positions can be taken over by either side.
+      </p>
+
+      <div class="info-box">
+        <div class="info-box-head">🔭 Community Theories</div>
+        <p>The name "Override" has sparked enormous speculation — switches that can be flipped, zones that change ownership, game objects that can be "overridden" by opponents. The reveal video is being combed for every visual clue. We'll have a full breakdown once the manual drops Monday.</p>
+      </div>
+    </div>
+
+    <!-- SEASON HISTORY -->
+    <div class="article-section" id="history">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">05</span> VEX V5 Season History</h2>
+      <p>
+        Override joins a long line of memorable VEX V5 seasons. Each game has introduced different mechanics, field elements, and scoring systems — meaning robot designs that dominated one year rarely survive unchanged into the next. Here's how past seasons set the stage:
+      </p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot">🏗️</div>
+          <div class="tl-body">
+            <div class="tl-date">2023–24</div>
+            <div class="tl-title">Over Under</div>
+            <div class="tl-desc">Triballs scored in goals, teams competed over and under a central barrier. Elevation bars for end-game climbing. 8-point autonomous bonus.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">🎯</div>
+          <div class="tl-body">
+            <div class="tl-date">2024–25</div>
+            <div class="tl-title">High Stakes</div>
+            <div class="tl-desc">Rings scored on stakes (mobile goals + wall stakes), positive and negative corners, a central Ladder for climbing. 6-point autonomous bonus. Introduced complex positional strategy.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">📦</div>
+          <div class="tl-body">
+            <div class="tl-date">2025–26</div>
+            <div class="tl-title">Push Back</div>
+            <div class="tl-desc">88 Blocks on the field, 4 Goals (2 Long, 2 Center), blocks worth 3 points each. Teams scored blocks in goals and controlled zones. Park zones for end-game. 10-point autonomous bonus.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">🎮</div>
+          <div class="tl-body">
+            <div class="tl-date">2026–27</div>
+            <div class="tl-title">Override ← You Are Here</div>
+            <div class="tl-desc">Revealed April 24th at VEX Worlds St. Louis. Full manual drops April 27th. The community is already building hype — and robots.</div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        One pattern stands out across recent seasons: each game has rewarded teams that invest early in both autonomous programming <em>and</em> driver practice, not just one or the other. Override will almost certainly follow suit.
+      </p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div class="article-section" id="whatsnext">
+      <span class="section-anchor"></span>
+      <h2><span class="section-num">06</span> What's Next for Your Team</h2>
+      <p>
+        The game manual lands on April 27th — that's when the real work begins. Here's how the VexGrind team suggests spending the next few days:
+      </p>
+
+      <ul class="styled-list">
+        <li><span class="li-label">Watch the reveal →</span><span>The official Override reveal video is live now on the VEX Robotics YouTube channel. Watch it multiple times. Pause on field shots. Take notes on every visible game element.</span></li>
+        <li><span class="li-label">Read the manual on April 27th →</span><span>Don't rely on community summaries alone — read the actual manual. Rule nuances in VEX can make or break your season strategy.</span></li>
+        <li><span class="li-label">Identify the meta-scoring element →</span><span>Every season has one high-value scoring action that becomes the dominant strategy. Find it early, build for it first.</span></li>
+        <li><span class="li-label">Plan your autonomous routine →</span><span>Autonomous wins tournaments. Start designing it the moment you understand the AWP requirements, even before you have field elements.</span></li>
+        <li><span class="li-label">Pre-order the kit →</span><span>The Override game kit (276-9250) is already available for pre-order at VEXrobotics.com. Early orders ship as soon as Worlds wraps. Don't get caught waiting.</span></li>
+      </ul>
+
+      <div class="takeaway">
+        <div class="takeaway-head">⚡ Key Takeaway</div>
+        <p>
+          Override is here, and the off-season clock is ticking. The teams who win next season won't necessarily be the ones with the cleverest robot in October — they'll be the ones who studied the manual hardest in April, identified the dominant strategy before anyone else, and built consistent autonomous routines from day one. The work starts now.
+        </p>
+      </div>
+    </div>
+
+    <div class="art-divider"><span>✦</span></div>
+
+    <div class="author-box reveal">
+      <div class="author-box-avatar">AL</div>
+      <div>
+        <div class="author-box-name">Aryan & Lakshman</div>
+        <div class="author-box-role">VEX Pitwall · VexGrind</div>
+        <p>The VEX pitwall team covering news, strategy, and the science behind the robots we build. We'll have a full Override breakdown up the moment the manual drops April 27th.</p>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- MORE FROM THE BLOG -->
+<div class="more-section">
+  <div class="more-label reveal">More from the blog</div>
+  <div class="more-grid">
+    <a href="#" class="more-card reveal">
+      <div class="more-thumb tb-build"><span>🤖</span></div>
+      <div class="more-body">
+        <div class="more-tag">Strategy</div>
+        <h3>Robot Types: Conventional & Unconventional</h3>
+      </div>
+    </a>
+    <a href="#" class="more-card reveal">
+      <div class="more-thumb tb-code"><span>💻</span></div>
+      <div class="more-body">
+        <div class="more-tag">Code</div>
+        <h3>PROS 4 vs VEXcode: Which Should Your Team Use in 2026?</h3>
+      </div>
+    </a>
+    <a href="#" class="more-card reveal">
+      <div class="more-thumb tb-strat"><span>🎯</span></div>
+      <div class="more-body">
+        <div class="more-tag">Strategy</div>
+        <h3>Alliance Selection Psychology: How to Get Picked Every Time</h3>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="nav-logo" style="font-size:1.1rem;">VexGrind</a>
+  <p>© 2026 VexGrind. All rights reserved.</p>
+  <div style="display:flex; gap:1.5rem;">
+    <a href="#" style="color:var(--muted);text-decoration:none;">Privacy</a>
+    <a href="#" style="color:var(--muted);text-decoration:none;">Terms</a>
+    <a href="#" style="color:var(--muted);text-decoration:none;">Contact</a>
+  </div>
+</footer>
+
+<script>
+  function updateProgress() {
+    const body = document.getElementById('article-body');
+    const bar  = document.getElementById('progress-bar');
+    const sideFill = document.getElementById('sidebar-progress');
+    const sidePct  = document.getElementById('sidebar-pct');
+    const rect   = body.getBoundingClientRect();
+    const total  = body.offsetHeight - window.innerHeight;
+    const scrolled = Math.max(0, -rect.top);
+    const pct    = Math.min(100, Math.round((scrolled / total) * 100));
+    bar.style.width = pct + '%';
+    if (sideFill) sideFill.style.width = pct + '%';
+    if (sidePct)  sidePct.textContent  = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  const sections = document.querySelectorAll('.article-section');
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => tocObserver.observe(s));
+
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => revealObs.observe(el));
+
+  document.querySelectorAll('.share-btn').forEach(btn => {
+    if (btn.textContent.includes('Copy')) {
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).catch(() => {});
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => btn.textContent = '🔗 Copy link', 2000);
+      });
+    }
+  });
+
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  if (fullscreenBtn) {
+    const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    const toggleFullscreen = async () => {
+      if (isFullscreen()) {
+        const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+        if (exitFn) await exitFn.call(document);
+      } else {
+        const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
+        if (requestFn) await requestFn.call(document.documentElement);
+      }
+    };
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+  }
+</script>
+
+</body>
+</html>
