@@ -446,13 +446,13 @@
     <p>🍪 We use cookies to improve your experience. By continuing to use VexGrind, you agree to our use of cookies.</p>
     <button onclick="acceptCookies()">Accept</button>
   </div>
-
   <script>
-    // Sample Blog Posts Data
+    // Sample Blog Posts Data - Now with slugs for proper linking
     const blogPosts = [
-      {
+      { 
         id: 1,
         category: "community",
+        slug: "vex-name-reveal-2026-2027",           // ← Added
         title: "VEX NAME REVEAL!!",
         emoji: "🤝",
         excerpt: "The official VEX Robotics game names for the 2026-2027 season were revealed in a retro-style announcement.",
@@ -460,9 +460,10 @@
         date: "Mar 4",
         readTime: "8 min"
       },
-      {
+      { 
         id: 2,
         category: "build",
+        slug: "experimenting-with-obstacle-courses", // ← Added
         title: "Experimenting with Obstacle Courses",
         emoji: "🎮",
         excerpt: "We built an obstacle course using household objects to test our driving skills for future challenges.",
@@ -470,9 +471,10 @@
         date: "Apr 2",
         readTime: "5 min"
       },
-      {
+      { 
         id: 3,
         category: "code",
+        slug: "conventional-and-unconventional-robots", // ← Added
         title: "Conventional and Unconventional Robots",
         emoji: "🧠",
         excerpt: "Exploring soft robots and other unconventional designs that challenge traditional robotics stereotypes.",
@@ -480,9 +482,10 @@
         date: "Mar 28",
         readTime: "7 min"
       },
-      {
+      { 
         id: 4,
         category: "strategy",
+        slug: "alliance-selection-psychology",       // ← Added
         title: "Alliance Selection Psychology: How to Get Picked Every Time",
         emoji: "🎯",
         excerpt: "Rankings don't always predict picks. Here's what top teams actually look for during alliance selection.",
@@ -490,9 +493,10 @@
         date: "Mar 22",
         readTime: "6 min"
       },
-      {
+      { 
         id: 5,
         category: "notebook",
+        slug: "engineering-notebook-template-35-40", // ← Added
         title: "We Scored 35/40 on Our Engineering Notebook. Here's Our Template",
         emoji: "📋",
         excerpt: "The exact format, section ordering, and design decision logs that helped us nearly ace our notebook.",
@@ -500,9 +504,10 @@
         date: "Mar 17",
         readTime: "10 min"
       },
-      {
+      { 
         id: 6,
         category: "autonomous",
+        slug: "odometry-in-48-hours",                // ← Added
         title: "Odometry in 48 Hours: A Beginner's Survival Guide",
         emoji: "🧠",
         excerpt: "How we implemented working odometry with just 2 days until our qualifier — full code and diagrams included.",
@@ -515,10 +520,10 @@
     function renderPosts(filteredPosts) {
       const grid = document.getElementById('postsGrid');
       grid.innerHTML = '';
-
+      
       filteredPosts.forEach(post => {
         const cardHTML = `
-          <a href="#" class="post-card" data-category="${post.category}">
+          <a href="/blog/${post.slug}" class="post-card" data-category="${post.category}">
             <div class="post-thumb">
               <span>${post.emoji}</span>
             </div>
@@ -555,7 +560,6 @@
           if (category !== 'all') {
             filtered = blogPosts.filter(p => p.category === category);
           }
-
           renderPosts(filtered);
         });
       });
