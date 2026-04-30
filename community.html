@@ -285,6 +285,7 @@
     <li><a href="community.html" class="active">Community</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="account.html">Account</a></li>
+    <li><a href="messages.html">Messages</a></li>
   </ul>
   <div class="nav-actions">
     <a href="signup.html" class="btn-ghost">Sign in</a>
@@ -306,6 +307,7 @@
   <a href="community.html">Community</a>
   <a href="about.html">About</a>
   <a href="account.html">Account</a>
+  <a href="messages.html">Messages</a>
   <div class="mobile-actions">
     <a href="signup.html" class="btn-ghost" style="flex:1;justify-content:center;">Sign in</a>
     <a href="signup.html" class="btn-primary" style="flex:1;justify-content:center;">Join the Team</a>
@@ -419,6 +421,22 @@
 <div class="cookie-banner" id="cookieBanner">
   <p>🍪 We use cookies to improve your experience. By continuing to use VexGrind, you agree to our use of cookies.</p>
   <button onclick="acceptCookies()">Accept</button>
+</div>
+
+<!-- SHARE TO CHAT MODAL -->
+<div class="modal-overlay hidden" id="sharePostModal">
+  <div class="modal">
+    <h2>Share to Chat</h2>
+    <p>Select a chatroom to share this post to:</p>
+    <select class="modal-input" id="shareRoomSelect" style="cursor:pointer;">
+      <option value="">Select a room...</option>
+    </select>
+    <input type="hidden" id="sharePostId"/>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="document.getElementById('sharePostModal').classList.add('hidden')">Cancel</button>
+      <button class="modal-confirm" onclick="confirmShareToChat()">Share</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -813,8 +831,52 @@ document.getElementById('usernameModal').addEventListener('click', e=>{ if(e.tar
 
 // ── SHARE ──
 function sharePost(id) {
-  navigator.clipboard.writeText(window.location.href+'#post-'+id).catch(()=>{});
-  showToast('🔗 Link copied!');
+  const chatrooms = JSON.parse(localStorage.getItem('vg_chatrooms') || '[]');
+  if (chatrooms.length === 0) {
+    // No chatrooms, copy link instead
+    navigator.clipboard.writeText(window.location.href+'#post-'+id).catch(()=>{});
+    showToast('🔗 Link copied! Create a chatroom in Messages to share posts there.');
+    return;
+  }
+  
+  // Show chatroom selection
+  const roomSelect = document.getElementById('shareRoomSelect');
+  roomSelect.innerHTML = chatrooms.map(r => `<option value="${r.id}">${escHtml(r.name)}</option>`).join('');
+  document.getElementById('sharePostId').value = id;
+  document.getElementById('sharePostModal').classList.remove('hidden');
+}
+
+function confirmShareToChat() {
+  const postId = document.getElementById('sharePostId').value;
+  const roomId = document.getElementById('shareRoomSelect').value;
+  if (!postId || !roomId) return;
+  
+  const posts = JSON.parse(localStorage.getItem('vg_posts') || '[]');
+  const post = posts.find(p => p.id === postId);
+  if (!post) return;
+  
+  const messages = JSON.parse(localStorage.getItem('vg_messages_' + roomId) || '[]');
+  const username = localStorage.getItem('vg_username') || 'Anonymous';
+  messages.push({
+    id: 'msg_' + Date.now(),
+    author: username,
+    text: 'Check out this post!',
+    time: Date.now(),
+    likes: [],
+    dislikes: [],
+    likedBy: [],
+    dislikedBy: [],
+    sharedPost: {
+      id: post.id,
+      title: post.title,
+      author: post.author,
+      tag: post.tag
+    }
+  });
+  
+  localStorage.setItem('vg_messages_' + roomId, JSON.stringify(messages));
+  document.getElementById('sharePostModal').classList.add('hidden');
+  showToast('📤 Post shared to chat!');
 }
 
 // ── BOOKMARKS ──
