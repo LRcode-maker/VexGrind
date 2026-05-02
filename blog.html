@@ -511,7 +511,7 @@
         slug: "blog_infinitebumpersensorloop.html",                // ← Added
         title: "Infinite Bumper Sensor Loop in VEXcode V5",
         emoji: "🧠",
-        excerpt: "A deep dive into how we implemented an infinite loop for the bumper sensor in VEXcode V5, allowing our robot to continuously check for collisions without blocking other processes.",
+        excerpt: "",
         author: "NP & AS",
         date: "Mar 10",
         readTime: "15 min"
@@ -524,7 +524,7 @@
       
       filteredPosts.forEach(post => {
         const cardHTML = `
-          <a href="/blog/${post.slug}" class="post-card" data-category="${post.category}">
+          <a href="${post.slug}" class="post-card" data-category="${post.category}">
             <div class="post-thumb">
               <span>${post.emoji}</span>
             </div>
