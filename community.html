@@ -17,39 +17,14 @@
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
-    /* NAV */
+    /* ── NAV ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(7,9,15,0.75); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); }
-
-    .fullscreen-btn {
-      position: fixed;
-      top: 1rem;
-      right: 3rem;
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      z-index: 110;
-    }
-    .fullscreen-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
-    .fullscreen-btn svg { width: 18px; height: 18px; }
-
-    @media (max-width: 768px) {
-      .fullscreen-btn { right: 5rem; }
-    }
-
     .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; background: linear-gradient(135deg, #fff 40%, var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
     .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
-    .btn-ghost { background: none; border: 1px solid var(--border); color: var(--muted); font-family: inherit; font-size: 0.88rem; font-weight: 500; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; text-decoration: none; transition: color 0.2s, border-color 0.2s; display: inline-flex; align-items: center; }
+    .btn-ghost { background: none; border: 1px solid var(--border); color: var(--muted); font-family: inherit; font-size: 0.88rem; font-weight: 500; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; }
     .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
     .btn-primary { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1.2rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; transition: background 0.2s, transform 0.15s; }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
@@ -58,14 +33,13 @@
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 99; background: rgba(7,9,15,0.97); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; flex-direction: column; gap: 1.25rem; animation: slideDown 0.25s ease; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 99; background: rgba(7,9,15,0.97); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; flex-direction: column; gap: 1.25rem; }
     .mobile-menu.open { display: flex; }
     .mobile-menu a { color: var(--text); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
-    .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu .mobile-actions { display: flex; gap: 0.75rem; padding-top: 0.5rem; }
     @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* PAGE HERO */
+    /* ── PAGE HERO ── */
     .page-hero { padding: 8rem 3rem 3rem; position: relative; overflow: hidden; }
     .page-hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 50% 60% at 80% 40%, rgba(172,46,68,0.1) 0%, transparent 65%), radial-gradient(ellipse 40% 50% at 10% 70%, rgba(30,109,255,0.06) 0%, transparent 60%); }
     .page-hero-bg::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px; }
@@ -77,194 +51,180 @@
     .page-hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent2), #ff8c60); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .page-hero p { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 520px; }
 
-    /* USERNAME BANNER */
-    .user-banner { max-width: 1200px; margin: 0 auto 0; padding: 1rem 3rem 0; }
+    /* ── USER BANNER ── */
+    .user-banner { max-width: 1200px; margin: 0 auto; padding: 1rem 3rem 0; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
     .user-pill { display: inline-flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 0.45rem 1rem 0.45rem 0.6rem; font-size: 0.82rem; }
     .user-avatar { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
     .user-name { font-weight: 500; color: var(--text); }
     .user-change { color: var(--accent2); font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-left: 4px; }
-
-    /* USER STATS */
-    .user-stats { display: inline-flex; gap: 0.75rem; margin-left: 1rem; align-items: center; }
+    .user-stats { display: inline-flex; gap: 0.6rem; align-items: center; }
     .stat-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 0.35rem 0.75rem; font-size: 0.75rem; color: var(--muted); }
-    .stat-badge.karma { border-color: rgba(172,46,68,0.3); }
-    .stat-badge.karma .stat-icon { color: var(--accent2); }
-    .stat-badge.posts .stat-icon { color: var(--blue); }
-    .stat-badge span:not(.stat-icon) { font-weight: 600; color: var(--text); }
+    .stat-badge .stat-val { font-weight: 700; color: var(--text); }
 
-    /* LAYOUT */
-    .community-layout { max-width: 1200px; margin: 0 auto; padding: 2rem 3rem 6rem; display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
+    /* ── LAYOUT ── */
+    .community-layout { max-width: 1200px; margin: 0 auto; padding: 2rem 3rem 6rem; display: grid; grid-template-columns: 1fr 300px; gap: 2rem; }
 
-    /* POST COMPOSER */
-    .composer { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.5rem; }
-    .composer-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 0.75rem; }
-    .composer-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
-    .composer-body { flex: 1; }
-    .composer-title-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; margin-bottom: 0.6rem; transition: border-color 0.2s; resize: none; }
-    .composer-title-input:focus { border-color: rgba(172,46,68,0.5); }
-    .composer-title-input::placeholder { color: var(--muted); }
-    .composer-textarea { width: 100%; min-height: 90px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.88rem; line-height: 1.6; outline: none; resize: vertical; transition: border-color 0.2s; }
-    .composer-textarea:focus { border-color: rgba(172,46,68,0.5); }
-    .composer-textarea::placeholder { color: var(--muted); }
-    .composer-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem; }
-    .composer-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .tag-btn { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.75rem; color: var(--muted); cursor: pointer; transition: all 0.2s; font-family: inherit; }
-    .tag-btn:hover, .tag-btn.selected { background: rgba(172,46,68,0.15); border-color: rgba(172,46,68,0.4); color: var(--accent2); }
-    .post-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    /* ── COMPOSER ── */
+    .composer { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.5rem; transition: border-color 0.2s; }
+    .composer:focus-within { border-color: rgba(172,46,68,0.3); }
+    .composer-row { display: flex; gap: 12px; align-items: flex-start; }
+    .composer-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; flex-shrink: 0; }
+    .composer-body { flex: 1; display: flex; flex-direction: column; gap: 0.6rem; }
+    .c-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+    .c-input:focus { border-color: rgba(172,46,68,0.45); background: rgba(255,255,255,0.07); }
+    .c-input::placeholder { color: var(--muted); }
+    .c-textarea { width: 100%; min-height: 80px; resize: vertical; line-height: 1.6; font-size: 0.88rem; }
+    .composer-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+    .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tag-btn { background: none; border: 1px solid var(--border); border-radius: 100px; padding: 0.28rem 0.75rem; font-size: 0.74rem; color: var(--muted); cursor: pointer; font-family: inherit; transition: all 0.2s; white-space: nowrap; }
+    .tag-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .tag-btn.selected { background: rgba(172,46,68,0.15); border-color: var(--accent2); color: var(--accent2); }
+    .post-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.55rem 1.4rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
     .post-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .post-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .post-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
-    /* FILTER BAR */
-    .filter-bar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    /* ── FILTER BAR ── */
+    .filter-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
     .filter-chip { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.9rem; font-size: 0.8rem; color: var(--muted); cursor: pointer; transition: all 0.2s; font-family: inherit; }
     .filter-chip:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
     .filter-chip.active { background: rgba(172,46,68,0.15); border-color: rgba(172,46,68,0.4); color: var(--accent2); }
 
-    /* POST CARDS */
-    .posts-list { display: flex; flex-direction: column; gap: 1rem; }
+    /* ── POST LIST ── */
+    .posts-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-    .post-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.3s, transform 0.2s; animation: fadeIn 0.4s ease both; }
-    .post-card:hover { border-color: rgba(172,46,68,0.25); transform: translateY(-2px); }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    /* ── POST CARD ── */
+    .post-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.25s, transform 0.2s; animation: fadeIn 0.35s ease both; }
+    .post-card:hover { border-color: rgba(172,46,68,0.22); transform: translateY(-2px); }
+    .post-inner { display: flex; }
 
-    .post-inner { display: flex; gap: 0; }
-
-    /* VOTE COLUMN */
-    .vote-col { display: flex; flex-direction: column; align-items: center; padding: 1rem 0.75rem; gap: 4px; background: rgba(255,255,255,0.02); border-right: 1px solid var(--border); min-width: 52px; }
-    .vote-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; line-height: 1; padding: 4px; border-radius: 4px; transition: color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
-    .vote-btn:hover { background: rgba(255,255,255,0.06); }
+    /* VOTE COL */
+    .vote-col { display: flex; flex-direction: column; align-items: center; padding: 0.9rem 0.65rem; gap: 3px; background: rgba(0,0,0,0.15); border-right: 1px solid var(--border); min-width: 50px; }
+    .vote-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.95rem; padding: 5px 6px; border-radius: 4px; line-height: 1; transition: color 0.2s, background 0.2s; }
+    .vote-btn:hover { background: rgba(255,255,255,0.06); color: var(--text); }
     .vote-btn.upvoted { color: var(--accent2); }
     .vote-btn.downvoted { color: #60a5fa; }
-    .vote-count { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text); min-width: 24px; text-align: center; }
-    .vote-count.positive { color: var(--accent2); }
-    .vote-count.negative { color: #60a5fa; }
+    .vote-count { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text); text-align: center; min-width: 20px; }
+    .vote-count.pos { color: var(--accent2); }
+    .vote-count.neg { color: #60a5fa; }
 
     /* POST BODY */
-    .post-body { flex: 1; padding: 1rem 1.25rem; min-width: 0; }
-    .post-meta-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-    .post-author-avatar { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; }
-    .post-author { font-size: 0.78rem; font-weight: 600; color: var(--text); }
-    .post-author.anon { color: var(--muted); }
-    .post-time { font-size: 0.73rem; color: var(--muted); }
-    .post-flair { display: inline-block; font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .flair-strategy { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
-    .flair-build    { background: rgba(30,109,255,0.12); color: #60a5fa; border: 1px solid rgba(30,109,255,0.2); }
-    .flair-code     { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.18); }
-    .flair-discuss  { background: rgba(172,46,68,0.12); color: var(--accent2); border: 1px solid rgba(172,46,68,0.22); }
-    .flair-auton    { background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.18); }
-    .flair-news     { background: rgba(249,115,22,0.1); color: #f97316; border: 1px solid rgba(249,115,22,0.18); }
-    .post-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.4rem; cursor: pointer; }
-    .post-title:hover { color: var(--accent2); }
-    .post-preview { color: var(--muted); font-size: 0.82rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.75rem; }
-    .post-actions { display: flex; align-items: center; gap: 1rem; }
-    .action-btn { background: none; border: none; color: var(--muted); font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 0.3rem 0.5rem; border-radius: 6px; transition: color 0.2s, background 0.2s; font-family: inherit; }
-    .action-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-    .action-btn.bookmarked { color: var(--accent2); }
-    .action-btn svg { width: 14px; height: 14px; }
+    .post-body { flex: 1; padding: 0.9rem 1.1rem; min-width: 0; }
+    .post-meta-row { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.45rem; flex-wrap: wrap; }
+    .p-avatar { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; flex-shrink: 0; }
+    .p-author { font-size: 0.77rem; font-weight: 600; color: var(--text); }
+    .p-author.anon { color: var(--muted); }
+    .p-time { font-size: 0.72rem; color: var(--muted); }
+    .p-flair { font-size: 0.67rem; font-weight: 600; padding: 0.13rem 0.48rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .fl-discuss { background: rgba(172,46,68,0.12); color: var(--accent2); border: 1px solid rgba(172,46,68,0.2); }
+    .fl-build    { background: rgba(30,109,255,0.12); color: #60a5fa; border: 1px solid rgba(30,109,255,0.2); }
+    .fl-code     { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.18); }
+    .fl-strategy { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+    .fl-auton    { background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.18); }
+    .fl-news     { background: rgba(249,115,22,0.1); color: #f97316; border: 1px solid rgba(249,115,22,0.18); }
+    .p-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.35rem; cursor: pointer; transition: color 0.2s; }
+    .p-title:hover { color: var(--accent2); }
+    .p-preview { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 0.7rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .p-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .act-btn { background: none; border: none; color: var(--muted); font-size: 0.77rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; padding: 0.28rem 0.55rem; border-radius: 6px; transition: all 0.2s; font-family: inherit; }
+    .act-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .act-btn.saved { color: var(--accent2); }
+    .act-btn.danger:hover { color: var(--accent2); }
+    .act-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
 
-    /* EXPANDED POST (comments) */
-    .post-expanded { border-top: 1px solid var(--border); background: rgba(255,255,255,0.02); padding: 1.25rem; display: none; }
+    /* ── EXPANDED ── */
+    .post-expanded { border-top: 1px solid var(--border); background: rgba(0,0,0,0.12); padding: 1.1rem 1.25rem; display: none; }
     .post-expanded.open { display: block; }
-    .post-full-body { color: var(--text); font-size: 0.9rem; line-height: 1.75; margin-bottom: 1.25rem; white-space: pre-wrap; }
+    .full-body { color: var(--text); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.25rem; white-space: pre-wrap; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
 
     /* COMMENT COMPOSER */
-    .comment-composer { display: flex; gap: 10px; margin-bottom: 1.25rem; }
-    .comment-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
-    .comment-input-wrap { flex: 1; }
-    .comment-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.85rem; color: var(--text); font-family: inherit; font-size: 0.85rem; outline: none; resize: none; min-height: 70px; transition: border-color 0.2s; }
+    .comment-compose { display: flex; gap: 10px; margin-bottom: 1.1rem; }
+    .c-av { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .comment-compose-body { flex: 1; }
+    .comment-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.85rem; color: var(--text); font-family: inherit; font-size: 0.85rem; outline: none; resize: none; min-height: 65px; transition: border-color 0.2s; }
     .comment-input:focus { border-color: rgba(172,46,68,0.45); }
     .comment-input::placeholder { color: var(--muted); }
-    .comment-submit { margin-top: 0.5rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.45rem 1rem; border-radius: 7px; font-family: inherit; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; float: right; }
-    .comment-submit:hover { opacity: 0.9; }
+    .c-submit-row { display: flex; justify-content: flex-end; margin-top: 0.5rem; }
+    .c-submit { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.42rem 1rem; border-radius: 7px; font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+    .c-submit:hover { opacity: 0.9; }
 
     /* COMMENTS */
-    .comments-section { display: flex; flex-direction: column; gap: 1rem; clear: both; }
-    .comment { display: flex; gap: 10px; }
-    .comment-body { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1rem; }
-    .comment-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
-    .comment-author { font-size: 0.78rem; font-weight: 600; }
-    .comment-time { font-size: 0.72rem; color: var(--muted); }
-    .comment-text { color: var(--text2, #c8cde8); font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; }
-    .comment-vote-row { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
-    .c-vote-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.82rem; padding: 2px 5px; border-radius: 4px; transition: color 0.2s; font-family: inherit; display: flex; align-items: center; gap: 3px; }
-    .c-vote-btn:hover { color: var(--text); }
-    .c-vote-btn.upvoted { color: var(--accent2); }
-    .c-vote-btn.downvoted { color: #60a5fa; }
-    .c-vote-count { font-size: 0.78rem; font-weight: 600; min-width: 20px; text-align: center; }
-    .no-comments { color: var(--muted); font-size: 0.82rem; font-style: italic; text-align: center; padding: 1rem 0; }
+    .comments-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .comment-item { display: flex; gap: 9px; animation: fadeIn 0.3s ease both; }
+    .comment-body { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem 0.95rem; }
+    .comment-head { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.35rem; }
+    .c-author { font-size: 0.77rem; font-weight: 600; }
+    .c-time { font-size: 0.71rem; color: var(--muted); }
+    .c-text { color: #c8cde8; font-size: 0.84rem; line-height: 1.65; white-space: pre-wrap; }
+    .c-vote-row { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem; }
+    .cv-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.8rem; padding: 2px 5px; border-radius: 4px; transition: color 0.2s; font-family: inherit; }
+    .cv-btn:hover { color: var(--text); }
+    .cv-btn.upvoted { color: var(--accent2); }
+    .cv-btn.downvoted { color: #60a5fa; }
+    .cv-count { font-size: 0.77rem; font-weight: 600; min-width: 18px; text-align: center; }
+    .cv-del { margin-left: 0.35rem; color: var(--muted); font-size: 0.75rem; cursor: pointer; transition: color 0.2s; }
+    .cv-del:hover { color: var(--accent2); }
+    .no-comments { color: var(--muted); font-size: 0.82rem; font-style: italic; text-align: center; padding: 0.75rem 0; }
 
-    /* EMPTY STATE */
-    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
-    .empty-state-icon { font-size: 3.5rem; margin-bottom: 1rem; }
-    .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
-    .empty-state p { font-size: 0.88rem; line-height: 1.6; }
+    /* ── EMPTY STATE ── */
+    .empty-state { text-align: center; padding: 3.5rem 1rem; color: var(--muted); }
+    .empty-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+    .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .empty-state p { font-size: 0.85rem; line-height: 1.6; }
 
-    /* SIDEBAR */
-    .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
-    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .sidebar-card-header { background: linear-gradient(135deg, var(--accent), var(--accent2)); padding: 0.85rem 1.1rem; font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
-    .sidebar-card-body { padding: 1.1rem; }
-    .sidebar-card-body p { color: var(--muted); font-size: 0.82rem; line-height: 1.65; margin-bottom: 0.75rem; }
-    .sidebar-stat-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
-    .sidebar-stat-row:last-child { border-bottom: none; }
-    .sidebar-stat-label { color: var(--muted); }
-    .sidebar-stat-val { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent2); }
-    .rule-item { display: flex; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
-    .rule-item:last-child { border-bottom: none; }
-    .rule-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent2); flex-shrink: 0; width: 18px; }
-    .top-user { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
-    .top-user:last-child { border-bottom: none; }
-    .top-user-info { flex: 1; }
-    .top-user-name { font-size: 0.82rem; font-weight: 600; }
-    .top-user-posts { font-size: 0.73rem; color: var(--muted); }
-    .top-user-pts { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--green); }
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 1.1rem; }
+    .s-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .s-header { background: linear-gradient(135deg, var(--accent), var(--accent2)); padding: 0.75rem 1rem; font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .s-body { padding: 1rem; }
+    .s-body p { color: var(--muted); font-size: 0.82rem; line-height: 1.65; margin-bottom: 0.75rem; }
+    .s-stat { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid var(--border); font-size: 0.81rem; }
+    .s-stat:last-child { border-bottom: none; }
+    .s-stat-label { color: var(--muted); }
+    .s-stat-val { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent2); }
+    .rule-row { display: flex; gap: 0.55rem; padding: 0.45rem 0; border-bottom: 1px solid var(--border); font-size: 0.81rem; color: var(--muted); line-height: 1.5; }
+    .rule-row:last-child { border-bottom: none; }
+    .rule-n { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent2); flex-shrink: 0; width: 16px; }
+    .top-u { display: flex; align-items: center; gap: 0.7rem; padding: 0.45rem 0; border-bottom: 1px solid var(--border); }
+    .top-u:last-child { border-bottom: none; }
+    .top-u-av { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; flex-shrink: 0; }
+    .top-u-info { flex: 1; }
+    .top-u-name { font-size: 0.8rem; font-weight: 600; }
+    .top-u-sub { font-size: 0.71rem; color: var(--muted); }
+    .top-u-pts { font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--green); }
+    .hot-topic { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: opacity 0.2s; }
+    .hot-topic:last-child { border-bottom: none; }
+    .hot-topic:hover { opacity: 0.75; }
+    .hot-topic-num { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: rgba(172,46,68,0.35); flex-shrink: 0; width: 20px; }
+    .hot-topic-info p { font-size: 0.8rem; font-weight: 500; line-height: 1.4; margin-bottom: 2px; }
+    .hot-topic-info span { font-size: 0.71rem; color: var(--muted); }
 
-    /* USERNAME MODAL */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: flex; align-items: center; justify-content: center; animation: fadeOverlay 0.2s ease; }
+    /* ── USERNAME MODAL ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: flex; align-items: center; justify-content: center; }
     .modal-overlay.hidden { display: none; }
-    @keyframes fadeOverlay { from{opacity:0} to{opacity:1} }
-    .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; width: 360px; max-width: 90vw; animation: scaleIn 0.2s ease; }
+    .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; width: 360px; max-width: 92vw; animation: scaleIn 0.2s ease; }
     @keyframes scaleIn { from{opacity:0;transform:scale(0.93)} to{opacity:1;transform:scale(1)} }
     .modal h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .modal p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.25rem; }
+    .modal p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.1rem; }
     .modal-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 1rem; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; margin-bottom: 0.75rem; transition: border-color 0.2s; }
     .modal-input:focus { border-color: rgba(172,46,68,0.5); }
     .modal-input::placeholder { color: var(--muted); }
-    .modal-actions { display: flex; gap: 0.75rem; }
+    .modal-btns { display: flex; gap: 0.75rem; }
     .modal-cancel { flex: 1; background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 0.6rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
-    .modal-cancel:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
-    .modal-confirm { flex: 2; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.6rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
+    .modal-cancel:hover { color: var(--text); }
+    .modal-confirm { flex: 2; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 0.6rem; border-radius: 8px; font-family: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
     .modal-confirm:hover { opacity: 0.9; }
 
-    /* TOAST */
-    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1.25rem; font-size: 0.85rem; color: var(--text); z-index: 300; transform: translateY(20px); opacity: 0; transition: all 0.3s ease; pointer-events: none; display: flex; align-items: center; gap: 8px; }
+    /* ── TOAST ── */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem 1.2rem; font-size: 0.84rem; color: var(--text); z-index: 300; transform: translateY(20px); opacity: 0; transition: all 0.3s ease; pointer-events: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
 
-    /* ── BACK TO TOP ── */
-    .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 90; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-    .back-to-top.visible { opacity: 1; visibility: visible; }
-    .back-to-top:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
-
-    /* ── THEME TOGGLE ── */
-    .theme-toggle { position: fixed; top: 1rem; right: 8rem; width: 38px; height: 38px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; z-index: 110; }
-    .theme-toggle:hover { border-color: var(--accent); }
-    :root { --bg: #07090f; --bg2: #0d1220; }
-    :root.light { --bg: #f5f7fa; --bg2: #ffffff; --text: #1a1a2e; --muted: #64748b; --card: rgba(255,255,255,0.8); }
-    :root.light nav, :root.light .mobile-menu { background: rgba(255,255,255,0.9); }
-
-    /* ── COOKIE BANNER ── */
-    .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg2); border-top: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; z-index: 200; transform: translateY(100%); transition: transform 0.3s ease; }
-    .cookie-banner.show { transform: translateY(0); }
-    .cookie-banner p { font-size: 0.85rem; color: var(--muted); }
-    .cookie-banner button { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-family: inherit; }
-    .cookie-banner button:hover { background: var(--accent2); }
-
-    /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) { .community-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .nav-actions { display: none; } .hamburger { display: flex; }
@@ -276,16 +236,14 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">VexGrind</a>
   <ul class="nav-links">
-    <li><a href="guides.html" class="active">Guides</a></li>
+    <li><a href="guides.html">Guides</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="community.html" class="active">Community</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="account.html">Account</a></li>
-    <li><a href="messages.html">Messages</a></li>
   </ul>
   <div class="nav-actions">
     <a href="signup.html" class="btn-ghost">Sign in</a>
@@ -295,26 +253,19 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
-<button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
-  </svg>
-</button>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#">Guides</a>
+  <a href="guides.html">Guides</a>
   <a href="blog.html">Blog</a>
   <a href="community.html">Community</a>
   <a href="about.html">About</a>
   <a href="account.html">Account</a>
-  <a href="messages.html">Messages</a>
   <div class="mobile-actions">
     <a href="signup.html" class="btn-ghost" style="flex:1;justify-content:center;">Sign in</a>
     <a href="signup.html" class="btn-primary" style="flex:1;justify-content:center;">Join the Team</a>
   </div>
 </div>
 
-<!-- PAGE HERO -->
 <div class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-inner">
@@ -324,39 +275,37 @@
   </div>
 </div>
 
-<!-- USERNAME BANNER -->
 <div class="user-banner">
-  <div class="user-pill" id="userPill">
-    <div class="user-avatar" id="navAvatar" style="background: linear-gradient(135deg, #AC2E44, #1e6dff);">?</div>
+  <div class="user-pill">
+    <div class="user-avatar" id="navAvatar" style="background:linear-gradient(135deg,#AC2E44,#1e6dff);">?</div>
     <span class="user-name" id="navUsername">Anonymous</span>
-    <span class="user-change" onclick="openUsernameModal()">change</span>
+    <span class="user-change" onclick="openModal()">change</span>
   </div>
-  <div class="user-stats" id="userStats">
-    <span class="stat-badge karma"><span class="stat-icon">⚡</span><span id="karmaVal">0</span> karma</span>
-    <span class="stat-badge posts"><span class="stat-icon">📝</span><span id="postCountVal">0</span> posts</span>
+  <div class="user-stats">
+    <span class="stat-badge">⚡ <span class="stat-val" id="karmaVal">0</span> karma</span>
+    <span class="stat-badge">📝 <span class="stat-val" id="postCountVal">0</span> posts</span>
   </div>
 </div>
 
-<!-- MAIN LAYOUT -->
 <div class="community-layout">
-  <div class="main-col">
+  <div>
 
     <!-- COMPOSER -->
     <div class="composer reveal">
-      <div class="composer-top">
-        <div class="composer-avatar" id="composerAvatar" style="background: linear-gradient(135deg, #AC2E44, #1e6dff);">?</div>
+      <div class="composer-row">
+        <div class="composer-avatar" id="composerAvatar" style="background:linear-gradient(135deg,#AC2E44,#1e6dff);">?</div>
         <div class="composer-body">
-          <input class="composer-title-input" id="postTitle" type="text" placeholder="Post title — what's this about?" maxlength="120"/>
-          <textarea class="composer-textarea" id="postBody" placeholder="Share a build tip, ask a question, or start a discussion…" rows="3"></textarea>
+          <input class="c-input" id="postTitle" type="text" placeholder="Post title — what's this about?" maxlength="120"/>
+          <textarea class="c-input c-textarea" id="postBody" placeholder="Share a build tip, ask a question, or describe what you're struggling with…" rows="3"></textarea>
         </div>
       </div>
-      <div class="composer-footer">
-        <div class="composer-tags" id="composerTags">
+      <div class="composer-footer" style="margin-top:0.75rem;">
+        <div class="tag-row" id="tagRow">
           <button class="tag-btn" data-tag="discuss" onclick="selectTag(this)">💬 Discuss</button>
           <button class="tag-btn" data-tag="build" onclick="selectTag(this)">🔧 Build</button>
           <button class="tag-btn" data-tag="code" onclick="selectTag(this)">💻 Code</button>
           <button class="tag-btn" data-tag="strategy" onclick="selectTag(this)">🎯 Strategy</button>
-          <button class="tag-btn" data-tag="auton" onclick="selectTag(this)">🧠 Autonomous</button>
+          <button class="tag-btn" data-tag="auton" onclick="selectTag(this)">🧠 Auton</button>
           <button class="tag-btn" data-tag="news" onclick="selectTag(this)">🚨 News</button>
         </div>
         <button class="post-btn" id="postBtn" onclick="submitPost()" disabled>Post</button>
@@ -372,21 +321,58 @@
       <button class="filter-chip" data-filter="build" onclick="setFilter(this)">🔧 Build</button>
       <button class="filter-chip" data-filter="code" onclick="setFilter(this)">💻 Code</button>
       <button class="filter-chip" data-filter="strategy" onclick="setFilter(this)">🎯 Strategy</button>
+      <button class="filter-chip" data-filter="auton" onclick="setFilter(this)">🧠 Auton</button>
     </div>
 
-    <!-- POSTS -->
     <div class="posts-list" id="postsList"></div>
   </div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="sidebar-card">
-      <div class="sidebar-card-header">About the Community</div>
-      <div class="sidebar-card-body">
-        <p>The VexGrind community is for VEX V5 teams to share builds, code, strategy, and competition tips. Ask questions, get answers, and help fellow competitors improve.</p>
-        <div class="sidebar-stat-row"><span class="sidebar-stat-label">Members</span><span class="sidebar-stat-val" id="memberCount">2,418</span></div>
-        <div class="sidebar-stat-row"><span class="sidebar-stat-label">Posts today</span><span class="sidebar-stat-val" id="postsTodayCount">0</span></div>
-        <div class="sidebar-stat-row"><span class="sidebar-stat-label">Online now</span><span class="sidebar-stat-val">🟢 Live</span></div>
+    <div class="s-card">
+      <div class="s-header">About the Community</div>
+      <div class="s-body">
+        <p>The VexGrind community is the place for VEX V5 teams to share builds, code, strategy, and competition tips. Ask questions, get answers, and help fellow competitors improve.</p>
+        <div class="s-stat"><span class="s-stat-label">Members</span><span class="s-stat-val" id="memberCount">2,418</span></div>
+        <div class="s-stat"><span class="s-stat-label">Posts today</span><span class="s-stat-val" id="todayCount">0</span></div>
+        <div class="s-stat"><span class="s-stat-label">Online now</span><span class="s-stat-val">🟢 Live</span></div>
+      </div>
+    </div>
+
+    <div class="s-card">
+      <div class="s-header">🔥 Trending</div>
+      <div class="s-body" id="trendingList"></div>
+    </div>
+
+    <div class="s-card">
+      <div class="s-header">Top Contributors</div>
+      <div class="s-body" id="topContribs">
+        <div class="top-u">
+          <div class="top-u-av" style="background:linear-gradient(135deg,#AC2E44,#1e6dff)">NP</div>
+          <div class="top-u-info"><div class="top-u-name">Naitik_Pal</div><div class="top-u-sub">12 posts this season</div></div>
+          <div class="top-u-pts">+847</div>
+        </div>
+        <div class="top-u">
+          <div class="top-u-av" style="background:linear-gradient(135deg,#1e6dff,#0d8a6a)">SG</div>
+          <div class="top-u-info"><div class="top-u-name">SarveshG</div><div class="top-u-sub">9 posts this season</div></div>
+          <div class="top-u-pts">+612</div>
+        </div>
+        <div class="top-u">
+          <div class="top-u-av" style="background:linear-gradient(135deg,#7c3aed,#AC2E44)">LR</div>
+          <div class="top-u-info"><div class="top-u-name">Lakshman_R</div><div class="top-u-sub">7 posts this season</div></div>
+          <div class="top-u-pts">+491</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s-card">
+      <div class="s-header">Community Rules</div>
+      <div class="s-body">
+        <div class="rule-row"><span class="rule-n">1</span><span>Be respectful — we're all here to improve.</span></div>
+        <div class="rule-row"><span class="rule-n">2</span><span>Stay on topic — VEX V5, robotics, related STEM.</span></div>
+        <div class="rule-row"><span class="rule-n">3</span><span>No spam or self-promotion without context.</span></div>
+        <div class="rule-row"><span class="rule-n">4</span><span>Share sources when posting strategies or code.</span></div>
+        <div class="rule-row"><span class="rule-n">5</span><span>Help beginners — you were one once.</span></div>
       </div>
     </div>
   </aside>
@@ -396,47 +382,18 @@
 <div class="modal-overlay hidden" id="usernameModal">
   <div class="modal">
     <h2>Set your username</h2>
-    <p>This is how you'll appear on posts and comments. Leave blank to post as Anonymous.</p>
+    <p>This is how you'll appear on posts and comments. Leave it blank to post as Anonymous.</p>
     <input class="modal-input" id="usernameInput" type="text" placeholder="e.g. VEX_Team9999A" maxlength="30"/>
-    <div class="modal-actions">
-      <button class="modal-cancel" onclick="closeUsernameModal()">Cancel</button>
-      <button class="modal-confirm" onclick="saveUsername()">Save username</button>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-confirm" onclick="saveUsername()">Save</button>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast">
   <div class="toast-dot"></div>
   <span id="toastMsg">Done!</span>
-</div>
-
-<!-- BACK TO TOP -->
-<button class="back-to-top" id="backToTop" title="Back to top">↑</button>
-
-<!-- THEME TOGGLE -->
-<button class="theme-toggle" id="themeToggle" title="Toggle theme">◐</button>
-
-<!-- COOKIE BANNER -->
-<div class="cookie-banner" id="cookieBanner">
-  <p>🍪 We use cookies to improve your experience. By continuing to use VexGrind, you agree to our use of cookies.</p>
-  <button onclick="acceptCookies()">Accept</button>
-</div>
-
-<!-- SHARE TO CHAT MODAL -->
-<div class="modal-overlay hidden" id="sharePostModal">
-  <div class="modal">
-    <h2>Share to Chat</h2>
-    <p>Select a chatroom to share this post to:</p>
-    <select class="modal-input" id="shareRoomSelect" style="cursor:pointer;">
-      <option value="">Select a room...</option>
-    </select>
-    <input type="hidden" id="sharePostId"/>
-    <div class="modal-actions">
-      <button class="modal-cancel" onclick="document.getElementById('sharePostModal').classList.add('hidden')">Cancel</button>
-      <button class="modal-confirm" onclick="confirmShareToChat()">Share</button>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -444,16 +401,52 @@
 let username = localStorage.getItem('vg_username') || '';
 let selectedTag = '';
 let activeFilter = 'hot';
+let bookmarks = JSON.parse(localStorage.getItem('vg_bookmarks') || '[]');
 let posts = JSON.parse(localStorage.getItem('vg_posts') || '[]');
 
 // Seed posts if empty
 if (posts.length === 0) {
+  const now = Date.now();
   posts = [
-    { id: 'seed1', author: 'Naitik_Pal', title: 'Best PID tuning approach for a 4-motor drivetrain?', body: "We've been struggling with our PID constants for the current season. Found that starting with a P value around 0.15 and keeping I near zero works well on our tile floor. What are your setups?\n\nAlso — is anyone using feedforward control alongside PID? Curious if the gains are worth the complexity.", tag: 'auton', votes: 42, upvoted: false, downvoted: false, comments: [{ id:'c1', author:'SarveshG', text:"We tuned ours to P=0.12, D=0.08 and it's been rock solid. Key was testing on the actual field tiles not carpet.", votes:14, upvoted:false, downvoted:false, time: Date.now()-3600000}], time: Date.now()-86400000 },
-    { id: 'seed2', author: 'SarveshG', title: '6-bar lift vs 4-bar for High Stakes — which did your team go with?', body: 'Debating whether the extra range of a 6-bar is worth the increased complexity and rubber band management. Our 4-bar has been consistent but we\'re hitting a ceiling on ring stack height.\n\nAnyone have data on cycle times for each?', tag: 'build', votes: 38, upvoted: false, downvoted: false, comments: [{ id:'c2', author:'Anonymous', text:'We ran a 6-bar all season. Yes it\'s more finicky but the extra extension is worth it at high-level tournaments.', votes:8, upvoted:false, downvoted:false, time: Date.now()-7200000}], time: Date.now()-172800000 },
-    { id: 'seed3', author: 'Lakshman_R', title: 'PROS vs VEXcode — honest comparison after a full season on both', body: "Ran VEXcode in Skills and PROS in match auton all season. Here's my honest take:\n\nPROS: Better for complex auton, great toolchain, steeper learning curve. PROS + LVGL for GUI is brilliant.\nVEXcode: Faster to prototype, easier for newer programmers, blocks mode is great for middle school teams.\n\nFor a competitive high school team in 2026-27, I'd still go PROS. The ecosystem is just more powerful.", tag: 'code', votes: 61, upvoted: false, downvoted: false, comments: [], time: Date.now()-259200000 },
-    { id: 'seed4', author: 'Anonymous', title: 'Alliance selection tip that actually worked at our regional', body: 'Something our team figured out: at alliance selection, walk up to the teams you want and introduce yourself BEFORE they get picked. Teams that already know you by name will pick you over a stranger with similar rankings.\n\nWe placed 7th at qualifiers but got picked 3rd overall because we spent lunch talking to every top-5 team.', tag: 'strategy', votes: 55, upvoted: false, downvoted: false, comments: [{ id:'c3', author:'Naitik_Pal', text:'This is underrated advice. Social capital is real at tournaments. We do the same thing.', votes:19, upvoted:false, downvoted:false, time: Date.now()-43200000}], time: Date.now()-345600000 },
-    { id: 'seed5', author: 'Anonymous', title: 'VEX 2026-27 Name Reveal — what do you think the game will be?', body: 'The name dropped this week and everyone\'s speculating. Based on recent seasons: Over Under (2022), Spin Up (2023), High Stakes (2024), Push Back (2025)...\n\nPatterns I see: physical verb + direction/modifier. My guess for the new game is something with elevation or reach mechanics — VEX loves a good endgame climb.\n\nWhat\'s your theory?', tag: 'discuss', votes: 29, upvoted: false, downvoted: false, comments: [], time: Date.now()-43200000 },
+    {
+      id:'seed1', author:'Naitik_Pal',
+      title:'Best PID tuning approach for a 4-motor drivetrain?',
+      body:"We've been struggling with our PID constants. Starting with P=0.15, I near zero works on tile floors.\n\nAnyone using feedforward control alongside PID? Curious if the gains are worth the complexity.",
+      tag:'auton', votes:42, upvoted:false, downvoted:false, time:now-86400000,
+      comments:[{id:'c1',author:'SarveshG',text:"P=0.12, D=0.08 — rock solid. Test on actual field tiles, not carpet.",votes:14,upvoted:false,downvoted:false,time:now-3600000}]
+    },
+    {
+      id:'seed2', author:'SarveshG',
+      title:'6-bar lift vs 4-bar for High Stakes — which did your team go with?',
+      body:"Debating whether the extra range of a 6-bar is worth the increased complexity. Our 4-bar is consistent but we're hitting a ceiling on ring stack height.\n\nAnyone have cycle time data for each?",
+      tag:'build', votes:38, upvoted:false, downvoted:false, time:now-172800000,
+      comments:[{id:'c2',author:'Anonymous',text:"6-bar all season. More finicky but the extension is worth it at high-level events.",votes:8,upvoted:false,downvoted:false,time:now-7200000}]
+    },
+    {
+      id:'seed3', author:'Lakshman_R',
+      title:'PROS vs VEXcode — honest comparison after a full season on both',
+      body:"PROS: Better for complex auton, great toolchain, steeper learning curve.\nVEXcode: Faster to prototype, easier for newer programmers.\n\nFor competitive high school teams in 2026-27 I'd still go PROS. The ecosystem is just more powerful.",
+      tag:'code', votes:61, upvoted:false, downvoted:false, time:now-259200000, comments:[]
+    },
+    {
+      id:'seed4', author:'Anonymous',
+      title:'Alliance selection tip that actually worked at our regional',
+      body:"Walk up to the teams you want and introduce yourself BEFORE they get picked. Teams that know your name will pick you over a stranger with similar rankings.\n\nWe placed 7th in quals but got picked 3rd overall.",
+      tag:'strategy', votes:55, upvoted:false, downvoted:false, time:now-345600000,
+      comments:[{id:'c3',author:'Naitik_Pal',text:"Underrated advice. Social capital is real at tournaments.",votes:19,upvoted:false,downvoted:false,time:now-43200000}]
+    },
+    {
+      id:'seed5', author:'Anonymous',
+      title:'VEX 2026-27 game speculation — what mechanic do you think is coming?',
+      body:"Now that the name's been revealed, what mechanics do you think we'll see?\n\nMy bet: an endgame climb element — VEX loves the dramatic finish. Also expecting some kind of sorting/placement objective.\n\nWhat's your theory?",
+      tag:'discuss', votes:29, upvoted:false, downvoted:false, time:now-43200000, comments:[]
+    },
+    {
+      id:'seed6', author:'Naitik_Pal',
+      title:"Struggling with autonomous drift — here's what fixed it for us",
+      body:"Our bot was consistently drifting ~15cm left in auton. After two weeks of debugging:\n\n1. Motor cartridge wear — one 200rpm cart was running slow\n2. Tyre pressure inconsistency — inflate all to the same firmness\n3. Odometry wheel slipping — needed a spring-loaded tensioner\n\nHope this saves someone else 2 weeks.",
+      tag:'auton', votes:47, upvoted:false, downvoted:false, time:now-518400000, comments:[]
+    },
   ];
   savePosts();
 }
@@ -463,47 +456,13 @@ function init() {
   updateUserUI();
   renderPosts();
   updateStats();
-  setupComposerListeners();
+  renderTrending();
+  setupListeners();
 }
 
-function updateUserUI() {
-  const display = username || 'Anonymous';
-  const initials = username ? username.slice(0,2).toUpperCase() : '?';
-  const color = username ? getAvatarColor(username) : 'linear-gradient(135deg,#AC2E44,#1e6dff)';
-
-  document.getElementById('navUsername').textContent = display;
-  document.getElementById('navAvatar').textContent = initials;
-  document.getElementById('navAvatar').style.background = color;
-  document.getElementById('composerAvatar').textContent = initials;
-  document.getElementById('composerAvatar').style.background = color;
-  updateUserStats();
-}
-
-function updateUserStats() {
-  if (!username || username === 'Anonymous') {
-    document.getElementById('karmaVal').textContent = '0';
-    document.getElementById('postCountVal').textContent = '0';
-    return;
-  }
-  // Calculate karma from user's posts and comments
-  let karma = 0;
-  let postCount = 0;
-  posts.forEach(p => {
-    if (p.author === username) {
-      postCount++;
-      karma += p.votes;
-      p.comments.forEach(c => {
-        if (c.author === username) karma += c.votes;
-      });
-    }
-  });
-  document.getElementById('karmaVal').textContent = karma;
-  document.getElementById('postCountVal').textContent = postCount;
-}
-  document.getElementById('composerAvatar').style.background = color;
-
-function getAvatarColor(name) {
-  const colors = [
+// ── USER UI ──
+function getColor(name) {
+  const cols = [
     'linear-gradient(135deg,#AC2E44,#1e6dff)',
     'linear-gradient(135deg,#1e6dff,#0d8a6a)',
     'linear-gradient(135deg,#7c3aed,#AC2E44)',
@@ -512,223 +471,245 @@ function getAvatarColor(name) {
     'linear-gradient(135deg,#fbbf24,#f97316)',
     'linear-gradient(135deg,#4ade80,#22d3ee)',
   ];
-  let hash = 0;
-  for (let i=0;i<name.length;i++) hash = name.charCodeAt(i)+((hash<<5)-hash);
-  return colors[Math.abs(hash) % colors.length];
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+  return cols[Math.abs(h) % cols.length];
 }
 
-function getFlairClass(tag) {
-  const map = { discuss:'flair-discuss', build:'flair-build', code:'flair-code', strategy:'flair-strategy', auton:'flair-auton', news:'flair-news' };
-  return map[tag] || 'flair-discuss';
+function getInitials(name) {
+  return name ? name.replace(/[^a-zA-Z0-9]/g,'').slice(0,2).toUpperCase() || '?' : '?';
 }
 
-function getFlairLabel(tag) {
-  const map = { discuss:'💬 Discuss', build:'🔧 Build', code:'💻 Code', strategy:'🎯 Strategy', auton:'🧠 Auton', news:'🚨 News' };
-  return map[tag] || tag;
+function updateUserUI() {
+  const display = username || 'Anonymous';
+  const initials = username ? getInitials(username) : '?';
+  const color = username ? getColor(username) : 'linear-gradient(135deg,#AC2E44,#1e6dff)';
+
+  document.getElementById('navUsername').textContent = display;
+  document.getElementById('navAvatar').textContent = initials;
+  document.getElementById('navAvatar').style.background = color;
+  document.getElementById('composerAvatar').textContent = initials;
+  document.getElementById('composerAvatar').style.background = color;
+
+  // karma + post count
+  let karma = 0, postCount = 0;
+  posts.forEach(p => {
+    if (p.author === display) { postCount++; karma += p.votes; }
+    p.comments.forEach(c => { if (c.author === display) karma += c.votes; });
+  });
+  document.getElementById('karmaVal').textContent = karma;
+  document.getElementById('postCountVal').textContent = postCount;
 }
 
-function timeAgo(ts) {
-  const s = Math.floor((Date.now()-ts)/1000);
-  if (s<60) return 'just now';
-  if (s<3600) return Math.floor(s/60)+'m ago';
-  if (s<86400) return Math.floor(s/3600)+'h ago';
-  return Math.floor(s/86400)+'d ago';
+// ── FLAIR ──
+function flairClass(tag) {
+  return ({ discuss:'fl-discuss', build:'fl-build', code:'fl-code', strategy:'fl-strategy', auton:'fl-auton', news:'fl-news' })[tag] || 'fl-discuss';
+}
+function flairLabel(tag) {
+  return ({ discuss:'💬 Discuss', build:'🔧 Build', code:'💻 Code', strategy:'🎯 Strategy', auton:'🧠 Auton', news:'🚨 News' })[tag] || tag;
 }
 
-function savePosts() {
-  localStorage.setItem('vg_posts', JSON.stringify(posts));
+// ── TIME ──
+function ago(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s/60) + 'm ago';
+  if (s < 86400) return Math.floor(s/3600) + 'h ago';
+  return Math.floor(s/86400) + 'd ago';
 }
 
+// ── SAVE ──
+function savePosts() { localStorage.setItem('vg_posts', JSON.stringify(posts)); }
+
+// ── STATS ──
 function updateStats() {
   const today = new Date().toDateString();
   const todayCount = posts.filter(p => new Date(p.time).toDateString() === today).length;
-  document.getElementById('postsTodayCount').textContent = todayCount;
-  document.getElementById('memberCount').textContent = (2418 + posts.filter(p=>p.author!=='Anonymous'&&!['Naitik_Pal','SarveshG','Lakshman_R'].includes(p.author)).length).toLocaleString();
+  document.getElementById('todayCount').textContent = todayCount;
+  const extras = posts.filter(p => p.author !== 'Anonymous' && !['Naitik_Pal','SarveshG','Lakshman_R'].includes(p.author)).length;
+  document.getElementById('memberCount').textContent = (2418 + extras).toLocaleString();
 }
 
-// ── FILTER & SORT ──
+// ── TRENDING ──
+function renderTrending() {
+  const top5 = [...posts].sort((a,b) => b.votes - a.votes).slice(0,5);
+  document.getElementById('trendingList').innerHTML = top5.map((p,i) => `
+    <div class="hot-topic" onclick="scrollToPost('${p.id}')">
+      <div class="hot-topic-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="hot-topic-info">
+        <p>${esc(p.title.slice(0,55))}${p.title.length>55?'…':''}</p>
+        <span>${p.votes} upvotes · ${p.comments.length} comments</span>
+      </div>
+    </div>`).join('');
+}
+
+function scrollToPost(id) {
+  const el = document.getElementById('post-' + id);
+  if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); el.style.borderColor='rgba(172,46,68,0.5)'; setTimeout(()=>el.style.borderColor='',1500); }
+}
+
+// ── FILTER ──
 function setFilter(btn) {
-  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
   activeFilter = btn.dataset.filter;
   renderPosts();
 }
 
-function getFilteredPosts() {
-  let filtered = [...posts];
-  if (['discuss','build','code','strategy','auton','news'].includes(activeFilter)) {
-    filtered = filtered.filter(p=>p.tag===activeFilter);
-  }
-  if (activeFilter==='new') filtered.sort((a,b)=>b.time-a.time);
-  else if (activeFilter==='top') filtered.sort((a,b)=>b.votes-a.votes);
-  else filtered.sort((a,b)=>(b.votes*0.7+(1/(Date.now()-b.time+1))*1e10)-(a.votes*0.7+(1/(Date.now()-a.time+1))*1e10));
-  return filtered;
+function getSorted() {
+  let f = [...posts];
+  if (['discuss','build','code','strategy','auton','news'].includes(activeFilter)) f = f.filter(p => p.tag === activeFilter);
+  if (activeFilter === 'new') f.sort((a,b) => b.time - a.time);
+  else if (activeFilter === 'top') f.sort((a,b) => b.votes - a.votes);
+  else f.sort((a,b) => (b.votes * 0.7 + 1e10/(Date.now()-b.time+1)) - (a.votes * 0.7 + 1e10/(Date.now()-a.time+1)));
+  return f;
 }
 
-// ── RENDER ──
+// ── RENDER POSTS ──
 function renderPosts() {
   const list = document.getElementById('postsList');
-  const filtered = getFilteredPosts();
-  if (filtered.length===0) {
-    list.innerHTML=`<div class="empty-state"><div class="empty-state-icon">🤖</div><h3>No posts yet</h3><p>Be the first to post in this category!</p></div>`;
+  const sorted = getSorted();
+  if (!sorted.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🤖</div><h3>Nothing here yet</h3><p>Be the first to post in this category!</p></div>`;
     return;
   }
-  list.innerHTML = filtered.map(p=>renderPost(p)).join('');
+  list.innerHTML = sorted.map(p => postHTML(p)).join('');
 }
 
-function renderPost(p) {
-  const voteClass = p.votes>0?'positive':p.votes<0?'negative':'';
-  const upClass = p.upvoted?'upvoted':'';
-  const downClass = p.downvoted?'downvoted':'';
-  const initials = p.author==='Anonymous'?'?':p.author.slice(0,2).toUpperCase();
-  const avatarColor = p.author==='Anonymous'?'background:#444':('background:'+getAvatarColor(p.author)).replace('background:linear','background:linear');
-  const avatarStyle = p.author==='Anonymous'?'background:#3a3a4a':getAvatarColor(p.author);
-  const authorClass = p.author==='Anonymous'?'anon':'';
-  const commentCount = p.comments.length;
+function postHTML(p) {
+  const vClass = p.votes > 0 ? 'pos' : p.votes < 0 ? 'neg' : '';
+  const avatarColor = p.author === 'Anonymous' ? '#3a3a4a' : getColor(p.author);
+  const authorClass = p.author === 'Anonymous' ? 'anon' : '';
+  const saved = bookmarks.includes(p.id);
+  const canDel = username && (username === p.author || (username === 'Anonymous' && p.author === 'Anonymous'));
   return `
   <div class="post-card" id="post-${p.id}">
     <div class="post-inner">
       <div class="vote-col">
-        <button class="vote-btn ${upClass}" onclick="vote('${p.id}','up')" title="Upvote">▲</button>
-        <span class="vote-count ${voteClass}">${p.votes}</span>
-        <button class="vote-btn ${downClass}" onclick="vote('${p.id}','down')" title="Downvote">▼</button>
+        <button class="vote-btn ${p.upvoted?'upvoted':''}" onclick="vote('${p.id}','up')">▲</button>
+        <span class="vote-count ${vClass}" id="vc-${p.id}">${p.votes}</span>
+        <button class="vote-btn ${p.downvoted?'downvoted':''}" onclick="vote('${p.id}','down')">▼</button>
       </div>
       <div class="post-body">
         <div class="post-meta-row">
-          <div class="post-author-avatar" style="background:${avatarStyle}">${initials}</div>
-          <span class="post-author ${authorClass}">${p.author}</span>
-          <span class="post-time">${timeAgo(p.time)}</span>
-          <span class="post-flair ${getFlairClass(p.tag)}">${getFlairLabel(p.tag)}</span>
+          <div class="p-avatar" style="background:${avatarColor}">${getInitials(p.author)}</div>
+          <span class="p-author ${authorClass}">${p.author}</span>
+          <span class="p-time">${ago(p.time)}</span>
+          <span class="p-flair ${flairClass(p.tag)}">${flairLabel(p.tag)}</span>
         </div>
-        <div class="post-title" onclick="toggleExpand('${p.id}')">${escHtml(p.title)}</div>
-        <div class="post-preview">${escHtml(p.body)}</div>
-        <div class="post-actions">
-          <button class="action-btn" onclick="toggleExpand('${p.id}')">
+        <div class="p-title" onclick="toggleExpand('${p.id}')">${esc(p.title)}</div>
+        <div class="p-preview">${esc(p.body)}</div>
+        <div class="p-actions">
+          <button class="act-btn" onclick="toggleExpand('${p.id}')">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h6"/></svg>
-            ${commentCount} comment${commentCount!==1?'s':''}
+            <span id="cc-${p.id}">${p.comments.length}</span> comment${p.comments.length!==1?'s':''}
           </button>
-          <button class="action-btn" onclick="sharePost('${p.id}')">
+          <button class="act-btn ${saved?'saved':''}" onclick="toggleSave('${p.id}')">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12l-4-2-4 2V2z"/></svg>
+            ${saved?'Saved':'Save'}
+          </button>
+          <button class="act-btn" onclick="copyLink('${p.id}')">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="4" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="12" r="1.5"/><path d="M5.5 7.2L10.5 4.8M5.5 8.8L10.5 11.2"/></svg>
             Share
           </button>
-          <button class="action-btn ${isBookmarked(p.id)?'bookmarked':''}" onclick="toggleBookmark('${p.id}')">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12l-4-2-4 2V2z"/></svg>
-            ${isBookmarked(p.id)?'Saved':'Save'}
-          </button>
-          ${canDelete(p.author)?`<button class="action-btn" onclick="deletePost('${p.id}')" style="color:var(--accent2)">✕ Delete</button>`:''}
+          ${canDel ? `<button class="act-btn danger" onclick="delPost('${p.id}')">✕ Delete</button>` : ''}
         </div>
       </div>
     </div>
     <div class="post-expanded" id="expand-${p.id}">
-      <div class="post-full-body">${escHtml(p.body)}</div>
-      <div class="comment-composer">
-        <div class="comment-avatar" id="cAvatar-${p.id}" style="background:${getAvatarColor(username||'anon')}">${username?username.slice(0,2).toUpperCase():'?'}</div>
-        <div class="comment-input-wrap">
-          <textarea class="comment-input" id="commentInput-${p.id}" placeholder="Add a comment…" rows="3"></textarea>
-          <button class="comment-submit" onclick="submitComment('${p.id}')">Comment</button>
+      <div class="full-body">${esc(p.body)}</div>
+      <div class="comment-compose">
+        <div class="c-av" style="background:${username?getColor(username):'#3a3a4a'}">${getInitials(username||'?')}</div>
+        <div class="comment-compose-body">
+          <textarea class="comment-input" id="ci-${p.id}" placeholder="Add a comment…" rows="3"></textarea>
+          <div class="c-submit-row"><button class="c-submit" onclick="submitComment('${p.id}')">Comment</button></div>
         </div>
       </div>
-      <div class="comments-section" id="comments-${p.id}">
-        ${renderComments(p)}
-      </div>
+      <div class="comments-list" id="comments-${p.id}">${renderComments(p)}</div>
     </div>
   </div>`;
 }
 
 function renderComments(p) {
-  if (p.comments.length===0) return '<div class="no-comments">No comments yet — be the first!</div>';
-  return p.comments.map(c=>{
-    const ci = c.author==='Anonymous'?'?':c.author.slice(0,2).toUpperCase();
-    const ca = c.author==='Anonymous'?'#3a3a4a':getAvatarColor(c.author);
-    const aClass = c.author==='Anonymous'?'anon':'';
+  if (!p.comments.length) return '<div class="no-comments">No comments yet — be the first!</div>';
+  return p.comments.map(c => {
+    const ca = c.author === 'Anonymous' ? '#3a3a4a' : getColor(c.author);
+    const canDel = username && (username === c.author || (username === 'Anonymous' && c.author === 'Anonymous'));
     return `
-    <div class="comment" id="comment-${c.id}">
-      <div class="comment-avatar" style="background:${ca};width:28px;height:28px;font-size:0.62rem;">${ci}</div>
+    <div class="comment-item" id="comment-${c.id}">
+      <div class="c-av" style="background:${ca};width:28px;height:28px;">${getInitials(c.author)}</div>
       <div class="comment-body">
-        <div class="comment-header">
-          <span class="comment-author ${aClass}" style="color:${c.author==='Anonymous'?'var(--muted)':'var(--text)'}">${c.author}</span>
-          <span class="comment-time">${timeAgo(c.time)}</span>
+        <div class="comment-head">
+          <span class="c-author" style="color:${c.author==='Anonymous'?'var(--muted)':'var(--text)'}">${c.author}</span>
+          <span class="c-time">${ago(c.time)}</span>
         </div>
-        <div class="comment-text">${escHtml(c.text)}</div>
-        <div class="comment-vote-row">
-          <button class="c-vote-btn ${c.upvoted?'upvoted':''}" onclick="voteComment('${p.id}','${c.id}','up')">▲</button>
-          <span class="c-vote-count">${c.votes}</span>
-          <button class="c-vote-btn ${c.downvoted?'downvoted':''}" onclick="voteComment('${p.id}','${c.id}','down')">▼</button>
-          ${canDelete(c.author)?`<button class="c-vote-btn" onclick="deleteComment('${p.id}','${c.id}')" style="color:var(--accent2);margin-left:0.5rem;">✕ delete</button>`:''}
+        <div class="c-text">${esc(c.text)}</div>
+        <div class="c-vote-row">
+          <button class="cv-btn ${c.upvoted?'upvoted':''}" onclick="voteComment('${p.id}','${c.id}','up')">▲</button>
+          <span class="cv-count" id="cvc-${c.id}">${c.votes}</span>
+          <button class="cv-btn ${c.downvoted?'downvoted':''}" onclick="voteComment('${p.id}','${c.id}','down')">▼</button>
+          ${canDel ? `<span class="cv-del" onclick="delComment('${p.id}','${c.id}')">✕ delete</span>` : ''}
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function canDelete(author) {
-  if (!username) return false;
-  return username===author || username==='Anonymous'&&author==='Anonymous';
-}
-
-// ── EXPAND / COLLAPSE ──
+// ── EXPAND ──
 function toggleExpand(id) {
-  const el = document.getElementById('expand-'+id);
-  el.classList.toggle('open');
+  document.getElementById('expand-'+id).classList.toggle('open');
 }
 
-// ── VOTING ──
+// ── VOTE POST ──
 function vote(id, dir) {
-  const post = posts.find(p=>p.id===id);
-  if (!post) return;
-  if (dir==='up') {
-    if (post.upvoted) { post.votes--; post.upvoted=false; }
-    else { if (post.downvoted) { post.votes++; post.downvoted=false; } post.votes++; post.upvoted=true; }
+  const p = posts.find(x => x.id === id);
+  if (!p) return;
+  if (dir === 'up') {
+    if (p.upvoted) { p.votes--; p.upvoted = false; }
+    else { if (p.downvoted) { p.votes++; p.downvoted = false; } p.votes++; p.upvoted = true; }
   } else {
-    if (post.downvoted) { post.votes++; post.downvoted=false; }
-    else { if (post.upvoted) { post.votes--; post.upvoted=false; } post.votes--; post.downvoted=true; }
+    if (p.downvoted) { p.votes++; p.downvoted = false; }
+    else { if (p.upvoted) { p.votes--; p.upvoted = false; } p.votes--; p.downvoted = true; }
   }
   savePosts();
-  // Update just the vote col
   const card = document.getElementById('post-'+id);
-  const voteCount = card.querySelector('.vote-count');
-  const upBtn = card.querySelector('.vote-btn:first-child');
-  const downBtn = card.querySelector('.vote-btn:last-of-type');
-  voteCount.textContent = post.votes;
-  voteCount.className = 'vote-count'+(post.votes>0?' positive':post.votes<0?' negative':'');
-  upBtn.className = 'vote-btn'+(post.upvoted?' upvoted':'');
-  downBtn.className = 'vote-btn'+(post.downvoted?' downvoted':'');
+  const vc = card.querySelector('.vote-count');
+  vc.textContent = p.votes;
+  vc.className = 'vote-count' + (p.votes>0?' pos':p.votes<0?' neg':'');
+  card.querySelectorAll('.vote-btn')[0].className = 'vote-btn' + (p.upvoted?' upvoted':'');
+  card.querySelectorAll('.vote-btn')[1].className = 'vote-btn' + (p.downvoted?' downvoted':'');
+  renderTrending();
 }
 
-function voteComment(postId, commentId, dir) {
-  const post = posts.find(p=>p.id===postId);
-  if (!post) return;
-  const comment = post.comments.find(c=>c.id===commentId);
-  if (!comment) return;
-  if (dir==='up') {
-    if (comment.upvoted) { comment.votes--; comment.upvoted=false; }
-    else { if (comment.downvoted){comment.votes++;comment.downvoted=false;} comment.votes++; comment.upvoted=true; }
+// ── VOTE COMMENT ──
+function voteComment(pid, cid, dir) {
+  const p = posts.find(x => x.id === pid);
+  const c = p && p.comments.find(x => x.id === cid);
+  if (!c) return;
+  if (dir === 'up') {
+    if (c.upvoted) { c.votes--; c.upvoted = false; }
+    else { if (c.downvoted) { c.votes++; c.downvoted = false; } c.votes++; c.upvoted = true; }
   } else {
-    if (comment.downvoted) { comment.votes++; comment.downvoted=false; }
-    else { if (comment.upvoted){comment.votes--;comment.upvoted=false;} comment.votes--; comment.downvoted=true; }
+    if (c.downvoted) { c.votes++; c.downvoted = false; }
+    else { if (c.upvoted) { c.votes--; c.upvoted = false; } c.votes--; c.downvoted = true; }
   }
   savePosts();
-  const commentEl = document.getElementById('comment-'+commentId);
-  const count = commentEl.querySelector('.c-vote-count');
-  const up = commentEl.querySelector('.c-vote-btn:first-child');
-  const down = commentEl.querySelectorAll('.c-vote-btn')[1];
-  count.textContent = comment.votes;
-  up.className = 'c-vote-btn'+(comment.upvoted?' upvoted':'');
-  down.className = 'c-vote-btn'+(comment.downvoted?' downvoted':'');
+  const el = document.getElementById('comment-'+cid);
+  el.querySelector('.cv-count').textContent = c.votes;
+  el.querySelectorAll('.cv-btn')[0].className = 'cv-btn' + (c.upvoted?' upvoted':'');
+  el.querySelectorAll('.cv-btn')[1].className = 'cv-btn' + (c.downvoted?' downvoted':'');
 }
 
-// ── POST SUBMISSION ──
-function setupComposerListeners() {
+// ── POST SUBMIT ──
+function setupListeners() {
   const title = document.getElementById('postTitle');
   const body = document.getElementById('postBody');
   const btn = document.getElementById('postBtn');
-  const check = ()=>{ btn.disabled = title.value.trim().length<3; };
-  title.addEventListener('input', check);
-  body.addEventListener('input', check);
+  [title, body].forEach(el => el.addEventListener('input', () => { btn.disabled = title.value.trim().length < 3; }));
 }
 
 function selectTag(btn) {
-  document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   selectedTag = btn.dataset.tag;
 }
@@ -737,263 +718,128 @@ function submitPost() {
   const title = document.getElementById('postTitle').value.trim();
   const body = document.getElementById('postBody').value.trim();
   if (!title) return;
-  const newPost = {
-    id: 'p'+Date.now(),
-    author: username||'Anonymous',
-    title, body,
-    tag: selectedTag||'discuss',
-    votes: 1, upvoted: true, downvoted: false,
-    comments: [],
-    time: Date.now()
-  };
-  posts.unshift(newPost);
+  const p = { id:'p'+Date.now(), author:username||'Anonymous', title, body, tag:selectedTag||'discuss', votes:1, upvoted:true, downvoted:false, comments:[], time:Date.now() };
+  posts.unshift(p);
   savePosts();
-  // Reset
-  document.getElementById('postTitle').value='';
-  document.getElementById('postBody').value='';
-  document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('selected'));
-  selectedTag='';
-  document.getElementById('postBtn').disabled=true;
-  activeFilter='new';
-  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postBody').value = '';
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
+  selectedTag = '';
+  document.getElementById('postBtn').disabled = true;
+  activeFilter = 'new';
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   document.querySelector('[data-filter="new"]').classList.add('active');
   renderPosts();
   updateStats();
-  showToast('✅ Post published!');
+  renderTrending();
+  updateUserUI();
+  toast('✅ Post published!');
 }
 
-// ── COMMENT SUBMISSION ──
-function submitComment(postId) {
-  const input = document.getElementById('commentInput-'+postId);
+// ── COMMENT SUBMIT ──
+function submitComment(pid) {
+  const input = document.getElementById('ci-'+pid);
   const text = input.value.trim();
   if (!text) return;
-  const post = posts.find(p=>p.id===postId);
-  if (!post) return;
-  const newComment = {
-    id: 'c'+Date.now(),
-    author: username||'Anonymous',
-    text,
-    votes: 1, upvoted: true, downvoted: false,
-    time: Date.now()
-  };
-  post.comments.push(newComment);
+  const p = posts.find(x => x.id === pid);
+  if (!p) return;
+  p.comments.push({ id:'c'+Date.now(), author:username||'Anonymous', text, votes:1, upvoted:true, downvoted:false, time:Date.now() });
   savePosts();
-  input.value='';
-  document.getElementById('comments-'+postId).innerHTML = renderComments(post);
-  // update comment count in action btn
-  const card = document.getElementById('post-'+postId);
-  const actionBtn = card.querySelector('.action-btn');
-  actionBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h6"/></svg> ${post.comments.length} comment${post.comments.length!==1?'s':''}`;
-  showToast('💬 Comment added!');
+  input.value = '';
+  document.getElementById('comments-'+pid).innerHTML = renderComments(p);
+  document.getElementById('cc-'+pid).textContent = p.comments.length;
+  toast('💬 Comment added!');
 }
 
 // ── DELETE ──
-function deletePost(id) {
-  posts = posts.filter(p=>p.id!==id);
+function delPost(id) {
+  if (!confirm('Delete this post?')) return;
+  posts = posts.filter(p => p.id !== id);
   savePosts();
   renderPosts();
   updateStats();
-  showToast('🗑️ Post deleted');
-}
-
-function deleteComment(postId, commentId) {
-  const post = posts.find(p=>p.id===postId);
-  if (!post) return;
-  post.comments = post.comments.filter(c=>c.id!==commentId);
-  savePosts();
-  document.getElementById('comments-'+postId).innerHTML = renderComments(post);
-  showToast('🗑️ Comment deleted');
-}
-
-// ── USERNAME ──
-function openUsernameModal() {
-  document.getElementById('usernameInput').value = username;
-  document.getElementById('usernameModal').classList.remove('hidden');
-  setTimeout(()=>document.getElementById('usernameInput').focus(),100);
-}
-
-function closeUsernameModal() {
-  document.getElementById('usernameModal').classList.add('hidden');
-}
-
-function saveUsername() {
-  const val = document.getElementById('usernameInput').value.trim().replace(/\s+/g,'_').slice(0,30);
-  username = val;
-  localStorage.setItem('vg_username', val);
-  closeUsernameModal();
+  renderTrending();
   updateUserUI();
-  renderPosts();
-  showToast(val?`👋 Welcome, ${val}!`:'Posting as Anonymous');
+  toast('🗑️ Post deleted');
 }
 
-document.getElementById('usernameInput').addEventListener('keydown', e=>{ if(e.key==='Enter') saveUsername(); });
-document.getElementById('usernameModal').addEventListener('click', e=>{ if(e.target===document.getElementById('usernameModal')) closeUsernameModal(); });
-
-// ── SHARE ──
-function sharePost(id) {
-  const chatrooms = JSON.parse(localStorage.getItem('vg_chatrooms') || '[]');
-  if (chatrooms.length === 0) {
-    // No chatrooms, copy link instead
-    navigator.clipboard.writeText(window.location.href+'#post-'+id).catch(()=>{});
-    showToast('🔗 Link copied! Create a chatroom in Messages to share posts there.');
-    return;
-  }
-  
-  // Show chatroom selection
-  const roomSelect = document.getElementById('shareRoomSelect');
-  roomSelect.innerHTML = chatrooms.map(r => `<option value="${r.id}">${escHtml(r.name)}</option>`).join('');
-  document.getElementById('sharePostId').value = id;
-  document.getElementById('sharePostModal').classList.remove('hidden');
+function delComment(pid, cid) {
+  const p = posts.find(x => x.id === pid);
+  if (!p) return;
+  p.comments = p.comments.filter(c => c.id !== cid);
+  savePosts();
+  document.getElementById('comments-'+pid).innerHTML = renderComments(p);
+  toast('🗑️ Comment deleted');
 }
 
-function confirmShareToChat() {
-  const postId = document.getElementById('sharePostId').value;
-  const roomId = document.getElementById('shareRoomSelect').value;
-  if (!postId || !roomId) return;
-  
-  const posts = JSON.parse(localStorage.getItem('vg_posts') || '[]');
-  const post = posts.find(p => p.id === postId);
-  if (!post) return;
-  
-  const messages = JSON.parse(localStorage.getItem('vg_messages_' + roomId) || '[]');
-  const username = localStorage.getItem('vg_username') || 'Anonymous';
-  messages.push({
-    id: 'msg_' + Date.now(),
-    author: username,
-    text: 'Check out this post!',
-    time: Date.now(),
-    likes: [],
-    dislikes: [],
-    likedBy: [],
-    dislikedBy: [],
-    sharedPost: {
-      id: post.id,
-      title: post.title,
-      author: post.author,
-      tag: post.tag
-    }
-  });
-  
-  localStorage.setItem('vg_messages_' + roomId, JSON.stringify(messages));
-  document.getElementById('sharePostModal').classList.add('hidden');
-  showToast('📤 Post shared to chat!');
-}
-
-// ── BOOKMARKS ──
-let bookmarks = JSON.parse(localStorage.getItem('vg_bookmarks') || '[]');
-
-function isBookmarked(id) {
-  return bookmarks.includes(id);
-}
-
-function toggleBookmark(id) {
+// ── SAVE / BOOKMARK ──
+function toggleSave(id) {
   if (bookmarks.includes(id)) {
     bookmarks = bookmarks.filter(b => b !== id);
-    showToast('📌 Removed from saved');
+    toast('📌 Removed from saved');
   } else {
     bookmarks.push(id);
-    showToast('📌 Post saved!');
+    toast('📌 Post saved!');
   }
   localStorage.setItem('vg_bookmarks', JSON.stringify(bookmarks));
   renderPosts();
 }
 
+// ── SHARE ──
+function copyLink(id) {
+  navigator.clipboard.writeText(window.location.href + '#post-' + id).catch(() => {});
+  toast('🔗 Link copied!');
+}
+
+// ── USERNAME MODAL ──
+function openModal() {
+  document.getElementById('usernameInput').value = username;
+  document.getElementById('usernameModal').classList.remove('hidden');
+  setTimeout(() => document.getElementById('usernameInput').focus(), 100);
+}
+function closeModal() { document.getElementById('usernameModal').classList.add('hidden'); }
+function saveUsername() {
+  const val = document.getElementById('usernameInput').value.trim().replace(/\s+/g,'_').slice(0,30);
+  username = val;
+  localStorage.setItem('vg_username', val);
+  closeModal();
+  updateUserUI();
+  renderPosts();
+  toast(val ? `👋 Welcome, ${val}!` : 'Posting as Anonymous');
+}
+document.getElementById('usernameInput').addEventListener('keydown', e => { if (e.key === 'Enter') saveUsername(); });
+document.getElementById('usernameModal').addEventListener('click', e => { if (e.target.id === 'usernameModal') closeModal(); });
+
 // ── TOAST ──
 let toastTimer;
-function showToast(msg) {
+function toast(msg) {
   const t = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>t.classList.remove('show'), 2500);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 // ── UTILS ──
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// ── REVEAL ──
-const reveals = document.querySelectorAll('.reveal');
-const revObs = new IntersectionObserver((entries)=>{
-  entries.forEach((e,i)=>{ if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*80); });
-},{threshold:0.08});
-reveals.forEach(el=>revObs.observe(el));
-
-// ── NAV HAMBURGER ──
+// ── HAMBURGER ──
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click',()=>{
+hamburger.addEventListener('click', () => {
   const open = mobileMenu.classList.toggle('open');
-  hamburger.classList.toggle('open',open);
+  hamburger.classList.toggle('open', open);
 });
-mobileMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{
-  mobileMenu.classList.remove('open'); hamburger.classList.remove('open');
-}));
-window.addEventListener('resize',()=>{ if(window.innerWidth>768){ mobileMenu.classList.remove('open'); hamburger.classList.remove('open'); }});
+mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { mobileMenu.classList.remove('open'); hamburger.classList.remove('open'); }));
+window.addEventListener('resize', () => { if (window.innerWidth > 768) { mobileMenu.classList.remove('open'); hamburger.classList.remove('open'); } });
 
-// Auto-refresh time labels
-setInterval(()=>{
-  document.querySelectorAll('.post-time,.comment-time').forEach(el=>{
-    // times are static in the DOM, re-render would be needed for live update — skip for performance
-  });
-}, 60000);
+// ── REVEAL ──
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
 init();
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    if (fullscreenBtn) {
-      const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-      const toggleFullscreen = async () => {
-        if (isFullscreen()) {
-          const exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-          if (exitFn) await exitFn.call(document);
-        } else {
-          const requestFn = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
-          if (requestFn) await requestFn.call(document.documentElement);
-        }
-      };
-      fullscreenBtn.addEventListener('click', toggleFullscreen);
-    }
-
-    // ── BACK TO TOP ──
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 400) backToTop.classList.add('visible');
-      else backToTop.classList.remove('visible');
-    });
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    // ── THEME TOGGLE ──
-    const themeToggle = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('vg_theme');
-    if (savedTheme === 'light') document.documentElement.classList.add('light');
-    themeToggle.addEventListener('click', () => {
-      document.documentElement.classList.toggle('light');
-      localStorage.setItem('vg_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
-    });
-
-    // ── COOKIE BANNER ──
-    const cookieBanner = document.getElementById('cookieBanner');
-    if (!localStorage.getItem('vg_cookies')) {
-      setTimeout(() => cookieBanner.classList.add('show'), 3000);
-    }
-    window.acceptCookies = function() {
-      localStorage.setItem('vg_cookies', 'accepted');
-      cookieBanner.classList.remove('show');
-    };
-
-    // ── KEYBOARD SHORTCUTS ──
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 't' && !e.target.matches('input, textarea')) {
-        document.getElementById('themeToggle').click();
-      }
-      if (e.key === 'h' && !e.target.matches('input, textarea')) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      if (e.key === '?' && !e.target.matches('input, textarea')) {
-        alert('Keyboard shortcuts:\n• t - Toggle theme\n• h - Go to home\n• ? - Show this help');
-      }
-    });
-  </script>
+</script>
 </body>
 </html>
