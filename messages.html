@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Messages — VexGrind</title>
+  <title>Community — VexGrind</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -189,6 +189,7 @@
   </style>
 </head>
 <body>
+<script>window.location.replace('community.html');</script>
 
 <!-- NAV -->
 <nav>
@@ -196,10 +197,9 @@
   <ul class="nav-links">
     <li><a href="guides.html">Guides</a></li>
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="community.html">Community</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="account.html">Account</a></li>
-    <li><a href="messages.html" class="active">Messages</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="account.html">Account</a></li>
+      <li><a href="community.html" class="active">Community</a></li>
   </ul>
   <div class="nav-actions">
     <a href="signup.html" class="btn-ghost">Sign in</a>
@@ -213,10 +213,9 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="guides.html">Guides</a>
   <a href="blog.html">Blog</a>
-  <a href="community.html">Community</a>
   <a href="about.html">About</a>
   <a href="account.html">Account</a>
-  <a href="messages.html">Messages</a>
+  <a href="community.html">Community</a>
   <div class="mobile-actions">
     <a href="signup.html" class="btn-ghost" style="flex:1;justify-content:center;">Sign in</a>
     <a href="signup.html" class="btn-primary" style="flex:1;justify-content:center;">Join the Team</a>
@@ -227,9 +226,9 @@
 <div class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-inner">
-    <div class="page-badge"><span></span> Secure Messaging</div>
-    <h1>VexGrind <em>Messages</em></h1>
-    <p>Create private chatrooms with unique codes. Share posts, react with likes & dislikes, and report users when needed.</p>
+    <div class="page-badge"><span></span> Live community</div>
+    <h1>VexGrind <em>Community</em></h1>
+    <p>Connect with the VexGrind community in private rooms. Share posts, react with likes & dislikes, and report users when needed.</p>
   </div>
 </div>
 
@@ -478,7 +477,7 @@ function renderRoomList() {
   list.innerHTML = chatrooms.map(room => {
     const messages = getMessages(room.id);
     const lastMsg = messages[messages.length - 1];
-    const preview = lastMsg ? (lastMsg.author + ': ' + lastMsg.text.slice(0, 30)) : 'No messages yet';
+    const preview = lastMsg ? (lastMsg.author + ': ' + lastMsg.text.slice(0, 30)) : 'No community discussions yet';
     const time = lastMsg ? timeAgo(lastMsg.time) : '';
     const isActive = room.id === currentRoomId ? 'active' : '';
     
@@ -523,7 +522,7 @@ function renderMessages() {
   const container = document.getElementById('chatMessages');
   
   if (messages.length === 0) {
-    container.innerHTML = '<div style="text-align:center; color:var(--muted); padding:2rem;">No messages yet. Start the conversation!</div>';
+    container.innerHTML = '<div style="text-align:center; color:var(--muted); padding:2rem;">No community discussions yet. Start the conversation!</div>';
     return;
   }
   
