@@ -280,12 +280,11 @@
 <nav>
   <a href="index.html" class="nav-logo">VexGrind</a>
   <ul class="nav-links">
-    <li><a href="guides.html" class="active">Guides</a></li>
+    <li><a href="guides.html">Guides</a></li>
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="community.html" class="active">Community</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="account.html">Account</a></li>
-    <li><a href="messages.html">Messages</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="account.html">Account</a></li>
+      <li><a href="community.html" class="active">Community</a></li>
   </ul>
   <div class="nav-actions">
     <a href="signup.html" class="btn-ghost">Sign in</a>
@@ -304,11 +303,10 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#">Guides</a>
   <a href="blog.html">Blog</a>
-  <a href="community.html">Community</a>
   <a href="about.html">About</a>
   <a href="account.html">Account</a>
-  <a href="messages.html">Messages</a>
-  <div class="mobile-actions">
+  <a href="community.html">Community</a>
+  <div class="mobile-actions"
     <a href="signup.html" class="btn-ghost" style="flex:1;justify-content:center;">Sign in</a>
     <a href="signup.html" class="btn-primary" style="flex:1;justify-content:center;">Join the Team</a>
   </div>
@@ -835,7 +833,7 @@ function sharePost(id) {
   if (chatrooms.length === 0) {
     // No chatrooms, copy link instead
     navigator.clipboard.writeText(window.location.href+'#post-'+id).catch(()=>{});
-    showToast('🔗 Link copied! Create a chatroom in Messages to share posts there.');
+    showToast('🔗 Link copied! Create a chatroom in Community to share posts there.');
     return;
   }
   
