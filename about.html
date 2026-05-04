@@ -499,6 +499,12 @@
       font-size: 0.7rem; color: var(--accent2);
       margin-top: 0.75rem;
     }
+    .theme-toggle { position: fixed; top: 1rem; right: 8rem; width: 38px; height: 38px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; z-index: 110; }
+    .theme-toggle:hover { border-color: var(--accent); }
+    :root.light { --bg: #f5f7fa; --bg2: #ffffff; --text: #1a1a2e; --muted: #64748b; --card: rgba(255,255,255,0.8); 
+    }
+    :root.light nav, :root.light .mobile-menu { background: rgba(255,255,255,0.9);
+    }
 
     /* ── CTA ── */
     .cta-section {
@@ -758,7 +764,7 @@
       <li><a href="account.html">Account</a></li>
       <li><a href="community.html">Community</a></li>
     </ul>
-    <div class="nav-actions"
+    <div class="nav-actions">
       <a href="signup.html" class="btn-ghost">Sign in</a>
       <a href="signup.html" class="btn-primary">Join the Team</a>
     </div>
@@ -767,6 +773,7 @@
     </button>
   </nav>
   <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+  <button class="theme-toggle" id="themeToggle" title="Toggle theme">◐</button>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M5 11V5h6M5 5l6 6M19 13v6h-6M19 19l-6-6"/>
     </svg>
@@ -799,7 +806,8 @@
       <h2>We level the<br><em>playing field.</em></h2>
       <p>VEX Robotics is one of the most competitive STEM programs on the planet. But for too long, the best strategies, code, and build knowledge were locked away in private Discord servers and top-team notebooks that never got shared.</p>
       <p>VexGrind changes that. We believe every team can work together to build this community and create the greatest robots Vex has ever seen</p>
-      <p>We publish everything: auton routines, CAD files. No paywalls. No gatekeeping. Just the information to help you succeed</p>
+      <p>We publish everything: auton routines, CAD files. No paywalls. No gatekeeping. Just the information to help you succeed
+      </p>
     </div>
 
     <div class="mission-visual reveal">
@@ -954,7 +962,7 @@
           <h3>Fishy</h3>
           <div class="team-role">DA GOAT</div>
           <p>fish</p>
-          <div class="team-tag">✦ Excellence Award × 3</div>
+          <div class="team-tag">✦ Excellence Award * 67</div>
         </div>
       </div>
     </div>
@@ -989,6 +997,13 @@
 
   <script>
     // Scroll reveal
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('vg_theme');
+    if (savedTheme === 'light') document.documentElement.classList.add('light');
+    themeToggle.addEventListener('click', () => {
+    document.documentElement.classList.toggle('light');
+    localStorage.setItem('vg_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+   });
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
