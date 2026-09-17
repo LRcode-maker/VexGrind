@@ -1,0 +1,15 @@
+site:
+  name: VexGrind
+
+collections:
+  pages:
+    label: "Pages"
+    path: "Pages"
+    type: "page"
+    fields:
+      - name: title
+        label: "Title"
+        type: "string"
+      - name: content
+        label: "Content"
+        type: "rich_text"
