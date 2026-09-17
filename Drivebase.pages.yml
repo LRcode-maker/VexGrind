@@ -1,1 +1,15 @@
+site:
+  name: Vex Grind
+collections:
+  pages:
+    label: "Pages"
+    path: "pages"
+    type: "page"
+    fields:
+      - name: title
+        label: "Title"
+        type: "string"
+      - name: content
+        label: "Content"
+        type: "rich_text"
 
